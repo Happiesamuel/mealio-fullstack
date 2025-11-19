@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function OnBoard() {
+export default function OnBoardingTwo() {
   return (
     <>
       <Image
@@ -11,28 +11,28 @@ export default function OnBoard() {
         resizeMode="contain"
         className="w-[105px] mt-10"
       />
-      <View className="flex-1 w-full items-center justify-center">
+      <View className="flex w-full items-center justify-center">
         <Image
-          source={images.onboardingOne}
+          source={images.onboardingTwo}
           resizeMode="contain"
           className="w-[325px] "
         />
         <View className="gap-4 flex items-center mt-12">
           <Text className="text-2xl text-black  font-roboto-semibold">
-            Welcome to Mealio 🍽️
+            Order Easily, Eat Happily
           </Text>
           <Text className="font-roboto text-xl text-grey text-center ">
-            Discover your favorite meals and get them delivered fast and fresh.
+            Track your orders in real-time and enjoy quick, secure checkout.
           </Text>
         </View>
         <View className="w-full items-center gap-5 mt-12">
           <View className="flex gap-1.5 items-center justify-center flex-row  w-full">
+            <View className="w-8 h-1.5 rounded-full !bg-grey/30 " />
             <View className="w-8 h-1.5 rounded-full !bg-primary" />
-            <View className="w-8 h-1.5 rounded-full !bg-grey/30" />
           </View>
           <View className="flex w-full gap-6 ">
             <TouchableOpacity
-              onPress={() => router.push("/onbording-two")}
+              onPress={() => router.push("/login")}
               className="bg-primary rounded-full w-full"
             >
               <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">

@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { Slot } from "expo-router";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnBoardingLayout() {
   return (
-    <View>
-      <Text>OnBoardingLayout</Text>
-    </View>
-  )
+    <SafeAreaView className="h-full flex-1 bg-secondary flex items-center px-5">
+      <Slot />
+    </SafeAreaView>
+  );
 }
