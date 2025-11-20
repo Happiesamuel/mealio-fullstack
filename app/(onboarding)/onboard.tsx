@@ -1,9 +1,15 @@
+import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { images } from "@/constnts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 export default function OnBoard() {
+  async function finishOnboarding() {
+    await AsyncStorage.setItem("seen_onboard", "true");
+    router.replace("/login");
+  }
   return (
     <>
       <Image
@@ -31,22 +37,23 @@ export default function OnBoard() {
             <View className="w-8 h-1.5 rounded-full !bg-grey/30" />
           </View>
           <View className="flex w-full gap-6 ">
-            <TouchableOpacity
+            <RoundedFullButton
               onPress={() => router.push("/onbording-two")}
-              className="bg-primary rounded-full w-full"
+              className="bg-primary "
             >
               <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
                 Next
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/login")}
-              className="bg-[#A1C249]/5 rounded-full w-full"
+            </RoundedFullButton>
+
+            <RoundedFullButton
+              onPress={finishOnboarding}
+              className="bg-[#A1C249]/5 "
             >
               <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
                 Skip
               </Text>
-            </TouchableOpacity>
+            </RoundedFullButton>
           </View>
         </View>
       </View>

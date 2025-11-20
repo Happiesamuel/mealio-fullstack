@@ -1,3 +1,4 @@
+import { useAppState } from "@/hooks/useAppState";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
@@ -11,6 +12,8 @@ export default function RootLayout() {
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Light": require("../assets/fonts/Roboto-Light.ttf"),
   });
+
+  const { loaded, seenOnboard, userToken } = useAppState();
   useEffect(
     function () {
       if (error) throw error;
@@ -18,6 +21,8 @@ export default function RootLayout() {
     },
     [fontLoaded, error]
   );
+
   if (!fontLoaded) return null;
+
   return <Stack screenOptions={{ headerShown: false }} />;
 }
