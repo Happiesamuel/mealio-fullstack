@@ -43,15 +43,15 @@
 //   return <Redirect href="/" />;
 // }
 
-//finish onboard
+// finish onboard
 // await AsyncStorage.setItem("seenOnboard", "true");
 // router.replace("/auth");
 
-//login
+// login
 // await AsyncStorage.setItem("userToken", token);
 // router.replace("/home");
 
-//logout
+// logout
 // await AsyncStorage.removeItem("userToken");
 // router.replace("/");
 

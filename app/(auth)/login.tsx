@@ -1,11 +1,12 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
 
 export default function Login() {
+  // const error = "The password you entered doesn't match";
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -21,6 +22,7 @@ export default function Login() {
           placeholder="Your email"
           keyboardType="email-address"
           type="normal"
+          // error={error}
         />
         <View className="gap-1.5">
           <CustomInput
@@ -30,14 +32,17 @@ export default function Login() {
           />
           <Link
             className="font-roboto-medium text-xs text-black self-end"
-            href={"/"}
+            href={"/reset-password"}
           >
             Forget Password?
           </Link>
         </View>
       </View>
 
-      <RoundedFullButton className="bg-primary" onPress={() => {}}>
+      <RoundedFullButton
+        className="bg-primary"
+        onPress={() => router.push("/(tabs)")}
+      >
         <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
           Login
         </Text>

@@ -10,10 +10,11 @@ export default function RoundedFullButton({
   children: React.ReactNode;
   className: string;
 }) {
+  const cla = className.split(" ").find((x) => x.startsWith("w-"));
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={cn(" rounded-full w-full", className)}
+      className={cn("rounded-full", cla ? cla : "w-full", className)}
     >
       {children}
     </TouchableOpacity>

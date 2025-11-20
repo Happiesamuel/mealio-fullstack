@@ -14,21 +14,28 @@ export default function CustomInput({
   keyboardType,
   type,
   label,
+  error,
 }: {
   placeholder: string;
   keyboardType?: KeyboardTypeOptions;
   type?: string;
   label: string;
+  error?: string;
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [show, setShow] = useState(type === "password");
+
   return (
     <View className="gap-2">
       <Text className="font-roboto-medium text-black text-xs">{label}:</Text>
       <View
         className={cn(
           "bg-[#E8E8E8] rounded-2xl  border  font-roboto text-sm flex flex-row items-center justify-between",
-          isFocused ? " border-primary" : "border-[#E8E8E8]"
+          isFocused
+            ? " border-primary"
+            : error
+              ? "border-error"
+              : "border-[#E8E8E8]"
         )}
       >
         <TextInput
@@ -53,6 +60,7 @@ export default function CustomInput({
           </Pressable>
         )}
       </View>
+      {error && <Text className="font-roboto text-error text-xs">{error}</Text>}
     </View>
   );
 }
