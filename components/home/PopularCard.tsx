@@ -1,11 +1,16 @@
 import { ItemProp } from "@/types";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function PopularCard({ item }: { item: ItemProp }) {
   return (
-    <TouchableOpacity style={{ width: 220 }} className="gap-2 ">
+    <TouchableOpacity
+      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      style={{ width: 220 }}
+      className="gap-2 "
+    >
       <View className="w-full relative">
         <Image
           className="rounded-lg w-full"

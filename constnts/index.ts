@@ -4,6 +4,10 @@ import eye from "@/assets/icons/eye.png";
 import google from "@/assets/icons/google.png";
 
 import banner from "@/assets/images/banner.png";
+import recipieSlideOne from "@/assets/images/details-1.png";
+import recipieSlideTwo from "@/assets/images/details-2.png";
+import recipieSlideThree from "@/assets/images/details-3.png";
+import recipieSlideFour from "@/assets/images/details-4.png";
 import exploreRestaurantOne from "@/assets/images/explore-restaurant-1.png";
 import exploreRestaurantTwo from "@/assets/images/explore-restaurant-2.png";
 import exploreRestaurantThree from "@/assets/images/explore-restaurant-3.png";
@@ -33,6 +37,10 @@ export const images = {
   exploreRestaurantThree,
   exploreRestaurantTwo,
   noSearch,
+  recipieSlideOne,
+  recipieSlideTwo,
+  recipieSlideThree,
+  recipieSlideFour,
 };
 export const icons = {
   eye,

@@ -3,8 +3,9 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 interface FeatureCardProp {
   name: string;
   id: string;
@@ -16,7 +17,10 @@ interface FeatureCardProp {
 }
 export default function FeatureCard({ item }: { item: FeatureCardProp }) {
   return (
-    <View className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl">
+    <TouchableOpacity
+      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl"
+    >
       <View className="w-full relative">
         <Image
           className="rounded-lg w-full"
@@ -66,6 +70,6 @@ export default function FeatureCard({ item }: { item: FeatureCardProp }) {
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

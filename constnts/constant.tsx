@@ -253,3 +253,25 @@ export const cusine = [
     slug: "vegan",
   },
 ];
+export const detailsSlide = [
+  {
+    name: "Extra fries",
+    price: 20,
+    image: images.recipieSlideOne,
+  },
+  {
+    name: "Smoothie",
+    price: 28,
+    image: images.recipieSlideTwo,
+  },
+  {
+    name: "Soda",
+    price: 19,
+    image: images.recipieSlideThree,
+  },
+  {
+    name: "Coselaw",
+    price: 19,
+    image: images.recipieSlideFour,
+  },
+];
