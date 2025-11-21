@@ -223,3 +223,33 @@ export const recentSerch = [
     id: "4",
   },
 ];
+export const cusine = [
+  {
+    name: "African",
+
+    slug: "african",
+  },
+  {
+    name: "Chinese",
+
+    slug: "chinese",
+  },
+
+  {
+    name: "Indian",
+
+    slug: "indian",
+  },
+
+  {
+    name: "Italian",
+
+    slug: "italian",
+  },
+
+  {
+    name: "Vegan",
+
+    slug: "vegan",
+  },
+];
