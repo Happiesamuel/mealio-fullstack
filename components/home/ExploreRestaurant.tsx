@@ -4,7 +4,7 @@ import React from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 export default function ExploreRestaurant() {
   return (
-    <View className="gap-2">
+    <View className="gap-1">
       <View className="flex items-center justify-between flex-row w-full">
         <Text className="font-roboto-medium text-sm text-black">
           Explore Restaurants

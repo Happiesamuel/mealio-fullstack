@@ -15,7 +15,7 @@ export default function PopularMeals() {
       </View>
       <FlatList
         data={popularMeals}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return <PopularCard item={item} />;
         }}

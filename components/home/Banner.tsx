@@ -12,7 +12,7 @@ export default function Banner() {
         className="size-full rounded-3xl"
       />
       <View className="bg-[#000000]/30 absolute size-full rounded-3xl" />
-      <View className="gap-4 absolute top-[30px] px-3.5 max-w-[195px]">
+      <View className="gap-4 absolute top-[40px] px-3.5 max-w-[195px]">
         <View className="gap-2">
           <Text className="text-sm font-roboto-bold text-white">
             Free delivery today

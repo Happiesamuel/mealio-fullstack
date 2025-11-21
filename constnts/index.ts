@@ -11,7 +11,10 @@ import exploreRestaurantFour from "@/assets/images/explore-restaurant-4.png";
 import exploreRestaurantFive from "@/assets/images/explore-restaurant-5.png";
 import homeRecipeOne from "@/assets/images/home-recipe-1.png";
 import homeRecipeTwo from "@/assets/images/home-recipe-2.png";
+import homeRecipeThree from "@/assets/images/home-recipe-3.png";
+import homeRecipeFour from "@/assets/images/home-recipe-4.png";
 import icon from "@/assets/images/icon.png";
+import noSearch from "@/assets/images/no-search.png";
 import onboardingOne from "@/assets/images/onboarding_1.png";
 import onboardingTwo from "@/assets/images/onboarding_2.png";
 
@@ -22,11 +25,14 @@ export const images = {
   banner,
   homeRecipeOne,
   homeRecipeTwo,
+  homeRecipeThree,
+  homeRecipeFour,
   exploreRestaurantFive,
   exploreRestaurantFour,
   exploreRestaurantOne,
   exploreRestaurantThree,
   exploreRestaurantTwo,
+  noSearch,
 };
 export const icons = {
   eye,

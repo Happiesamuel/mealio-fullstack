@@ -5,5 +5,5 @@ export interface ItemProp {
   rating: number;
   image: any;
   name: string;
-  id: number;
+  id: string;
 }
