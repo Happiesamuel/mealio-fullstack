@@ -1,11 +1,11 @@
+import SearchBar from "@/components/home/SearchBar";
 import React from "react";
-import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Explore() {
+export default function search() {
   return (
     <SafeAreaView>
-      <Text>explore</Text>
+      <SearchBar />
     </SafeAreaView>
   );
 }
