@@ -1,10 +1,14 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 
 export default function NewPassword() {
+  const [form, setForm] = useState({
+    password: "",
+    confirmPassword: "",
+  });
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -18,12 +22,16 @@ export default function NewPassword() {
 
       <View className="gap-6 my-10">
         <CustomInput
+          handleChange={(text) => setForm({ ...form, password: text })}
+          value={form.password}
           label="Create Password"
           placeholder="Enter your password"
           type="password"
         />
         <CustomInput
           label="Confirm Password"
+          handleChange={(text) => setForm({ ...form, confirmPassword: text })}
+          value={form.confirmPassword}
           placeholder="Enter your password"
           type="password"
         />

@@ -2,10 +2,14 @@ import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
 import { Link, router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
 
 export default function Login() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
   // const error = "The password you entered doesn't match";
   return (
     <View className="mt-16">
@@ -18,6 +22,8 @@ export default function Login() {
 
       <View className="gap-6 my-10">
         <CustomInput
+          handleChange={(text) => setForm({ ...form, email: text })}
+          value={form.email}
           label="Email"
           placeholder="Your email"
           keyboardType="email-address"
@@ -26,6 +32,8 @@ export default function Login() {
         />
         <View className="gap-1.5">
           <CustomInput
+            handleChange={(text) => setForm({ ...form, password: text })}
+            value={form.password}
             label="Password"
             placeholder="Enter your password"
             type="password"

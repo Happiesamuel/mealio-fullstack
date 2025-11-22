@@ -15,12 +15,16 @@ export default function CustomInput({
   type,
   label,
   error,
+  value,
+  handleChange,
 }: {
   placeholder: string;
   keyboardType?: KeyboardTypeOptions;
   type?: string;
   label: string;
   error?: string;
+  value: string;
+  handleChange(text: string): void;
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [show, setShow] = useState(type === "password");
@@ -39,6 +43,8 @@ export default function CustomInput({
         )}
       >
         <TextInput
+          value={value}
+          onChangeText={handleChange}
           placeholderTextColor={"#8e9aaf"}
           placeholder={placeholder}
           autoCapitalize="none"

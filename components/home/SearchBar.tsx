@@ -65,7 +65,7 @@ export default function SearchBar({
 
   return (
     <>
-      <View className="flex items-center flex-row bg-grey/10 rounded-r-full rounded-l-full px-4 py-2 my-4">
+      <View className="flex items-center flex-row bg-grey/10 rounded-r-full rounded-l-full px-4 py-2 my-4 mb-2">
         <View className="w-[90%] flex flex-row items-center gap-1">
           <Ionicons name="search-outline" size={20} color="#A1A1A1" />
 

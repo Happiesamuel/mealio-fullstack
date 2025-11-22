@@ -1,7 +1,10 @@
 import apple from "@/assets/icons/apple.png";
+import cash from "@/assets/icons/cash.png";
 import defaultProfile from "@/assets/icons/default.png";
 import eye from "@/assets/icons/eye.png";
 import google from "@/assets/icons/google.png";
+import mastercard from "@/assets/icons/mastercard.png";
+import visa from "@/assets/icons/visa.png";
 
 import banner from "@/assets/images/banner.png";
 import recipieSlideOne from "@/assets/images/details-1.png";
@@ -18,6 +21,7 @@ import homeRecipeTwo from "@/assets/images/home-recipe-2.png";
 import homeRecipeThree from "@/assets/images/home-recipe-3.png";
 import homeRecipeFour from "@/assets/images/home-recipe-4.png";
 import icon from "@/assets/images/icon.png";
+import noCart from "@/assets/images/no-cart.png";
 import noSearch from "@/assets/images/no-search.png";
 import onboardingOne from "@/assets/images/onboarding_1.png";
 import onboardingTwo from "@/assets/images/onboarding_2.png";
@@ -37,6 +41,7 @@ export const images = {
   exploreRestaurantThree,
   exploreRestaurantTwo,
   noSearch,
+  noCart,
   recipieSlideOne,
   recipieSlideTwo,
   recipieSlideThree,
@@ -47,4 +52,7 @@ export const icons = {
   apple,
   google,
   defaultProfile,
+  visa,
+  mastercard,
+  cash,
 };

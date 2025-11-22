@@ -1,38 +1,68 @@
-import { ItemProp } from "@/types";
-import { AntDesign } from "@expo/vector-icons";
+import { FeatureCardProp } from "@/types";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
-import RoundedFullButton from "../ui/RoundedFullButton";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function SearchResult({ item }: { item: ItemProp }) {
+export default function SearchResult({ item }: { item: FeatureCardProp }) {
   return (
-    <View className="bg-[#EEEEEE] px-2.5 py-1.5 rounded-xl flex items-center flex-row gap-2">
-      <View className="w-[30%]">
+    <TouchableOpacity
+      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl"
+    >
+      <View className="w-full relative">
         <Image
+          className="rounded-lg w-full"
           source={item.image}
+          style={{ height: 120 }}
           resizeMode="cover"
-          className="h-[50px] w-full rounded"
         />
+        <View
+          className=" flex items-center justify-center  z-10 flex-row absolute  rounded-full"
+          style={{
+            backgroundColor: "#2E2E2E26",
+            width: 32,
+            height: 32,
+            right: 8,
+            top: 8,
+          }}
+        >
+          <Ionicons name="heart-outline" size={20} color="white" />
+        </View>
       </View>
-      <View className="flex-1 gap-2">
-        <View className="flex items-center flex-row justify-between">
-          <Text className="font-roboto text-sm text-black">{item.name}</Text>
-          <Text className="font-roboto-medium text-sm text-black">
-            ${item.price.toFixed(2)}
+      <Text className="font-roboto-semibold text-sm text-black">
+        {item.name}
+      </Text>
+      <Text className="font-roboto text-xs text-grey" numberOfLines={1}>
+        {item.description}
+      </Text>
+      <View className="flex items-center flex-row gap-1">
+        <View className="flex items-center flex-row gap-1">
+          <AntDesign name="star" size={12} color="#FF8007" />
+          <Text className="font-roboto text-xs text-black">
+            {item.rating.toFixed(1)}
           </Text>
         </View>
-        <View className="flex items-center flex-row justify-between">
-          <View className="flex items-center flex-row gap-1">
-            <AntDesign name="clock-circle" size={12} color="#A1A1A1" />
-            <Text className="font-roboto text-xs text-grey">{item.time}</Text>
-          </View>
-          <RoundedFullButton className="bg-primary w-fit">
-            <Text className="font-roboto-bold text-white text-[6px] py-1 pb-1.5 px-2.5">
-              Add to Cart
-            </Text>
-          </RoundedFullButton>
+        <Text className="font-roboto text-xs text-grey">
+          ({item.reviews} reviews)
+        </Text>
+      </View>
+      <View className="flex justify-between flex-row items-center">
+        <Text className="font-roboto-medium text-sm text-black">
+          ${item.price.toFixed(2)}
+        </Text>
+        <View className=" rounded-md size-7 flex items-center justify-center border border-primary/30">
+          <MaterialCommunityIcons
+            name="cart-outline"
+            size={15}
+            color="#14b74d"
+          />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

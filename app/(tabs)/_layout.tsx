@@ -1,3 +1,4 @@
+import { cart } from "@/constnts/constant";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { Tabs } from "expo-router";
@@ -79,7 +80,7 @@ function TabBarIcon({
   focused: boolean;
 }) {
   return (
-    <View className="gap-2 flex items-center justify-center   ">
+    <View className="gap-2 flex items-center justify-center relative  ">
       <MaterialCommunityIcons
         name={!focused ? `${iconName}-outline` : iconName}
         size={24}
@@ -91,6 +92,13 @@ function TabBarIcon({
       >
         {title}
       </Text>
+      {iconName === "cart" && (
+        <View className="size-5  flex items-center justify-center bg-error rounded-full absolute -top-3 -right-2">
+          <Text className="text-white text-[10px] font-roboto-semibold">
+            {cart.length}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

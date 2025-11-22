@@ -2,10 +2,15 @@ import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
 
 export default function SignUp() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -19,6 +24,8 @@ export default function SignUp() {
 
       <View className="gap-6 my-10">
         <CustomInput
+          handleChange={(text) => setForm({ ...form, email: text })}
+          value={form.email}
           label="Email"
           placeholder="Your email"
           keyboardType="email-address"
@@ -26,10 +33,14 @@ export default function SignUp() {
         />
         <CustomInput
           label="Password"
+          handleChange={(text) => setForm({ ...form, password: text })}
+          value={form.password}
           placeholder="Enter your password"
           type="password"
         />
         <CustomInput
+          handleChange={(text) => setForm({ ...form, confirmPassword: text })}
+          value={form.confirmPassword}
           label="Confirm Password"
           placeholder="Enter your password"
           type="password"

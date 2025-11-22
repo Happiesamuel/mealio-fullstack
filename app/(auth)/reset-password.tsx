@@ -1,10 +1,13 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 
 export default function ResetPassword() {
+  const [form, setForm] = useState({
+    email: "",
+  });
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -18,6 +21,8 @@ export default function ResetPassword() {
 
       <View className="gap-6 my-10">
         <CustomInput
+          handleChange={(text) => setForm({ ...form, email: text })}
+          value={form.email}
           label="Email"
           placeholder="Your email"
           keyboardType="email-address"

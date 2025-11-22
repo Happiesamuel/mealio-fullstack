@@ -1,4 +1,4 @@
-import { images } from ".";
+import { icons, images } from ".";
 
 export const categories = [
   { name: "All", slug: "all" },
@@ -118,6 +118,36 @@ export const FeatureMeals = [
     reviews: 120,
     rating: 4,
     image: images.homeRecipeOne,
+    id: "11",
+    description: "Rich in flavor, handpicked, and easy to cook",
+  },
+  {
+    name: "Fish Stew",
+    route: "/",
+    price: 100,
+    reviews: 120,
+    rating: 4,
+    image: images.homeRecipeOne,
+    id: "8",
+    description: "Rich in flavor, handpicked, and easy to cook",
+  },
+  {
+    name: "Fish Stew",
+    route: "/",
+    price: 100,
+    reviews: 120,
+    rating: 4,
+    image: images.homeRecipeOne,
+    id: "6",
+    description: "Rich in flavor, handpicked, and easy to cook",
+  },
+  {
+    name: "Fish Stew",
+    route: "/",
+    price: 100,
+    reviews: 120,
+    rating: 4,
+    image: images.homeRecipeOne,
     id: "1",
     description: "Rich in flavor, handpicked, and easy to cook",
   },
@@ -168,7 +198,7 @@ export const FeatureMeals = [
     reviews: 180,
     rating: 5,
     image: images.homeRecipeTwo,
-    id: "5",
+    id: "6",
     description: "Clean, dried and redy to cook. ",
   },
 ];
@@ -273,5 +303,61 @@ export const detailsSlide = [
     name: "Coselaw",
     price: 19,
     image: images.recipieSlideFour,
+  },
+];
+export const cart = [
+  {
+    name: "Fish Stew",
+    price: 100,
+    image: images.homeRecipeOne,
+    id: "1",
+    quantity: 1,
+  },
+  {
+    name: "Smoked Catfish",
+    price: 100,
+    image: images.homeRecipeTwo,
+    id: "2",
+    quantity: 1,
+  },
+  {
+    name: "Fish Stew",
+    price: 100,
+    image: images.homeRecipeThree,
+    id: "3",
+    quantity: 1,
+  },
+  {
+    name: "Smoked Catfish",
+    price: 100,
+    image: images.homeRecipeFour,
+    id: "4",
+    quantity: 1,
+  },
+];
+export const address = [
+  {
+    name: "Home Address",
+    street: "No 31, prince Salisu elegushi.....",
+    id: "1",
+  },
+  {
+    name: "Office Address",
+    street: "No 31, prince Salisu elegushi.....",
+    id: "2",
+  },
+];
+export const payment = [
+  {
+    name: "Master Card",
+    pin: "******3687",
+    id: "1",
+    icon: icons.mastercard,
+  },
+  {
+    name: "Visa Card",
+    pin: "Make payment by Visa card",
+    id: "2",
+    icon: icons.visa,
   },
 ];
