@@ -48,7 +48,7 @@ export default function CheckoutModal({
             className="flex items-center justify-between  flex-row px-4 mb-4"
           >
             <Text className="font-roboto-bold text-xl text-black mb-4">
-              Add new Address
+              {data ? "Edit" : "Add new"} Address
             </Text>
             <Pressable onPress={onCancel} className="mb-4">
               <EvilIcons name="close-o" size={24} color="black" />

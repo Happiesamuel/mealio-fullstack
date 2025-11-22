@@ -93,7 +93,7 @@ function TabBarIcon({
         {title}
       </Text>
       {iconName === "cart" && (
-        <View className="size-5  flex items-center justify-center bg-error rounded-full absolute -top-3 -right-2">
+        <View className="size-5  flex items-center justify-center bg-error rounded-full absolute -top-3.5 -right-2">
           <Text className="text-white text-[10px] font-roboto-semibold">
             {cart.length}
           </Text>
