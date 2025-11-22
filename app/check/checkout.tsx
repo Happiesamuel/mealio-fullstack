@@ -3,13 +3,16 @@ import Location from "@/components/checkout/Location";
 import PaymentMethod from "@/components/checkout/PaymentMethod";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import cn from "clsx";
+import { router } from "expo-router";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Checkout() {
   const select = true;
-  function handleCheckout() {}
+  function handleCheckout() {
+    router.push("/successOrder/1");
+  }
   return (
     <SafeAreaView className="bg-secondary h-full px-5 w-fit">
       <CheckoutHeader />

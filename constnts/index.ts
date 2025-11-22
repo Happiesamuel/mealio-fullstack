@@ -4,6 +4,7 @@ import defaultProfile from "@/assets/icons/default.png";
 import eye from "@/assets/icons/eye.png";
 import google from "@/assets/icons/google.png";
 import mastercard from "@/assets/icons/mastercard.png";
+import successOrder from "@/assets/icons/success-order.png";
 import visa from "@/assets/icons/visa.png";
 
 import banner from "@/assets/images/banner.png";
@@ -55,4 +56,5 @@ export const icons = {
   visa,
   mastercard,
   cash,
+  successOrder,
 };
