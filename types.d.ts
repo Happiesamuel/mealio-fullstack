@@ -21,3 +21,18 @@ export interface LocationProp {
   street: string;
   id: string;
 }
+export interface MealProp {
+  name: string;
+  price: number;
+  time: string;
+  rating: number;
+  image: any;
+  id: string;
+}
+export interface ResturntProp {
+  name: string;
+  slug: string;
+  image: any;
+  location: string;
+  rating: number;
+}

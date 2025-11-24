@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function ExploreHeader() {
+export default function favourite() {
   return (
     <View>
-      <Text>ExploreHeader</Text>
+      <Text>favourite</Text>
     </View>
   );
 }

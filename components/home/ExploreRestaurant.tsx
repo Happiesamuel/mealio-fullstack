@@ -1,7 +1,15 @@
 import { exploreResturants } from "@/constnts/constant";
 import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 export default function ExploreRestaurant() {
   return (
     <View className="gap-1">
@@ -9,7 +17,9 @@ export default function ExploreRestaurant() {
         <Text className="font-roboto-medium text-sm text-black">
           Explore Restaurants
         </Text>
-        <FontAwesome name="angle-right" size={20} color="black" />
+        <Pressable onPress={() => router.push("/explore?tab=restaurant")}>
+          <FontAwesome name="angle-right" size={20} color="black" />
+        </Pressable>
       </View>
       <FlatList
         data={exploreResturants}

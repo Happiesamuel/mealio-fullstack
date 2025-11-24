@@ -6,7 +6,7 @@ import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function CartHeader() {
   return (
-    <View className="flex flex-row items-center justify-between my-1">
+    <View className="flex flex-row items-center justify-between my-1 pt-4">
       <Text className="font-roboto-bold text-xl text-black">Cart</Text>
       <RoundedFullButton
         className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
