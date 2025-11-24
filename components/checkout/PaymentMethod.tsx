@@ -3,7 +3,8 @@ import { payment } from "@/constnts/constant";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import RadioButton from "../ui/RadioButton";
-interface PaymentMethod {
+import PaymentModal from "./PaymentModal";
+interface PaymentMethodProp {
   name: string;
   pin: string;
   id: string;
@@ -19,7 +20,7 @@ export default function PaymentMethod() {
           <Text className="text-base font-roboto-medium text-black">
             Payment Method
           </Text>
-          <Pressable>
+          <Pressable onPress={() => setShowModal(!showModal)}>
             <Text className="text-base font-roboto-medium text-primary">
               Add New
             </Text>
@@ -40,6 +41,17 @@ export default function PaymentMethod() {
         selectedAddress={selectedAddress}
         setSelectedAddress={setSelectedAddress}
       />
+      {showModal && (
+        <PaymentModal
+          visible={showModal}
+          onCancel={() => {
+            setShowModal(false);
+          }}
+          onConfirm={() => {
+            setShowModal(false);
+          }}
+        />
+      )}
     </View>
   );
 }
@@ -79,7 +91,7 @@ function PaymentCard({
   selectedAddress,
   setSelectedAddress,
 }: {
-  item: PaymentMethod;
+  item: PaymentMethodProp;
   setSelectedAddress: Dispatch<SetStateAction<string | null>>;
   selectedAddress: string | null;
 }) {

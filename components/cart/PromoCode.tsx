@@ -1,0 +1,56 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import cn from "clsx";
+import React, { useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
+export default function PromoCode() {
+  const a = true;
+  const [text, setText] = useState("");
+  return (
+    <View className="mb-8">
+      <View className="bg-[#E8E8E8] mb-2 px-4 rounded-2xl flex flex-row items-center justify-between">
+        <View className="gap-2 flex items-center flex-row flex-1 py-2">
+          <MaterialCommunityIcons
+            name="ticket-confirmation-outline"
+            size={14}
+            color="#A1A1A1"
+          />
+          <TextInput
+            className="font-roboto text-sm  w-[90%]"
+            placeholder="Promo Code"
+            onChangeText={(text) => setText(text)}
+            value={text}
+            placeholderTextColor={"#8E9AAF"}
+          />
+        </View>
+        <Pressable
+          className="bg-primary rounded-xl py-2 px-4"
+          onPress={() => {}}
+        >
+          <Text className="text-base font-roboto-bold text-white text-center">
+            Apply
+          </Text>
+        </Pressable>
+      </View>
+      <View
+        className={cn(
+          "border-l-8 rounded-sm flex items-center flex-row gap-2 py-3 pl-2",
+          a ? "bg-[#F1FBF2] border-l-primary" : "border-l-error bg-[#F6E6E5]"
+        )}
+      >
+        <MaterialCommunityIcons
+          name={a ? "check-bold" : "close-thick"}
+          size={18}
+          color={a ? "#14B74D" : "#FF1414"}
+        />
+        <Text
+          className={cn(
+            "font-roboto-semibold text-xs",
+            a ? "text-primary" : "text-error"
+          )}
+        >
+          Promo Code {a ? "applied" : "expired"}
+        </Text>
+      </View>
+    </View>
+  );
+}

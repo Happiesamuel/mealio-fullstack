@@ -1,10 +1,10 @@
 import { cart } from "@/constnts/constant";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
+import PromoCode from "./PromoCode";
 export default function CartFooter() {
   function handleCheckout() {
     router.push("/check/checkout");
@@ -12,28 +12,8 @@ export default function CartFooter() {
   return (
     <View className="gap-3 mt-4">
       <View className="">
-        <View className="bg-[#E8E8E8] mb-8 px-4 rounded-2xl flex flex-row items-center justify-between">
-          <View className="gap-2 flex items-center flex-row flex-1 py-2">
-            <MaterialCommunityIcons
-              name="ticket-confirmation-outline"
-              size={14}
-              color="#A1A1A1"
-            />
-            <TextInput
-              className="font-roboto text-sm  w-[90%]"
-              placeholder="Promo Code"
-              placeholderTextColor={"#8E9AAF"}
-            />
-          </View>
-          <Pressable
-            className="bg-primary rounded-xl py-2 px-4"
-            onPress={() => {}}
-          >
-            <Text className="text-base font-roboto-bold text-white text-center">
-              Apply
-            </Text>
-          </Pressable>
-        </View>
+        <PromoCode />
+
         <View className="gap-2.5">
           <Foot
             title="Subtotal"
