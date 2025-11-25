@@ -1,3 +1,11 @@
+import {
+  FontAwesome5,
+  FontAwesome6,
+  Fontisto,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { icons, images } from ".";
 
 export const categories = [
@@ -423,4 +431,64 @@ export const explore = [
 ];
 export const orders = [
   { orderId: "#123332133", date: " 26 november, 2025", status: "delivered" },
+];
+export const profile = [
+  {
+    name: "General",
+    subjects: [
+      {
+        name: "Edit Profile",
+        icon: <FontAwesome5 name="user" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "Addresses",
+        icon: <FontAwesome6 name="contact-book" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "Payment Method",
+        icon: <Ionicons name="wallet-outline" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "Notifications",
+        icon: <Fontisto name="bell" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "Preferences",
+        icon: <MaterialIcons name="room-preferences" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "Security",
+        icon: (
+          <MaterialCommunityIcons name="security" size={16} color="black" />
+        ),
+        route: "/",
+      },
+    ],
+  },
+  {
+    name: "Help & Support",
+    subjects: [
+      {
+        name: "Contact Support",
+        icon: <MaterialIcons name="support-agent" size={16} color="black" />,
+        route: "/",
+      },
+      {
+        name: "FAQ",
+        icon: (
+          <MaterialCommunityIcons
+            name="message-question-outline"
+            size={16}
+            color="black"
+          />
+        ),
+        route: "/",
+      },
+    ],
+  },
 ];

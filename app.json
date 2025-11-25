@@ -39,6 +39,22 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow this app to access your photos.",
+          "cameraPermission": "Allow this app to access the camera.",
+          "microphonePermission": "Allow this app to access the microphone while recording video."
+        }
       ]
     ],
     "experiments": {

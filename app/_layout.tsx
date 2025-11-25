@@ -1,3 +1,4 @@
+import BottomSheetProvider from "@/context/BottomSheetProvider";
 import { useAppState } from "@/hooks/useAppState";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
@@ -24,5 +25,9 @@ export default function RootLayout() {
 
   if (!fontLoaded) return null;
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <BottomSheetProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </BottomSheetProvider>
+  );
 }
