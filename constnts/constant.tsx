@@ -421,3 +421,6 @@ export const explore = [
     id: "6",
   },
 ];
+export const orders = [
+  { orderId: "#123332133", date: " 26 november, 2025", status: "delivered" },
+];

@@ -26,6 +26,7 @@ import noCart from "@/assets/images/no-cart.png";
 import noSearch from "@/assets/images/no-search.png";
 import onboardingOne from "@/assets/images/onboarding_1.png";
 import onboardingTwo from "@/assets/images/onboarding_2.png";
+import profileImg from "@/assets/images/profile-img.png";
 
 export const images = {
   onboardingOne,
@@ -47,6 +48,7 @@ export const images = {
   recipieSlideTwo,
   recipieSlideThree,
   recipieSlideFour,
+  profileImg,
 };
 export const icons = {
   eye,
