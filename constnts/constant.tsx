@@ -459,14 +459,14 @@ export const profile = [
       {
         name: "Preferences",
         icon: <MaterialIcons name="room-preferences" size={16} color="black" />,
-        route: "/",
+        route: "/profile/preference",
       },
       {
         name: "Security",
         icon: (
           <MaterialCommunityIcons name="security" size={16} color="black" />
         ),
-        route: "/",
+        route: "/profile/security",
       },
     ],
   },

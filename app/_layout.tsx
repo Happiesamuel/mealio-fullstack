@@ -26,10 +26,16 @@ export default function RootLayout() {
 
   if (!fontLoaded) return null;
   const screens: { screen: string; animation: StackAnimationTypes }[] = [
-    { screen: "profile/notification", animation: "ios_from_right" },
+    { screen: "(onboarding)", animation: "fade" },
+    { screen: "(auth)", animation: "fade" },
+    { screen: "(tabs)", animation: "fade" },
     { screen: "profile/edit", animation: "ios_from_right" },
+    { screen: "profile/notification", animation: "ios_from_right" },
     { screen: "profile/address", animation: "ios_from_right" },
     { screen: "profile/payment", animation: "ios_from_right" },
+    { screen: "profile/preference", animation: "ios_from_right" },
+    { screen: "profile/security/index", animation: "ios_from_right" },
+    { screen: "profile/security/password", animation: "ios_from_right" },
   ];
   return (
     <BottomSheetProvider>

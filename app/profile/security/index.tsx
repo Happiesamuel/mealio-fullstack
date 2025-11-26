@@ -7,7 +7,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Notification() {
+export default function Security() {
   const isOn = useSharedValue(0);
 
   const handlePress = () => {
@@ -16,20 +16,20 @@ export default function Notification() {
 
   return (
     <SafeAreaView className="bg-secondary h-full px-3">
-      <ProfileHeader>Notification</ProfileHeader>
+      <ProfileHeader>Security</ProfileHeader>
       <View className="gap-6 mt-10">
-        <View className="flex flex-row items-center justify-between">
-          <Text className="font-roboto text-base text-black">Meals Alerts</Text>
-          <Switch value={isOn} onPress={handlePress} style={styles.switch} />
-        </View>
-        <Link href={"/profile/preference"}>
+        <Link href={"/profile/security/password"}>
           <View className="flex items-center w-full justify-between gap-2 flex-row">
             <Text className="text-base font-roboto text-black">
-              Communication Preference
+              Change Password
             </Text>
             <FontAwesome name="angle-right" size={20} color="black" />
           </View>
         </Link>
+        <View className="flex flex-row items-center justify-between">
+          <Text className="font-roboto text-base text-black">Biometrics</Text>
+          <Switch value={isOn} onPress={handlePress} style={styles.switch} />
+        </View>
       </View>
     </SafeAreaView>
   );
