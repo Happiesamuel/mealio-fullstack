@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -7,15 +7,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-export default function ExploreTabHeader() {
+export default function ExploreTabHeader({
+  tabSlug,
+  setTabSlug,
+}: {
+  tabSlug: string;
+  setTabSlug: Dispatch<SetStateAction<string>>;
+}) {
   const params = useLocalSearchParams<{ tab: string }>();
-  const [tabSlug, setTabSlug] = useState(params.tab || "meals");
-  useEffect(
-    function () {
-      setTabSlug(params.tab);
-    },
-    [params]
-  );
+
   const tabs = [
     { name: "Meals", slug: "meals" },
     { name: "Restaurant", slug: "restaurant" },

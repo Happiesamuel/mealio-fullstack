@@ -51,9 +51,9 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow this app to access your photos.",
-          "cameraPermission": "Allow this app to access the camera.",
-          "microphonePermission": "Allow this app to access the microphone while recording video."
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access the camera.",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access the microphone while recording video."
         }
       ]
     ],
