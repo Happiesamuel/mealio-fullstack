@@ -444,17 +444,17 @@ export const profile = [
       {
         name: "Addresses",
         icon: <FontAwesome6 name="contact-book" size={16} color="black" />,
-        route: "/",
+        route: "/profile/address",
       },
       {
         name: "Payment Method",
         icon: <Ionicons name="wallet-outline" size={16} color="black" />,
-        route: "/",
+        route: "/profile/payment",
       },
       {
         name: "Notifications",
         icon: <Fontisto name="bell" size={16} color="black" />,
-        route: "/",
+        route: "/profile/notification",
       },
       {
         name: "Preferences",
