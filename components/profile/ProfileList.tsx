@@ -1,5 +1,6 @@
 import { profile } from "@/constnts/constant";
 import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -13,6 +14,9 @@ export default function ProfileList() {
             {prof.subjects.map((sub) => (
               <TouchableOpacity
                 key={sub.name}
+                onPress={() =>
+                  sub.route !== "/" ? router.push(sub.route) : null
+                }
                 className="flex items-center flex-row justify-between py-2.5"
               >
                 <View className="flex items-center gap-2 flex-row">

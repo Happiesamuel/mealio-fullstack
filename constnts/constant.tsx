@@ -439,7 +439,7 @@ export const profile = [
       {
         name: "Edit Profile",
         icon: <FontAwesome5 name="user" size={16} color="black" />,
-        route: "/",
+        route: "/profile/edit",
       },
       {
         name: "Addresses",
