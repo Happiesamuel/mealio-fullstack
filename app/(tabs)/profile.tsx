@@ -1,7 +1,7 @@
 import ProfileList from "@/components/profile/ProfileList";
 import { images } from "@/constnts";
 import { useBottomSheet } from "@/context/BottomSheetProvider";
-import { pickImage } from "@/lib/helper";
+import { pickImage, takePhoto } from "@/lib/helper";
 import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
@@ -15,13 +15,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
-  const { open } = useBottomSheet();
+  const { open, close } = useBottomSheet();
   const [photo, setPhoto] = useState<string | null>(null);
   const list = [
     {
       name: "Take Photo",
       icon: <Feather name="camera" size={18} color="black" />,
-      fun: () => null,
+      fun: handleTakePhoto,
     },
     {
       name: "Choose photo",
@@ -29,6 +29,7 @@ export default function Profile() {
       fun: choosePhoto,
     },
   ];
+
   const openSheet = () => {
     open(
       <View className=" gap-5">
@@ -48,6 +49,11 @@ export default function Profile() {
 
   async function choosePhoto() {
     const img = await pickImage();
+    if (img) setPhoto(img.uri);
+    close();
+  }
+  async function handleTakePhoto() {
+    const img = await takePhoto(close)();
     if (img) setPhoto(img.uri);
   }
   return (

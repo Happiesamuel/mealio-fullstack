@@ -19,3 +19,30 @@ export async function pickImage() {
 
   return result.assets[0]; // contains uri, width, height, etc.
 }
+
+export function takePhoto(close: () => void) {
+  return () =>
+    new Promise<ImagePicker.ImagePickerAsset | null>(async (resolve) => {
+      // Request permission
+      const perm = await ImagePicker.requestCameraPermissionsAsync();
+      if (!perm.granted) {
+        alert("Camera permission is required!");
+        close();
+        resolve(null);
+        return;
+      }
+
+      // Launch camera
+      const res = await ImagePicker.launchCameraAsync({
+        quality: 1,
+      });
+
+      close();
+
+      if (res.canceled) {
+        resolve(null);
+      } else {
+        resolve(res.assets[0]); // fully typed { uri, width, height, ... }
+      }
+    });
+}
