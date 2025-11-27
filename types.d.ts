@@ -36,3 +36,11 @@ export interface ResturntProp {
   location: string;
   rating: number;
 }
+export interface Notification {
+  id: string;
+  title: string;
+  content: string;
+  image: any;
+  status: string;
+  time: string;
+}

@@ -492,3 +492,30 @@ export const profile = [
     ],
   },
 ];
+
+export const notifictions = [
+  {
+    id: "1",
+    title: "Your order is being prepared",
+    content: "Your food is currently being prepared and will be ready soon",
+    image: images.homeRecipeTwo,
+    status: "order prepare",
+    time: "5 mins ago",
+  },
+  {
+    id: "2",
+    title: "Rider assigned to your delivery ",
+    content: "A rider has picked up your order and is on the way.",
+    image: "",
+    status: "delivery",
+    time: "10 mins ago",
+  },
+  {
+    id: "3",
+    title: "Order delivered succesfully",
+    content: "Hope you enjoyed your meal! Don't forget to rate your delivery.",
+    image: "",
+    status: "success",
+    time: "1 hour ago",
+  },
+];
