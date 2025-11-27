@@ -12,6 +12,7 @@ import recipieSlideOne from "@/assets/images/details-1.png";
 import recipieSlideTwo from "@/assets/images/details-2.png";
 import recipieSlideThree from "@/assets/images/details-3.png";
 import recipieSlideFour from "@/assets/images/details-4.png";
+import emptyNot from "@/assets/images/empty-not.png";
 import exploreRestaurantOne from "@/assets/images/explore-restaurant-1.png";
 import exploreRestaurantTwo from "@/assets/images/explore-restaurant-2.png";
 import exploreRestaurantThree from "@/assets/images/explore-restaurant-3.png";
@@ -48,6 +49,7 @@ export const images = {
   recipieSlideTwo,
   recipieSlideThree,
   recipieSlideFour,
+  emptyNot,
   profileImg,
 };
 export const icons = {
