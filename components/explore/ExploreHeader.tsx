@@ -6,7 +6,7 @@ import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function ExploreHeader() {
   return (
-    <View className="flex flex-row items-center justify-between my-1">
+    <View className="flex flex-row items-center justify-between pt-4">
       <Text className="font-roboto-bold text-xl text-black">Explore</Text>
       <View className="gap-7 flex items-center flex-row">
         <RoundedFullButton

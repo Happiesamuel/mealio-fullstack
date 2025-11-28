@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-export default function ExploreTabHeader({
+export default function FavouriteTabHeader({
   tabSlug,
   setTabSlug,
 }: {
@@ -53,40 +53,47 @@ export default function ExploreTabHeader({
   }));
 
   return (
-    <View className="relative flex-row justify-start gap-5">
-      {tabs.map((tab) => (
-        <Pressable
-          key={tab.slug}
-          onPress={() => handlePress(tab.slug)}
-          className="py-2"
-        >
-          <Text
-            className={`text-base font-roboto-medium ${
-              tab.slug === tabSlug ? "text-black" : "text-gray-400"
-            }`}
-            onLayout={(e) => {
-              tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
-              if (tab.slug === tabSlug) {
-                underlineWidth.value = e.nativeEvent.layout.width;
-              }
-            }}
+    <View className="flex flex-row items-center justify-between">
+      <View className="relative flex-row justify-start gap-5">
+        {tabs.map((tab) => (
+          <Pressable
+            key={tab.slug}
+            onPress={() => handlePress(tab.slug)}
+            className="py-2"
           >
-            {tab.name}
-          </Text>
-        </Pressable>
-      ))}
+            <Text
+              className={`text-base font-roboto-medium ${
+                tab.slug === tabSlug ? "text-black" : "text-gray-400"
+              }`}
+              onLayout={(e) => {
+                tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
+                if (tab.slug === tabSlug) {
+                  underlineWidth.value = e.nativeEvent.layout.width;
+                }
+              }}
+            >
+              {tab.name}
+            </Text>
+          </Pressable>
+        ))}
 
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            bottom: 0,
-            height: 2,
-            backgroundColor: "#14B74D",
-          },
-          animatedStyle,
-        ]}
-      />
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              bottom: 0,
+              height: 2,
+              backgroundColor: "#14B74D",
+            },
+            animatedStyle,
+          ]}
+        />
+      </View>
+      <Pressable>
+        <Text className="font-roboto-medium text-base text-primary">
+          Clear all
+        </Text>
+      </Pressable>
     </View>
   );
 }

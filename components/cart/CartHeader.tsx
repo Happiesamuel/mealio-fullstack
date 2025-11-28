@@ -10,7 +10,7 @@ export default function CartHeader() {
       <Text className="font-roboto-bold text-xl text-black">Cart</Text>
       <RoundedFullButton
         className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
-        onPress={() => router.push("/cart")}
+        onPress={() => router.push("/favourite")}
       >
         <Ionicons name="heart-outline" size={18} color="black" />
       </RoundedFullButton>
