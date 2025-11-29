@@ -25,6 +25,9 @@ import homeRecipeFour from "@/assets/images/home-recipe-4.png";
 import icon from "@/assets/images/icon.png";
 import noCart from "@/assets/images/no-cart.png";
 import noSearch from "@/assets/images/no-search.png";
+import offerOne from "@/assets/images/offer-1.png";
+import offerTwo from "@/assets/images/offer-2.png";
+import offerThree from "@/assets/images/offer-3.png";
 import onboardingOne from "@/assets/images/onboarding_1.png";
 import onboardingTwo from "@/assets/images/onboarding_2.png";
 import profileImg from "@/assets/images/profile-img.png";
@@ -51,6 +54,9 @@ export const images = {
   recipieSlideFour,
   emptyNot,
   profileImg,
+  offerOne,
+  offerTwo,
+  offerThree,
 };
 export const icons = {
   eye,

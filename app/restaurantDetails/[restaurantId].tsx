@@ -1,0 +1,67 @@
+import RestaurantHeader from "@/components/restaurantDetails/RestaurantHeader";
+import RestaurantMenu from "@/components/restaurantDetails/RestaurantMenu";
+import RestaurantOffers from "@/components/restaurantDetails/RestaurantOffers";
+import { images } from "@/constnts";
+import { offers, popularMeals } from "@/constnts/constant";
+import { EvilIcons, MaterialIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
+import React, { useState } from "react";
+import { FlatList, Image, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import RestaurantTabHeader from "../../components/restaurantDetails/RestaurantTabHeader";
+
+export default function RestaurantDetail() {
+  const { detail } = useLocalSearchParams<{ detail: string }>();
+  const [tabSlug, setTabSlug] = useState(detail || "menu");
+  return (
+    <SafeAreaView className="bg-secondary h-full px-3">
+      <RestaurantHeader />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        data={tabSlug === "menu" ? popularMeals : offers}
+        contentContainerClassName="pb-6 "
+        columnWrapperClassName="flex gap-2.5   "
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return tabSlug === "menu" ? (
+            <RestaurantMenu item={item} />
+          ) : (
+            <RestaurantOffers item={item} />
+          );
+        }}
+        ListHeaderComponent={() => (
+          <View className="gap-3  flex items-center mt-6">
+            <Image
+              source={images.exploreRestaurantTwo}
+              className="rounded-full size-[140px]"
+              resizeMode="cover"
+            />
+            <View className="gap-1.5 flex items-center">
+              <View className="flex items-center flex-row gap-1.5">
+                <Text className="font-roboto-semibold text-2xl text-black">
+                  Mr Bolat Kitchen
+                </Text>
+                <MaterialIcons name="verified" size={24} color="#14B74D" />
+              </View>
+              <View className="flex items-center flex-row gap-1">
+                <EvilIcons name="location" size={18} color="#A1A1A1" />
+                <Text className="font-roboto text-sm text-grey">
+                  Ikeja, Lagos; 2km away
+                </Text>
+              </View>
+              <Text className="font-roboto text-grey text-sm text-center">
+                Step into Maison Delish, where every meal is a celebration of
+                flavor and artistry. Our chefs craft each dish with the finest
+                seasonal ingredients, blending traditional recipes with modern
+                techniques to create a dining experience that delights all
+                senses.
+              </Text>
+            </View>
+            <RestaurantTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />
+          </View>
+        )}
+      />
+    </SafeAreaView>
+  );
+}

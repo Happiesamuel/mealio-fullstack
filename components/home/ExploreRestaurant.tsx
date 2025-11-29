@@ -25,7 +25,10 @@ export default function ExploreRestaurant() {
         data={exploreResturants}
         keyExtractor={(item) => item.slug}
         renderItem={({ item }) => (
-          <TouchableOpacity className="gap-2">
+          <TouchableOpacity
+            onPress={() => router.push("/restaurantDetails/2")}
+            className="gap-2"
+          >
             <Image
               source={item.image}
               resizeMode="cover"
