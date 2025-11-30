@@ -31,6 +31,9 @@ import offerThree from "@/assets/images/offer-3.png";
 import onboardingOne from "@/assets/images/onboarding_1.png";
 import onboardingTwo from "@/assets/images/onboarding_2.png";
 import profileImg from "@/assets/images/profile-img.png";
+import reviewOne from "@/assets/images/review-1.png";
+import reviewTwo from "@/assets/images/review-2.jpg";
+import reviewThree from "@/assets/images/review-3.png";
 
 export const images = {
   onboardingOne,
@@ -57,6 +60,9 @@ export const images = {
   offerOne,
   offerTwo,
   offerThree,
+  reviewOne,
+  reviewThree,
+  reviewTwo,
 };
 export const icons = {
   eye,

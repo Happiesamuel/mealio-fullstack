@@ -44,3 +44,11 @@ export interface Notification {
   status: string;
   time: string;
 }
+export interface Review {
+  id: string;
+  name: string;
+  image: any;
+  time: string;
+  rating: number;
+  content: string;
+}

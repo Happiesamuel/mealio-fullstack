@@ -575,4 +575,14 @@ export const offers = [
     id: "6",
   },
 ];
-export const reviews = [{ id: "1" }];
+export const reviews = [
+  {
+    id: "1",
+    name: "Topsysammy",
+    image: images.reviewTwo,
+    time: "05/10/2026  01:28am",
+    rating: 5,
+    content:
+      "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
+  },
+];
