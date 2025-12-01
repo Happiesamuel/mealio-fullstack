@@ -63,7 +63,7 @@ export default function RestaurantTabHeader({ tabSlug, setTabSlug }: Props) {
   }
 
   return (
-    <View className="relative flex-row items-center justify-between w-full px-5 mb-3">
+    <View className="relative flex-row items-center border-b border-grey/30 justify-between w-full px-5 mb-3">
       {tabs.map((tab) => (
         <Pressable
           key={tab.slug}
@@ -88,7 +88,7 @@ export default function RestaurantTabHeader({ tabSlug, setTabSlug }: Props) {
         style={[
           {
             position: "absolute",
-            bottom: 0,
+            bottom: -1,
             height: 2,
             backgroundColor: "#14B74D",
           },

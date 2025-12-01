@@ -6,6 +6,7 @@ import { images } from "@/constnts";
 import { offers, popularMeals, reviews } from "@/constnts/constant";
 import { ItemProp, Review } from "@/types";
 import { EvilIcons, MaterialIcons } from "@expo/vector-icons";
+import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, Image, Text, View } from "react-native";
@@ -29,7 +30,10 @@ export default function RestaurantDetail() {
               ? offers
               : reviews
         }
-        contentContainerClassName="pb-6 "
+        contentContainerClassName={cn(
+          "pb-6 ",
+          tabSlug === "reviews" && "gap-5"
+        )}
         columnWrapperClassName={tabSlug !== "reviews" ? "flex gap-2.5" : ""}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {

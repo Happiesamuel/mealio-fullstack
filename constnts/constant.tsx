@@ -585,4 +585,31 @@ export const reviews = [
     content:
       "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
   },
+  {
+    id: "2",
+    name: "Brian George",
+    image: images.reviewOne,
+    time: "05/10/2026  01:28am",
+    rating: 5,
+    content:
+      "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
+  },
+  {
+    id: "3",
+    name: "Guest 2023",
+    image: images.reviewThree,
+    time: "05/10/2026  01:28am",
+    rating: 5,
+    content:
+      "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
+  },
+  {
+    id: "4",
+    name: "Guest 2023",
+    image: images.reviewThree,
+    time: "05/10/2026  01:28am",
+    rating: 5,
+    content:
+      "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
+  },
 ];
