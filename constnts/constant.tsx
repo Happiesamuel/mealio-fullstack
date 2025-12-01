@@ -429,9 +429,7 @@ export const explore = [
     id: "6",
   },
 ];
-export const orders = [
-  { orderId: "#123332133", date: " 26 november, 2025", status: "delivered" },
-];
+
 export const profile = [
   {
     name: "General",
@@ -611,5 +609,67 @@ export const reviews = [
     rating: 5,
     content:
       "Absolutely loved it! Great food, fast service, and a lovely vibe. Every bite was full of flavor — easily one of the best dining spots in town. Highly recommend the [specific dish]!",
+  },
+];
+export const orders = [
+  {
+    orderId: "#123332133",
+    date: " 26 november, 2025",
+    status: "Delivered",
+    restaurantDetail: "Mamy's Dishes",
+    isVerified: true,
+
+    orders: [
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+    ],
+  },
+  {
+    orderId: "#123332134",
+    date: " 26 november, 2025",
+    status: "Shipped",
+    restaurantDetail: "Mamy's Dishes",
+    isVerified: true,
+
+    orders: [
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+    ],
+  },
+  {
+    orderId: "#123332135",
+    date: " 26 november, 2025",
+    status: "Failed",
+    restaurantDetail: "Mamy's Dishes",
+    isVerified: true,
+
+    orders: [
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+      {
+        name: "Fish and Chips + 3Items",
+        date: "31-Dec-2025, 02:00 PM",
+        image: images.homeRecipeOne,
+      },
+    ],
   },
 ];

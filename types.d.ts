@@ -52,3 +52,16 @@ export interface Review {
   rating: number;
   content: string;
 }
+export interface Orders {
+  orderId: string;
+  date: string;
+  status: string;
+  restaurantDetail: string;
+  isVerified: boolean;
+
+  orders: {
+    name: string;
+    date: string;
+    image: any;
+  }[];
+}
