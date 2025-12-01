@@ -3,6 +3,7 @@ import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
+import Foot from "../ui/Foot";
 import RoundedFullButton from "../ui/RoundedFullButton";
 import PromoCode from "./PromoCode";
 export default function CartFooter() {
@@ -52,26 +53,6 @@ export default function CartFooter() {
           Checkout Now
         </Text>
       </RoundedFullButton>
-    </View>
-  );
-}
-function Foot({
-  title,
-  price,
-  priceClass,
-  titleClass,
-}: {
-  price: number;
-  title: string;
-  priceClass: string;
-  titleClass: string;
-}) {
-  return (
-    <View className="flex items-center justify-between  flex-row">
-      <Text className={cn("font-roboto text-black", titleClass)}>{title}</Text>
-      <Text className={cn("font-roboto-semibold text-black", priceClass)}>
-        ${price.toFixed(2)}
-      </Text>
     </View>
   );
 }

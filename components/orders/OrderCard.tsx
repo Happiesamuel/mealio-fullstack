@@ -1,6 +1,7 @@
 import { Orders } from "@/types";
 import { AntDesign, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import cn from "clsx";
+import { router } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
@@ -90,7 +91,7 @@ export default function OrderCard({ item }: { item: Orders }) {
       </View>
       <RoundedFullButton
         className="bg-primary"
-        //   onPress={() => router.push("/(tabs)")}
+        onPress={() => router.push(`/order/5`)}
       >
         <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
           Order Details
