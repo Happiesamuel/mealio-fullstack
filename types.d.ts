@@ -56,7 +56,8 @@ export interface Orders {
   orderId: string;
   date: string;
   status: string;
-  restaurantDetail: string;
+  restaurantName: string;
+  restaurantImage: any;
   isVerified: boolean;
 
   orders: {

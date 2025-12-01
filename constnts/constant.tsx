@@ -616,7 +616,8 @@ export const orders = [
     orderId: "#123332133",
     date: " 26 november, 2025",
     status: "Delivered",
-    restaurantDetail: "Mamy's Dishes",
+    restaurantName: "Mamy's Dishes",
+    restaurantImage: images.exploreRestaurantOne,
     isVerified: true,
 
     orders: [
@@ -636,7 +637,8 @@ export const orders = [
     orderId: "#123332134",
     date: " 26 november, 2025",
     status: "Shipped",
-    restaurantDetail: "Mamy's Dishes",
+    restaurantName: "Mamy's Dishes",
+    restaurantImage: images.exploreRestaurantOne,
     isVerified: true,
 
     orders: [
@@ -656,7 +658,8 @@ export const orders = [
     orderId: "#123332135",
     date: " 26 november, 2025",
     status: "Failed",
-    restaurantDetail: "Mamy's Dishes",
+    restaurantName: "Mamy's Dishes",
+    restaurantImage: images.exploreRestaurantOne,
     isVerified: true,
 
     orders: [
