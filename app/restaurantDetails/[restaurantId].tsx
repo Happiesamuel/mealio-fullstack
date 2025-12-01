@@ -1,33 +1,44 @@
 import RestaurantHeader from "@/components/restaurantDetails/RestaurantHeader";
 import RestaurantMenu from "@/components/restaurantDetails/RestaurantMenu";
 import RestaurantOffers from "@/components/restaurantDetails/RestaurantOffers";
+import RestaurantReviews from "@/components/restaurantDetails/RestaurantReviews";
 import { images } from "@/constnts";
-import { offers, popularMeals } from "@/constnts/constant";
+import { offers, popularMeals, reviews } from "@/constnts/constant";
+import { ItemProp, Review } from "@/types";
 import { EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RestaurantTabHeader from "../../components/restaurantDetails/RestaurantTabHeader";
-
+type ItemType = ItemProp | Review;
 export default function RestaurantDetail() {
   const { detail } = useLocalSearchParams<{ detail: string }>();
   const [tabSlug, setTabSlug] = useState(detail || "menu");
   return (
     <SafeAreaView className="bg-secondary h-full px-3">
       <RestaurantHeader />
-      <FlatList
+      <FlatList<ItemType>
         showsVerticalScrollIndicator={false}
-        numColumns={2}
-        data={tabSlug === "menu" ? popularMeals : offers}
+        key={tabSlug === "reviews" ? "one-col" : "two-col"}
+        numColumns={tabSlug === "reviews" ? 1 : 2}
+        data={
+          tabSlug === "menu"
+            ? popularMeals
+            : tabSlug === "offers"
+              ? offers
+              : reviews
+        }
         contentContainerClassName="pb-6 "
-        columnWrapperClassName="flex gap-2.5   "
+        columnWrapperClassName={tabSlug !== "reviews" ? "flex gap-2.5" : ""}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return tabSlug === "menu" ? (
-            <RestaurantMenu item={item} />
+            <RestaurantMenu item={item as unknown as ItemProp} />
+          ) : tabSlug === "offers" ? (
+            <RestaurantOffers item={item as unknown as ItemProp} />
           ) : (
-            <RestaurantOffers item={item} />
+            <RestaurantReviews item={item as unknown as Review} />
           );
         }}
         ListHeaderComponent={() => (
