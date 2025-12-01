@@ -1,5 +1,5 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
-import { images } from "@/constnts";
+import { icons, images } from "@/constnts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React from "react";
@@ -12,11 +12,13 @@ export default function OnBoard() {
   }
   return (
     <>
-      <Image
-        source={images.icon}
-        resizeMode="contain"
-        className="w-[105px] mt-10"
-      />
+      <View className="flex-row items-center gap-2 mt-4">
+        <Image source={icons.meal} style={{ width: 25, height: 25 }} />
+
+        <Text className="font-roboto-semibold text-2xl text-black ">
+          mealio
+        </Text>
+      </View>
       <View className="flex-1 w-full items-center justify-center">
         <Image
           source={images.onboardingOne}
