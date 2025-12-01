@@ -24,6 +24,7 @@ import homeRecipeThree from "@/assets/images/home-recipe-3.png";
 import homeRecipeFour from "@/assets/images/home-recipe-4.png";
 import icon from "@/assets/images/icon.png";
 import noCart from "@/assets/images/no-cart.png";
+import noOrder from "@/assets/images/no-order.png";
 import noSearch from "@/assets/images/no-search.png";
 import offerOne from "@/assets/images/offer-1.png";
 import offerTwo from "@/assets/images/offer-2.png";
@@ -63,6 +64,7 @@ export const images = {
   reviewOne,
   reviewThree,
   reviewTwo,
+  noOrder,
 };
 export const icons = {
   eye,

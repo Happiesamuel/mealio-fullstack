@@ -13,7 +13,7 @@ export default function OrdersHeader() {
           className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
           onPress={() => router.push("/favourite")}
         >
-          <Ionicons name="heart-outline" size={18} color="black" />
+          <Ionicons name="search-outline" size={18} color="black" />
         </RoundedFullButton>
         <RoundedFullButton
           className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
