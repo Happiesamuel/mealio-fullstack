@@ -28,7 +28,7 @@ export default function orderId() {
     },
   ];
   return (
-    <SafeAreaView className="h-full bg-secondary px-3">
+    <SafeAreaView edges={["top"]} className="h-full bg-secondary px-3">
       <OrderHeader />
       <ScrollView
         showsVerticalScrollIndicator={false}

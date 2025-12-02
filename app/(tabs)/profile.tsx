@@ -57,7 +57,7 @@ export default function Profile() {
     if (img) setPhoto(img.uri);
   }
   return (
-    <SafeAreaView className="h-full bg-secondary px-5">
+    <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerClassName="mt-10 pb-16"

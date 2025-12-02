@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Cart() {
   return (
-    <SafeAreaView className="bg-secondary px-5 h-full">
+    <SafeAreaView edges={["top"]} className="bg-secondary px-5 h-full">
       <CartHeader />
       <FlatList
         data={cart}

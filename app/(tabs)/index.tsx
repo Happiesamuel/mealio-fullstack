@@ -19,14 +19,14 @@ export default function Index() {
     router.setParams({ fil: slug });
   }
   return (
-    <SafeAreaView className="bg-secondary h-full px-3  ">
+    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3  ">
       <FlatList
         data={FeatureMeals}
         showsVerticalScrollIndicator={false}
         numColumns={2}
         keyExtractor={(item) => item.id}
         contentContainerClassName="pb-6 "
-        columnWrapperClassName="flex gap-2   "
+        columnWrapperClassName="flex gap-2  z "
         renderItem={({ item }) => <FeatureCard item={item} />}
         ListHeaderComponent={() => (
           <>

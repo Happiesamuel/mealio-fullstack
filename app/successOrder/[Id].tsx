@@ -8,7 +8,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function successOrder() {
   return (
-    <SafeAreaView className="px-5 h-full bg-secondary flex justify-center gap-6">
+    <SafeAreaView
+      edges={["top"]}
+      className="px-5 h-full bg-secondary flex justify-center gap-6"
+    >
       <Image
         source={icons.successOrder}
         resizeMode="cover"

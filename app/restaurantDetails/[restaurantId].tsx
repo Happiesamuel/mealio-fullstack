@@ -17,7 +17,7 @@ export default function RestaurantDetail() {
   const { detail } = useLocalSearchParams<{ detail: string }>();
   const [tabSlug, setTabSlug] = useState(detail || "menu");
   return (
-    <SafeAreaView className="bg-secondary h-full px-3">
+    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3">
       <RestaurantHeader />
       <FlatList<ItemType>
         showsVerticalScrollIndicator={false}

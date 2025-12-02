@@ -4,7 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnBoardingLayout() {
   return (
-    <SafeAreaView className="h-full flex-1 bg-secondary flex items-center px-5">
+    <SafeAreaView
+      edges={["top"]}
+      className="h-full flex-1 bg-secondary flex items-center px-5"
+    >
       <Slot />
     </SafeAreaView>
   );

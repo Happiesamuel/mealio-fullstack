@@ -13,7 +13,7 @@ export default function Explore() {
   const { tab } = useLocalSearchParams<{ tab: string }>();
   const [tabSlug, setTabSlug] = useState(tab || "meals");
   return (
-    <SafeAreaView className="h-full bg-secondary px-5">
+    <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5 flex-1">
       <View className="gap-2 pb-2 pt-4">
         <ExploreHeader />
         <ExploreTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />

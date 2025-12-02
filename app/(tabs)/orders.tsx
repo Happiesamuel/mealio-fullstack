@@ -25,7 +25,7 @@ export default function Orders() {
           ? orders.filter((x) => x.status === "Failed")
           : orders;
   return (
-    <SafeAreaView className="bg-secondary h-full px-3">
+    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3">
       <OrdersHeader />
       <View className="pb-2">
         <OrderTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />

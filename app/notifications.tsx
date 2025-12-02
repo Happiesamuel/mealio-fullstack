@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function notifications() {
   return (
-    <SafeAreaView className="bg-secondary  h-full px-5">
+    <SafeAreaView edges={["top"]} className="bg-secondary  h-full px-5">
       <NotificationHeader />
       <FlatList
         data={notifictions}

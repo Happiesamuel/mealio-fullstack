@@ -6,7 +6,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeHeader() {
   return (
-    <View className="flex flex-row items-center justify-between">
+    <View className="flex flex-row items-center justify-between my-1 pt-4">
       <View className="flex flex-row gap-2 items-center">
         <Image
           source={icons.defaultProfile}

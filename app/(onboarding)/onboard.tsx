@@ -3,7 +3,7 @@ import { icons, images } from "@/constnts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 
 export default function OnBoard() {
   async function finishOnboarding() {
@@ -11,7 +11,11 @@ export default function OnBoard() {
     router.replace("/login");
   }
   return (
-    <>
+    <ScrollView
+      contentContainerClassName="flex items-center justify-center pb-12"
+      scrollEnabled
+      showsVerticalScrollIndicator={false}
+    >
       <View className="flex-row items-center gap-2 mt-4">
         <Image source={icons.meal} style={{ width: 25, height: 25 }} />
 
@@ -19,7 +23,7 @@ export default function OnBoard() {
           mealio
         </Text>
       </View>
-      <View className="flex-1 w-full items-center justify-center">
+      <View className="flex-1 w-full items-center justify-center mt-16">
         <Image
           source={images.onboardingOne}
           resizeMode="contain"
@@ -59,6 +63,6 @@ export default function OnBoard() {
           </View>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
