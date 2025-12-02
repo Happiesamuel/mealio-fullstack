@@ -20,7 +20,10 @@ export default function Search() {
     ...FeatureMeals.filter((text) => text.name.startsWith(params.query)),
   ];
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3 w-fit">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary h-full px-3 w-fit pb-safe"
+    >
       <>
         <SearchHeader />
         <SearchBar handleSearch={handleSearch} value={params.query} />

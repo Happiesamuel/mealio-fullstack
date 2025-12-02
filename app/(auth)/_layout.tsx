@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AuthLayout() {
   return (
-    <SafeAreaView edges={["top"]} className="flex-1 bg-primary">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-primary ">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -30,7 +30,7 @@ export default function AuthLayout() {
           />
 
           <View
-            className="bg-secondary relative z-50 rounded-t-[34px] px-5 pb-10 mt-28"
+            className="bg-secondary pb-safe relative z-50 rounded-t-[34px] px-5  mt-28"
             style={{
               minHeight: Dimensions.get("screen").height - 112,
             }}

@@ -6,7 +6,7 @@ import { Text, View } from "react-native";
 
 export default function SearchFavourite() {
   return (
-    <View className="gap-4">
+    <View className="gap-4 mt-4">
       <View className="flex items-center justify-between flex-row">
         <Text className="text-sm font-roboto-semibold text-black">
           Recently Favorited

@@ -12,7 +12,7 @@ export default function OnBoard() {
   }
   return (
     <ScrollView
-      contentContainerClassName="flex items-center justify-center pb-12"
+      contentContainerClassName="flex items-center justify-between pb-12 flex-1"
       scrollEnabled
       showsVerticalScrollIndicator={false}
     >
@@ -37,30 +37,30 @@ export default function OnBoard() {
             Discover your favorite meals and get them delivered fast and fresh.
           </Text>
         </View>
-        <View className="w-full items-center gap-5 mt-12">
-          <View className="flex gap-1.5 items-center justify-center flex-row  w-full">
-            <View className="w-8 h-1.5 rounded-full !bg-primary" />
-            <View className="w-8 h-1.5 rounded-full !bg-grey/30" />
-          </View>
-          <View className="flex w-full gap-6 ">
-            <RoundedFullButton
-              onPress={() => router.push("/onbording-two")}
-              className="bg-primary "
-            >
-              <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
-                Next
-              </Text>
-            </RoundedFullButton>
+      </View>
+      <View className="w-full items-center gap-5 mt-12">
+        <View className="flex gap-1.5 items-center justify-center flex-row  w-full">
+          <View className="w-8 h-1.5 rounded-full !bg-primary" />
+          <View className="w-8 h-1.5 rounded-full !bg-grey/30" />
+        </View>
+        <View className="flex w-full gap-6 ">
+          <RoundedFullButton
+            onPress={() => router.push("/onbording-two")}
+            className="bg-primary "
+          >
+            <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
+              Next
+            </Text>
+          </RoundedFullButton>
 
-            <RoundedFullButton
-              onPress={finishOnboarding}
-              className="bg-[#A1C249]/5 "
-            >
-              <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
-                Skip
-              </Text>
-            </RoundedFullButton>
-          </View>
+          <RoundedFullButton
+            onPress={finishOnboarding}
+            className="bg-[#A1C249]/5 "
+          >
+            <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
+              Skip
+            </Text>
+          </RoundedFullButton>
         </View>
       </View>
     </ScrollView>

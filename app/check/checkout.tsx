@@ -14,7 +14,10 @@ export default function Checkout() {
     router.push("/successOrder/1");
   }
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-5 w-fit">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary h-full px-5 pb-safe w-fit"
+    >
       <CheckoutHeader />
       <ScrollView
         contentContainerClassName="pb-12"

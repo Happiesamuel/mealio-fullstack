@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function FoodDetail() {
   const [active, setActive] = useState<string | null>(null);
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary px-5 h-full">
+    <SafeAreaView edges={["top"]} className="bg-secondary px-5 h-full pb-safe">
       <DetailsHeader />
       <ScrollView
         contentContainerClassName="pb-2"

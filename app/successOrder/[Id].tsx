@@ -10,7 +10,7 @@ export default function successOrder() {
   return (
     <SafeAreaView
       edges={["top"]}
-      className="px-5 h-full bg-secondary flex justify-center gap-6"
+      className="px-5 h-full bg-secondary flex justify-center pb-safe gap-6"
     >
       <Image
         source={icons.successOrder}

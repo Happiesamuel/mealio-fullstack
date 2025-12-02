@@ -4,7 +4,9 @@ import cn from "clsx";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function TabsLayout() {
+  const insets = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
@@ -14,7 +16,8 @@ export default function TabsLayout() {
           backgroundColor: "white",
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          height: 90,
+          height: 90 + insets.bottom,
+          paddingBottom: insets.bottom,
         },
         tabBarItemStyle: {
           paddingVertical: 25,

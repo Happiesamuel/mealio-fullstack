@@ -160,13 +160,13 @@ function FilterModal({
       transparent
       onRequestClose={onClose}
     >
-      <View className="flex-1 justify-end  ">
+      <View className="flex-1 justify-end   ">
         <ScrollView
           contentContainerClassName="pb-16"
           showsVerticalScrollIndicator={false}
-          className="bg-secondary  p-5 pb-16   h-[100%] "
+          className="bg-secondary  p-5 pb-16  h-[100%] "
         >
-          <View className="flex flex-row items-center justify-between my-1">
+          <View className="flex flex-row items-center justify-between pt-4 pb-2 my-1">
             <RoundedFullButton
               className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
               onPress={onClose}
