@@ -14,9 +14,8 @@ export default function PopularCard({ item }: { item: ItemProp }) {
       <View className="w-full relative">
         <Image
           className="rounded-lg w-full"
-          source={item.image}
+          source={{ uri: item.image }}
           style={{ height: 120 }}
-          resizeMode="cover"
         />
         <View
           className=" flex items-center justify-center  z-10 flex-row absolute  rounded-full"
@@ -33,11 +32,11 @@ export default function PopularCard({ item }: { item: ItemProp }) {
       </View>
 
       <View className="flex justify-between flex-row items-center">
-        <Text className="font-roboto-semibold text-sm text-black">
+        <Text
+          className="font-roboto-semibold text-sm text-black"
+          numberOfLines={1}
+        >
           {item.name}
-        </Text>
-        <Text className="font-roboto-medium text-sm text-black">
-          ${item.price.toFixed(2)}
         </Text>
       </View>
       <View className="flex justify-between flex-row items-center">
@@ -46,9 +45,8 @@ export default function PopularCard({ item }: { item: ItemProp }) {
           <Text className="font-roboto text-xs text-grey">{item.time}</Text>
         </View>
         <View className="flex items-center flex-row gap-1">
-          <AntDesign name="star" size={12} color="#FF8007" />
-          <Text className="font-roboto text-xs text-grey">
-            {item.rating.toFixed(1)}
+          <Text className="font-roboto-medium text-sm text-black">
+            ${item.price.toFixed(2)}
           </Text>
         </View>
       </View>
