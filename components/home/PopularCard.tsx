@@ -1,10 +1,10 @@
-import { ItemProp } from "@/types";
+import { Meal } from "@/types";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function PopularCard({ item }: { item: ItemProp }) {
+export default function PopularCard({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
       onPress={() => router.push(`/fooddetail/${item.id}`)}
@@ -36,7 +36,7 @@ export default function PopularCard({ item }: { item: ItemProp }) {
           className="font-roboto-semibold text-sm text-black"
           numberOfLines={1}
         >
-          {item.name}
+          {item.title}
         </Text>
       </View>
       <View className="flex justify-between flex-row items-center">
