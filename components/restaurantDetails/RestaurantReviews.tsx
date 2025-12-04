@@ -1,23 +1,28 @@
-import { Review } from "@/types";
+import { formatReviewDate } from "@/lib/helper";
+import { RestaurantReview } from "@/types";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-export default function RestaurantReviews({ item }: { item: Review }) {
+export default function RestaurantReviews({
+  item,
+}: {
+  item: RestaurantReview;
+}) {
   return (
     <View className="flex items-start gap-1.5 flex-row">
       <Image
-        source={item.image}
+        source={{ uri: item.avatar }}
         resizeMode="contain"
         className="rounded-full size-6"
       />
       <View className="flex-1 gap-2">
         <View className="flex items-center flex-row justify-between">
           <View className="gap-1.5 flex flex-row items-center">
-            <Text className="text-xs font-roboto text-black">{item.name}</Text>
+            <Text className="text-xs font-roboto text-black">{item.user}</Text>
           </View>
           <Text className="text-grey font-roboto text-xs italic">
-            {item.time}
+            {formatReviewDate(item.date)}
           </Text>
         </View>
         <View className="flex flex-row gap-[3px]">
@@ -29,7 +34,7 @@ export default function RestaurantReviews({ item }: { item: Review }) {
           style={{ fontStyle: "italic" }}
           className="text-xs  font-roboto text-black"
         >
-          {item.content}
+          {item.comment}
         </Text>
       </View>
     </View>

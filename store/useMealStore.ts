@@ -1,16 +1,14 @@
-import { images } from "@/constnts";
-import { Meal } from "@/types";
+import { exploreRest } from "@/constnts/constant";
+import { Meal, Restaurant } from "@/types";
 import { useEffect } from "react";
 import { create } from "zustand";
 
-export interface Restaurant {
-  id: string;
-  name: string;
-  description: string;
-}
-
 interface Store {
   meals: Meal[];
+  popularMeals: Meal[];
+  featuredMeals: Meal[];
+  mealsForYou: Meal[];
+  todaysOffers: Meal[];
   restaurants: Restaurant[];
   categories: string[];
   loading: boolean;
@@ -44,63 +42,18 @@ function generateRandomReviews() {
 
 export const useMealStore = create<Store>((set, get) => ({
   meals: [],
-  restaurants: [
-    {
-      id: "r1",
-      name: "Mr Bolat Pizza",
-      slug: "mr-bolat-pizza",
-      image: images.exploreRestaurantTwo,
-      location: "Ikeja, Lagos — 2km away",
-      rating: 5,
-      description:
-        "Freshly baked pizza with premium toppings and bold flavors.",
-    },
-    {
-      id: "r2",
-      name: "Mamy's Dishes",
-      slug: "mamys-dishes",
-      image: images.exploreRestaurantOne,
-      location: "Ikeja, Lagos — 2km away",
-      rating: 5,
-      description:
-        "Home-style Nigerian meals made with love and authentic spices.",
-    },
-    {
-      id: "r3",
-      name: "Coco Cuisine",
-      slug: "coco-cuisine",
-      image: images.exploreRestaurantFive,
-      location: "Ikeja, Lagos — 2km away",
-      rating: 5,
-      description:
-        "A fusion of continental and African dishes served with elegance.",
-    },
-    {
-      id: "r4",
-      name: "Abacha Cuisine",
-      slug: "abacha-cuisine",
-      image: images.exploreRestaurantThree,
-      location: "Ikeja, Lagos — 2km away",
-      rating: 5,
-      description:
-        "Specialized in Eastern Nigerian delicacies, especially Abacha.",
-    },
-    {
-      id: "r5",
-      name: "Esther's Kitchen",
-      slug: "esthers-kitchen",
-      image: images.exploreRestaurantFour,
-      location: "Ikeja, Lagos — 2km away",
-      rating: 5,
-      description: "Healthy meals, refreshing salads, and wholesome dishes.",
-    },
-  ],
+  popularMeals: [],
+  featuredMeals: [],
+  mealsForYou: [],
+  todaysOffers: [],
+  restaurants: exploreRest,
 
   categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks", "Snacks"],
   loading: false,
   error: null,
 
   fetchMeals: async () => {
+    if (get().meals.length > 0) return;
     set({ loading: true, error: null });
     try {
       const letters = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -121,7 +74,9 @@ export const useMealStore = create<Store>((set, get) => ({
           image: m.strMealThumb,
           price: Math.floor(Math.random() * 2000) + 500,
           rating: parseFloat((Math.random() * 5).toFixed(1)),
-          restaurantId: ["r1", "r2", "r3"][Math.floor(Math.random() * 5)],
+          restaurantId: ["r1", "r2", "r3", "r4", "r5"][
+            Math.floor(Math.random() * 5)
+          ],
           discountPercent: [0, 10, 15, 20][Math.floor(Math.random() * 4)],
           time: `${Math.floor(Math.random() * 30) + 10} mins`,
           description: m.strInstructions || "Delicious meal ready to enjoy!",
@@ -133,6 +88,33 @@ export const useMealStore = create<Store>((set, get) => ({
       const allMeals = results.flat(); // flatten array of arrays
 
       set({ meals: allMeals, loading: false });
+      set({
+        popularMeals: get()
+          .meals.slice()
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 10),
+        loading: false,
+      });
+      set({
+        featuredMeals: get()
+          .meals.slice()
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 10),
+        loading: false,
+      });
+      set({
+        mealsForYou: get()
+          .meals.slice()
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 4),
+        loading: false,
+      });
+      set({
+        todaysOffers: get()
+          .meals.filter((m) => m.discountPercent! > 0)
+          .slice(0, 10),
+        loading: false,
+      });
     } catch (err: any) {
       set({ loading: false, error: err.message || "Something went wrong" });
     }
@@ -141,6 +123,10 @@ export const useMealStore = create<Store>((set, get) => ({
 
 export function useMeals() {
   const meals = useMealStore((s) => s.meals);
+  const popularMeals = useMealStore((s) => s.popularMeals);
+  const featuredMeals = useMealStore((s) => s.featuredMeals);
+  const mealsForYou = useMealStore((s) => s.mealsForYou);
+  const todaysOffers = useMealStore((s) => s.todaysOffers);
   const restaurants = useMealStore((s) => s.restaurants);
   const loading = useMealStore((s) => s.loading);
   const error = useMealStore((s) => s.error);
@@ -150,24 +136,6 @@ export function useMeals() {
     fetchMeals();
   }, []);
 
-  const popularMeals = meals
-    .slice()
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, 10);
-
-  const featuredMeals = meals
-    .slice()
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 10);
-
-  const mealsForYou = meals
-    .slice()
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 4);
-
-  const todaysOffers = meals.filter((m) => m.discountPercent! > 0).slice(0, 10);
-
-  const discountMeals = todaysOffers;
   const getMealsByRestaurant = (restaurantId: string) => {
     return meals.filter((m) => m.restaurantId === restaurantId);
   };
@@ -177,10 +145,11 @@ export function useMeals() {
     featuredMeals,
     mealsForYou,
     todaysOffers,
-    discountMeals,
     loading,
     error,
     refetch: fetchMeals,
     getMealsByRestaurant,
+    restaurants,
+    meals,
   };
 }

@@ -1,4 +1,4 @@
-import { ItemProp } from "@/types";
+import { Meal } from "@/types";
 import {
   AntDesign,
   Ionicons,
@@ -10,7 +10,7 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
-export default function RestaurantMenu({ item }: { item: ItemProp }) {
+export default function RestaurantMenu({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
       onPress={() => router.push(`/fooddetail/${item.id}`)}
@@ -19,7 +19,7 @@ export default function RestaurantMenu({ item }: { item: ItemProp }) {
       <View className="w-full relative">
         <Image
           className="rounded-lg w-full"
-          source={item.image}
+          source={{ uri: item.image }}
           style={{ height: 160 }}
           resizeMode="cover"
         />
@@ -37,7 +37,7 @@ export default function RestaurantMenu({ item }: { item: ItemProp }) {
         </View>
       </View>
       <Text className="font-roboto-semibold text-sm text-black">
-        {item.name}
+        {item.title}
       </Text>
       <View className="flex justify-between flex-row items-center">
         <View className="flex items-center flex-row gap-1">

@@ -49,7 +49,7 @@ export interface Review {
   image: any;
   time: string;
   rating: number;
-  content: string;
+  content?: string;
 }
 export interface Orders {
   orderId: string;
@@ -86,8 +86,22 @@ export interface Meal {
   }[];
 }
 
-interface Restaurant {
+export interface Restaurant {
   id: string;
   name: string;
   description: string;
+  image: any;
+  slug: string;
+  location: string;
+  rating: number;
+  description: string;
+  reviews: RestaurantReview[];
+}
+export interface RestaurantReview {
+  id: string;
+  user: string;
+  rating: number;
+  comment: string;
+  date: string;
+  avatar: any;
 }

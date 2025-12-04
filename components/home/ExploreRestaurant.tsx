@@ -1,4 +1,4 @@
-import { exploreResturants } from "@/constnts/constant";
+import { useMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 export default function ExploreRestaurant() {
+  const { restaurants } = useMeals();
   return (
     <View className="gap-1">
       <View className="flex items-center justify-between flex-row w-full">
@@ -22,11 +23,11 @@ export default function ExploreRestaurant() {
         </Pressable>
       </View>
       <FlatList
-        data={exploreResturants}
-        keyExtractor={(item) => item.slug}
+        data={restaurants}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => router.push("/restaurantDetails/2")}
+            onPress={() => router.push(`/restaurantDetails/${item.id}`)}
             className="gap-2"
           >
             <Image
