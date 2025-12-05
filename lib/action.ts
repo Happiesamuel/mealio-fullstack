@@ -7,17 +7,47 @@ const config = {
   spoonacularBaseUrl: EXPO_PUBLIC_SPOONACULAR_BASE_URL,
 };
 
-export async function spoonFetch(path: string, params = {}) {
-  const url = new URL(config.spoonacularBaseUrl + path);
-  Object.entries(params).forEach(([k, v]) => {
-    if (v !== undefined && v !== null) url.searchParams.set(k, String(v));
-  });
-  url.searchParams.set("apiKey", config.spoonacularApiKey);
-  const res = await fetch(url.toString());
+export async function fetchMealsByArea({ area }: { area: string }) {
+  try {
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
+    );
+    if (!res.ok) throw new Error("Failed to fetch ingredients");
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`${res.status} ${res.statusText}: ${text}`);
+    const data = await res.json();
+
+    if (!data.meals) {
+      return;
+    }
+
+    return data.meals.map((ar: any) => ({
+      name: ar.strMeal,
+      id: ar.idMeal, // use idIngredient
+      img: ar.strMealThumb, // ingredient image
+    }));
+  } catch (err: any) {
+    throw err;
   }
-  return res.json();
+}
+export async function fetchMealsByCat({ cat }: { cat: string }) {
+  try {
+    const res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${cat}`
+    );
+    if (!res.ok) throw new Error("Failed to fetch category");
+
+    const data = await res.json();
+
+    if (!data.meals) {
+      return;
+    }
+
+    return data.meals.map((ar: any) => ({
+      name: ar.strMeal,
+      id: ar.idMeal, // use idIngredient
+      img: ar.strMealThumb, // ingredient image
+    }));
+  } catch (err: any) {
+    throw err;
+  }
 }

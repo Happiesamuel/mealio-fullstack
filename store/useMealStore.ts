@@ -1,5 +1,5 @@
 import { exploreRest } from "@/constnts/constant";
-import { Meal, Restaurant } from "@/types";
+import { Ingredients, Meal, MealDetail, Restaurant } from "@/types";
 import { useEffect } from "react";
 import { create } from "zustand";
 
@@ -10,33 +10,43 @@ interface Store {
   mealsForYou: Meal[];
   todaysOffers: Meal[];
   restaurants: Restaurant[];
+  ingredients: Ingredients[];
   categories: string[];
   loading: boolean;
   error: string | null;
-
   fetchMeals: () => Promise<void>;
+  fetchIngredients: () => Promise<void>;
+  fetchMealDetail: (mealId: string) => Promise<MealDetail | undefined>;
 }
-function generateRandomReviews() {
-  const sampleUsers = ["Samuel", "Jane", "Ugo", "Michael", "Grace", "Tunde"];
-  const sampleComments = [
-    "Amazing meal, tastes great!",
-    "Very delicious and well cooked.",
-    "Not bad, enjoyed it.",
-    "Loved the flavor!",
-    "Could be better but okay.",
-    "Perfect dish! Will order again.",
-  ];
+const placeholderAvatars = [
+  "https://i.pravatar.cc/150?img=1",
+  "https://i.pravatar.cc/150?img=2",
+  "https://i.pravatar.cc/150?img=3",
+  "https://i.pravatar.cc/150?img=4",
+  "https://i.pravatar.cc/150?img=5",
+];
 
-  const count = Math.floor(Math.random() * 4) + 1; // 1–4 reviews
+const sampleUsers = ["Samuel", "Jane", "Ugo", "Chika", "Tolu", "Grace"];
 
-  return Array.from({ length: count }).map((_, i) => ({
-    id: Math.random().toString(36).slice(2),
+const sampleComments = [
+  "Amazing meal, tastes great!",
+  "Really enjoyed this dish.",
+  "Could be better, but still good.",
+  "Perfect flavors and well cooked!",
+  "Will definitely order again.",
+];
+
+function generateRandomReviews(count = 5) {
+  return Array.from({ length: count }).map((_, idx) => ({
+    id: `rev-${Date.now()}-${idx}`, // unique id
     user: sampleUsers[Math.floor(Math.random() * sampleUsers.length)],
     rating: parseFloat((Math.random() * 5).toFixed(1)),
     comment: sampleComments[Math.floor(Math.random() * sampleComments.length)],
     date: new Date(
-      Date.now() - Math.random() * 1000 * 60 * 60 * 24 * 5
-    ).toISOString(), // last 5 days
+      Date.now() - Math.floor(Math.random() * 10000000000)
+    ).toISOString(), // random recent date
+    avatar:
+      placeholderAvatars[Math.floor(Math.random() * placeholderAvatars.length)],
   }));
 }
 
@@ -47,6 +57,7 @@ export const useMealStore = create<Store>((set, get) => ({
   mealsForYou: [],
   todaysOffers: [],
   restaurants: exploreRest,
+  ingredients: [],
 
   categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks", "Snacks"],
   loading: false,
@@ -58,7 +69,6 @@ export const useMealStore = create<Store>((set, get) => ({
     try {
       const letters = "abcdefghijklmnopqrstuvwxyz".split("");
 
-      // Map each letter to a fetch Promise
       const promises = letters.map(async (letter) => {
         const res = await fetch(
           `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`
@@ -80,7 +90,7 @@ export const useMealStore = create<Store>((set, get) => ({
           discountPercent: [0, 10, 15, 20][Math.floor(Math.random() * 4)],
           time: `${Math.floor(Math.random() * 30) + 10} mins`,
           description: m.strInstructions || "Delicious meal ready to enjoy!",
-          reviews: generateRandomReviews(),
+          reviews: generateRandomReviews(5),
         }));
       });
 
@@ -119,6 +129,81 @@ export const useMealStore = create<Store>((set, get) => ({
       set({ loading: false, error: err.message || "Something went wrong" });
     }
   },
+  fetchIngredients: async () => {
+    set({ loading: true, error: null });
+    try {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/list.php?i=list`
+      );
+      if (!res.ok) throw new Error("Failed to fetch ingredients");
+
+      const data = await res.json();
+
+      if (!data.meals) {
+        set({ loading: false, ingredients: [] });
+        return;
+      }
+
+      const ings = data.meals.map((ing: any) => ({
+        name: ing.strIngredient,
+        id: ing.idIngredient, // use idIngredient
+        img: ing.strThumb, // ingredient image
+        type: ing.strType,
+      }));
+
+      set({
+        ingredients: ings,
+        loading: false,
+      });
+    } catch (err: any) {
+      set({ loading: false, error: err.message || "Something went wrong" });
+    }
+  },
+
+  fetchMealDetail: async (mealId: string): Promise<MealDetail | undefined> => {
+    set({ loading: true, error: null });
+    try {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch meal details");
+      const data = await res.json();
+      if (!data.meals || data.meals.length === 0) {
+        set({ loading: false });
+        return;
+      }
+
+      const meal = data.meals[0];
+
+      const formattedMeal = {
+        id: meal.idMeal,
+        title: meal.strMeal,
+        category: meal.strCategory,
+        area: meal.strArea,
+        description: meal.strInstructions,
+        image: meal.strMealThumb,
+        price: Math.floor(Math.random() * 2000) + 500, // optional
+        rating: parseFloat((Math.random() * 5).toFixed(1)), // optional
+        restaurantId: ["r1", "r2", "r3", "r4", "r5"][
+          Math.floor(Math.random() * 5)
+        ],
+        reviews: generateRandomReviews(5),
+        discountPercent: [0, 10, 15, 20][Math.floor(Math.random() * 4)], // optional
+        time: `${Math.floor(Math.random() * 30) + 10} mins`,
+        ingredients: Array.from({ length: 20 })
+          .map((_, i) => ({
+            ingredient: meal[`strIngredient${i + 1}`],
+            measure: meal[`strMeasure${i + 1}`],
+          }))
+          .filter((x) => x.ingredient && x.ingredient.trim() !== ""),
+      };
+
+      set({ loading: false });
+      return formattedMeal;
+    } catch (err: any) {
+      set({ loading: false, error: err.message || "Something went wrong" });
+    }
+  },
 }));
 
 export function useMeals() {
@@ -131,7 +216,13 @@ export function useMeals() {
   const loading = useMealStore((s) => s.loading);
   const error = useMealStore((s) => s.error);
   const fetchMeals = useMealStore((s) => s.fetchMeals);
+  const fetchMealDetail = useMealStore((s) => s.fetchMealDetail);
+  const ingredients = useMealStore((s) => s.ingredients);
+  const fetchIngredients = useMealStore((s) => s.fetchIngredients);
 
+  useEffect(() => {
+    fetchIngredients();
+  }, []);
   useEffect(() => {
     fetchMeals();
   }, []);
@@ -149,7 +240,9 @@ export function useMeals() {
     error,
     refetch: fetchMeals,
     getMealsByRestaurant,
+    ingredients,
     restaurants,
     meals,
+    fetchMealDetail,
   };
 }

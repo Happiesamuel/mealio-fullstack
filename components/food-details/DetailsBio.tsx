@@ -1,10 +1,12 @@
-import { images } from "@/constnts";
+import { MealDetail } from "@/types";
 import { AntDesign } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { useState } from "react";
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
-export default function DetailsBio() {
+export default function DetailsBio({ data }: { data: MealDetail }) {
   const [quan, setQuan] = useState(1);
+  const [expanded, setExpanded] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   function handleDecrease() {
     if (quan === 1) {
       setQuan(1);
@@ -20,17 +22,19 @@ export default function DetailsBio() {
       <View className="gap-2.5 mt-4">
         <Image
           className="w-full rounded-2xl"
-          source={images.homeRecipeOne}
-          style={{ height: Dimensions.get("screen").height / 2.5 }}
-          resizeMode="stretch"
+          source={{ uri: data?.image }}
+          style={{ height: Dimensions.get("screen").height / 2.6 }}
+          resizeMode="cover"
         />
-        <View className="flex items-center justify-between flex-row">
-          <Text className="font-roboto-semibold text-[27px] text-black">
-            Fish and Chips
+        <View className="flex items-center gap-2 justify-between flex-row">
+          <Text className="font-roboto-semibold text-[24px] max-w-[85%]  text-black">
+            {data?.title}
           </Text>
           <View className="flex items-center flex-row gap-1">
             <AntDesign name="star" size={16} color="#FF8007" />
-            <Text className="font-roboto text-base text-grey">5.0</Text>
+            <Text className="font-roboto text-base text-grey">
+              {data.rating}
+            </Text>
           </View>
         </View>
         <View className="flex items-center justify-between flex-row">
@@ -38,7 +42,7 @@ export default function DetailsBio() {
             <View className="flex items-center flex-row gap-1">
               <AntDesign name="clock-circle" size={16} color="#A1A1A1" />
               <Text className="font-roboto text-base text-grey">
-                20-30 mins
+                {data.time}
               </Text>
             </View>
           </View>
@@ -70,18 +74,39 @@ export default function DetailsBio() {
           </View>
         </View>
       </View>
-      <View className="gap-2.5 my-4">
-        <View className="flex gap-2 flex-row">
+      <View className="gap-2.5 mt-4">
+        <View className="flex gap-2 items-center flex-row">
           <AntDesign name="exclamation-circle" size={15} color="black" />
           <Text className="text-base font-roboto-semibold text-black">
             Description
           </Text>
         </View>
-        <Text className="text-base font-roboto text-grey">
-          Fresh white fish, hand-battered and fried till golden. Served with
-          crunchy fries, tartar sauce, and a zesty lemon wedge. Perfect comfort
-          food — made fresh, delivered hot.
-        </Text>
+        <View className=" " style={{ width: "100%" }}>
+          <Text
+            className="text-base italic font-roboto-medium text-zinc-600"
+            numberOfLines={expanded ? undefined : 3}
+            onTextLayout={(e) => {
+              if (e.nativeEvent.lines.length > 3 && !expanded) {
+                setShowMore(true);
+              }
+            }}
+          >
+            {data.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => setExpanded(!expanded)}
+            className="mt-1"
+          >
+            <Text
+              className={cn(
+                "font-roboto text-sm ",
+                expanded ? "!text-red-500" : "text-primary"
+              )}
+            >
+              {expanded ? "Show less" : "Read more"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

@@ -14,9 +14,9 @@ export default function RestaurantReviews({
       <Image
         source={{ uri: item.avatar }}
         resizeMode="contain"
-        className="rounded-full size-6"
+        className="rounded-full size-8"
       />
-      <View className="flex-1 gap-2">
+      <View className="flex-1 gap-1">
         <View className="flex items-center flex-row justify-between">
           <View className="gap-1.5 flex flex-row items-center">
             <Text className="text-xs font-roboto text-black">{item.user}</Text>
@@ -32,7 +32,7 @@ export default function RestaurantReviews({
         </View>
         <Text
           style={{ fontStyle: "italic" }}
-          className="text-xs  font-roboto text-black"
+          className="text-sm  font-roboto text-black"
         >
           {item.comment}
         </Text>

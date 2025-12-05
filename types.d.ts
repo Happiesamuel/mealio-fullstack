@@ -85,6 +85,11 @@ export interface Meal {
     date: string;
   }[];
 }
+export interface Ingredients {
+  name: string;
+  id: string;
+  img: string;
+}
 
 export interface Restaurant {
   id: string;
@@ -104,4 +109,19 @@ export interface RestaurantReview {
   comment: string;
   date: string;
   avatar: any;
+}
+export interface MealDetail {
+  id: string;
+  title: string;
+  category: string;
+  area: string;
+  description: string;
+  image: string;
+  price: number;
+  rating: number;
+  restaurantId: string;
+  reviews: RestaurantReview[];
+  discountPercent?: number;
+  time: string;
+  ingredients: Ingredient[];
 }

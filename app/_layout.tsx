@@ -35,6 +35,7 @@ import BottomSheetProvider from "@/context/BottomSheetProvider";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
+import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "./globals.css";
 import Splash from "./Splash";
@@ -78,6 +79,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <BottomSheetProvider>
         <Stack screenOptions={{ headerShown: false }} />
+        <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
       </BottomSheetProvider>
     </SafeAreaProvider>
   );

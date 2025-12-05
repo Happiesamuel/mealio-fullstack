@@ -1,69 +1,57 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
 
-interface FetchOptions<T> {
-  /** API URL to fetch from */
-  url: string;
-
-  /** Optional transform fn (e.g., data.results → just recipes) */
-  select?: (raw: any) => T;
-
-  /** Automatically run on mount */
-  auto?: boolean;
-
-  /** Optional dependencies for auto-refetch */
-  deps?: any[];
+interface UseAppwriteOptions<T, P extends Record<string, string | number>> {
+  fn: (params: P) => Promise<T>;
+  params?: P;
+  skip?: boolean;
 }
 
-export function useFetch<T = any>({
-  url,
-  select,
-  auto = true,
-  deps = [],
-}: FetchOptions<T>) {
+interface UseAppwriteReturn<T, P> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  refetch: (newParams?: P) => Promise<void>;
+}
+
+export const useFetch = <T, P extends Record<string, string | number>>({
+  fn,
+  params = {} as P,
+  skip = false,
+}: UseAppwriteOptions<T, P>): UseAppwriteReturn<T, P> => {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(!skip);
   const [error, setError] = useState<string | null>(null);
 
-  // Abort controller to avoid updates on unmounted component
-  const abortRef = useRef<AbortController | null>(null);
-
-  const fetchData = useCallback(async () => {
-    try {
+  const fetchData = useCallback(
+    async (fetchParams: P) => {
       setLoading(true);
       setError(null);
 
-      abortRef.current?.abort(); // cancel previous request
-      abortRef.current = new AbortController();
-
-      const res = await fetch(url, {
-        signal: abortRef.current.signal,
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
+      try {
+        const result = await fn(fetchParams);
+        setData(result);
+      } catch (err: unknown) {
+        const errorMessage =
+          err instanceof Error ? err.message : "An unknown error occurred";
+        setError(errorMessage);
+        Alert.alert("Error", errorMessage);
+      } finally {
+        setLoading(false);
       }
+    },
+    [fn]
+  );
 
-      const raw = await res.json();
-      setData(select ? select(raw) : raw);
-    } catch (err: any) {
-      if (err.name !== "AbortError") {
-        setError(err.message || "Something went wrong");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [url, select]);
-
-  // auto-fetch on mount or when dependencies change
   useEffect(() => {
-    if (auto) fetchData();
-    return () => abortRef.current?.abort();
-  }, [...deps]);
+    if (!skip) {
+      fetchData(params);
+    }
+  }, []);
 
-  return {
-    data,
-    loading,
-    error,
-    refetch: fetchData,
+  const refetch = async (newParams?: P) => {
+    await fetchData(newParams ?? params);
   };
-}
+
+  return { data, loading, error, refetch };
+};

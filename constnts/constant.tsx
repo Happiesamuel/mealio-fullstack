@@ -910,3 +910,17 @@ export const exploreRest = [
     ],
   },
 ];
+export const ingredientIcons = {
+  macaroni: "noodles",
+  "chicken stock": "pot",
+  "heavy cream": "cup",
+  "fajita seasoning": "seasoning",
+  salt: "shaker",
+  "chicken breast": "food-drumstick",
+  "olive oil": "bottle-soda",
+  onion: "onion",
+  "red pepper": "pepper-hot",
+  garlic: "food-apple-outline", // no garlic icon, this is closest
+  "cheddar cheese": "cheese",
+  parsley: "leaf",
+};
