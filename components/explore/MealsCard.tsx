@@ -1,4 +1,4 @@
-import { MealProp } from "@/types";
+import { Meal } from "@/types";
 import {
   AntDesign,
   Ionicons,
@@ -9,7 +9,7 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
-export default function MealsCard({ item }: { item: MealProp }) {
+export default function MealsCard({ item }: { item: Meal }) {
   return (
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
@@ -18,7 +18,7 @@ export default function MealsCard({ item }: { item: MealProp }) {
       >
         <Image
           resizeMode="cover"
-          source={item.image}
+          source={{ uri: item.image }}
           className="size-full rounded-2xl"
         />
       </TouchableOpacity>
@@ -28,7 +28,7 @@ export default function MealsCard({ item }: { item: MealProp }) {
             className="font-roboto-medium text-lg text-black"
             numberOfLines={1}
           >
-            {item.name}
+            {item.title}
           </Text>
           <View className="flex justify-between flex-row items-center">
             <View className="flex items-center flex-row gap-1">
@@ -43,7 +43,7 @@ export default function MealsCard({ item }: { item: MealProp }) {
             </View>
           </View>
           <Text className="font-roboto-medium text-base text-black">
-            ${item.price}
+            ${item.price.toFixed(2)}
           </Text>
         </View>
         <View className="flex flex-row items-center justify-between">

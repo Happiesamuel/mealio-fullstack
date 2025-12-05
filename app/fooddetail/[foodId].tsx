@@ -32,7 +32,7 @@ export default function FoodDetail() {
     return (
       <SafeAreaView
         edges={["top"]}
-        className="bg-secondary px-5 h-full pb-safe"
+        className="bg-secondary px-3 h-full pb-safe"
       >
         <DetailsHeader />
         <View className="flex flex-1 gap-2 items-center justify-center w-full  ">
@@ -46,7 +46,7 @@ export default function FoodDetail() {
     ingredients.find((y) => y.name === x.ingredient)
   ) as Ingredients[];
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary px-5 h-full pb-safe">
+    <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full pb-safe">
       <DetailsHeader />
       {mealDetail && (
         <FlatList

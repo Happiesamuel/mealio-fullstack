@@ -1,5 +1,5 @@
 import { exploreRest } from "@/constnts/constant";
-import { Ingredients, Meal, MealDetail, Restaurant } from "@/types";
+import { Categories, Ingredients, Meal, MealDetail, Restaurant } from "@/types";
 import { useEffect } from "react";
 import { create } from "zustand";
 
@@ -11,12 +11,13 @@ interface Store {
   todaysOffers: Meal[];
   restaurants: Restaurant[];
   ingredients: Ingredients[];
-  categories: string[];
+  categories: Categories[];
   loading: boolean;
   error: string | null;
   fetchMeals: () => Promise<void>;
   fetchIngredients: () => Promise<void>;
   fetchMealDetail: (mealId: string) => Promise<MealDetail | undefined>;
+  fetchCategories: () => Promise<void>;
 }
 const placeholderAvatars = [
   "https://i.pravatar.cc/150?img=1",
@@ -59,7 +60,7 @@ export const useMealStore = create<Store>((set, get) => ({
   restaurants: exploreRest,
   ingredients: [],
 
-  categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks", "Snacks"],
+  categories: [],
   loading: false,
   error: null,
 
@@ -159,6 +160,35 @@ export const useMealStore = create<Store>((set, get) => ({
       set({ loading: false, error: err.message || "Something went wrong" });
     }
   },
+  fetchCategories: async () => {
+    set({ loading: true, error: null });
+    try {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/categories.php`
+      );
+      if (!res.ok) throw new Error("Failed to fetch  categories");
+
+      const data = await res.json();
+
+      if (!data.categories) {
+        set({ loading: false, ingredients: [] });
+        return;
+      }
+
+      const cats = data.categories.map((ing: any) => ({
+        name: ing.strCategory,
+        id: ing.idCategory, // use idIngredient
+        img: ing.strCategoryThumb, // ingredient image
+      }));
+
+      set({
+        categories: cats,
+        loading: false,
+      });
+    } catch (err: any) {
+      set({ loading: false, error: err.message || "Something went wrong" });
+    }
+  },
 
   fetchMealDetail: async (mealId: string): Promise<MealDetail | undefined> => {
     set({ loading: true, error: null });
@@ -208,6 +238,7 @@ export const useMealStore = create<Store>((set, get) => ({
 
 export function useMeals() {
   const meals = useMealStore((s) => s.meals);
+  const categories = useMealStore((s) => s.categories);
   const popularMeals = useMealStore((s) => s.popularMeals);
   const featuredMeals = useMealStore((s) => s.featuredMeals);
   const mealsForYou = useMealStore((s) => s.mealsForYou);
@@ -217,6 +248,7 @@ export function useMeals() {
   const error = useMealStore((s) => s.error);
   const fetchMeals = useMealStore((s) => s.fetchMeals);
   const fetchMealDetail = useMealStore((s) => s.fetchMealDetail);
+  const fetchCategories = useMealStore((s) => s.fetchCategories);
   const ingredients = useMealStore((s) => s.ingredients);
   const fetchIngredients = useMealStore((s) => s.fetchIngredients);
 
@@ -225,6 +257,9 @@ export function useMeals() {
   }, []);
   useEffect(() => {
     fetchMeals();
+  }, []);
+  useEffect(() => {
+    fetchCategories();
   }, []);
 
   const getMealsByRestaurant = (restaurantId: string) => {
@@ -244,5 +279,6 @@ export function useMeals() {
     restaurants,
     meals,
     fetchMealDetail,
+    categories,
   };
 }

@@ -71,7 +71,7 @@ export default function SimalarCategory({ cat }: { cat: string }) {
 
               <View className="flex justify-between flex-row items-center">
                 <Text
-                  className="font-roboto-semibold text-sm text-black"
+                  className="font-roboto text-sm text-zinc-700"
                   numberOfLines={1}
                 >
                   {item.name}

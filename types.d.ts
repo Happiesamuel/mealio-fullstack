@@ -90,6 +90,11 @@ export interface Ingredients {
   id: string;
   img: string;
 }
+export interface Categories {
+  name: string;
+  id: string;
+  img: string;
+}
 
 export interface Restaurant {
   id: string;

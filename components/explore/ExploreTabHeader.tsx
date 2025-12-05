@@ -1,11 +1,14 @@
+import { useBottomSheet } from "@/context/BottomSheetProvider";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { Dispatch, SetStateAction, useRef } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import FilterMeals from "./FilterMeals";
 
 export default function ExploreTabHeader({
   tabSlug,
@@ -18,7 +21,7 @@ export default function ExploreTabHeader({
     { name: "Meals", slug: "meals" },
     { name: "Restaurant", slug: "restaurant" },
   ];
-
+  const { open, close } = useBottomSheet();
   // Store the measured widths of each tab
   const tabWidths = useRef<{ [key: string]: number }>({});
 
@@ -51,42 +54,61 @@ export default function ExploreTabHeader({
     width: underlineWidth.value,
     transform: [{ translateX: translateX.value }],
   }));
-
+  const openSheet = () => {
+    open(
+      <ScrollView
+        className="h-[80vh] gap-5"
+        showsVerticalScrollIndicator={false}
+      >
+        <FilterMeals />
+      </ScrollView>
+    );
+  };
   return (
-    <View className="relative flex-row justify-start gap-5">
-      {tabs.map((tab) => (
-        <Pressable
-          key={tab.slug}
-          onPress={() => handlePress(tab.slug)}
-          className="py-2"
-        >
-          <Text
-            className={`text-base font-roboto-medium ${
-              tab.slug === tabSlug ? "text-black" : "text-gray-400"
-            }`}
-            onLayout={(e) => {
-              tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
-              if (tab.slug === tabSlug) {
-                underlineWidth.value = e.nativeEvent.layout.width;
-              }
-            }}
+    <View className="flex flex-row items-center justify-between">
+      <View className="relative flex-row justify-start gap-5">
+        {tabs.map((tab) => (
+          <Pressable
+            key={tab.slug}
+            onPress={() => handlePress(tab.slug)}
+            className="py-2"
           >
-            {tab.name}
-          </Text>
-        </Pressable>
-      ))}
+            <Text
+              className={`text-base font-roboto-medium ${
+                tab.slug === tabSlug ? "text-black" : "text-gray-400"
+              }`}
+              onLayout={(e) => {
+                tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
+                if (tab.slug === tabSlug) {
+                  underlineWidth.value = e.nativeEvent.layout.width;
+                }
+              }}
+            >
+              {tab.name}
+            </Text>
+          </Pressable>
+        ))}
 
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            bottom: 0,
-            height: 2,
-            backgroundColor: "#14B74D",
-          },
-          animatedStyle,
-        ]}
-      />
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              bottom: 0,
+              height: 2,
+              backgroundColor: "#14B74D",
+            },
+            animatedStyle,
+          ]}
+        />
+      </View>
+      {tabSlug === "meals" && (
+        <Pressable
+          onPress={openSheet}
+          className="flex items-center justify-center   "
+        >
+          <Ionicons name="options-outline" size={24} color="black" />
+        </Pressable>
+      )}
     </View>
   );
 }

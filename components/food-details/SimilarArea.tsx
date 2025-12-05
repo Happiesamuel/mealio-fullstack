@@ -75,7 +75,7 @@ export default function SimilarArea({ area }: { area: string }) {
               </View>
 
               <Text
-                className="font-roboto-semibold text-sm text-black"
+                className="font-roboto text-sm text-zinc-700"
                 numberOfLines={1}
               >
                 {item.name}

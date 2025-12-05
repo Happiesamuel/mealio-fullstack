@@ -12,17 +12,17 @@ export default function Banner() {
         className="size-full rounded-3xl"
       />
       <View className="bg-[#000000]/30 absolute size-full rounded-3xl" />
-      <View className="gap-4 absolute top-[40px] px-3.5 max-w-[195px]">
+      <View className="gap-4 absolute top-[40px] px-3.5 w-full">
         <View className="gap-2">
           <Text className="text-sm font-roboto-bold text-white">
             Free delivery today
           </Text>
-          <Text className="text-[10px] font-roboto  text-secondary">
+          <Text className="text-[10px] font-roboto  text-secondary  max-w-[60%]">
             For every meals order today, you&apos;ll get free deliveries with no
             hidden charges
           </Text>
         </View>
-        <View className="w-[75%]">
+        <View className="w-[40%]">
           <RoundedFullButton className="bg-white" onPress={() => {}}>
             <Text className="text-sm font-roboto-bold  text-center text-primary py-2 px-4.5">
               Order Now
