@@ -5,30 +5,29 @@ import SimalarCategory from "@/components/food-details/SimalarCategory";
 import SimilarArea from "@/components/food-details/SimilarArea";
 import RestaurantReviews from "@/components/restaurantDetails/RestaurantReviews";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
-import { useMeals } from "@/store/useMealStore";
-import { Ingredients, MealDetail, RestaurantReview } from "@/types";
+import { useMealDetailQuery } from "@/hooks/useFetchMealDetail";
+import { useIngredientsQuery } from "@/hooks/useIngredients";
+import { useZustMeals } from "@/store/useMealStore";
+import { Ingredients, RestaurantReview } from "@/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function FoodDetail() {
-  const { foodId } = useLocalSearchParams<{
+  const { foodId, res: resId } = useLocalSearchParams<{
     foodId: string;
+    res: string;
   }>();
-  const { fetchMealDetail, loading, error, ingredients, restaurants } =
-    useMeals();
-  const [mealDetail, setMealDetail] = useState<MealDetail | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const meal = await fetchMealDetail(foodId);
-      if (meal) setMealDetail(meal);
-    }
-    fetchData();
-  }, [foodId]);
+  const { restaurants } = useZustMeals();
+  const {
+    data: mealDetail,
+    status: mealStatus,
+    error,
+  } = useMealDetailQuery(foodId);
+  const { data: ingredients, status: ingStatus } = useIngredientsQuery();
   const [active, setActive] = useState<string | null>(null);
-  if (loading || !mealDetail)
+  if (mealStatus === "pending" || ingStatus === "pending")
     return (
       <SafeAreaView
         edges={["top"]}
@@ -41,9 +40,9 @@ export default function FoodDetail() {
         </View>
       </SafeAreaView>
     );
-  const res = restaurants.find((x) => x.id === mealDetail.restaurantId);
+  const res = restaurants.find((x) => x.id === resId);
   const ings = mealDetail?.ingredients.map((x) =>
-    ingredients.find((y) => y.name === x.ingredient)
+    ingredients.find((y: any) => y.name === x.ingredient)
   ) as Ingredients[];
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full pb-safe">

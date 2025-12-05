@@ -74,3 +74,22 @@ export function formatReviewDate(isoDate: string) {
 
   return `${day}/${month}/${year} ${formattedHours}:${minutes}${ampm.toLowerCase()}`;
 }
+export function randomReviews() {
+  const users = ["Samuel", "Jane", "Ugo", "Chika", "Tolu", "Grace"];
+  const comments = [
+    "Amazing meal!",
+    "Loved it",
+    "Good but could be better",
+    "Perfect flavors",
+    "Will order again",
+  ];
+
+  return Array.from({ length: 5 }).map((_, i) => ({
+    id: `rev-${Date.now()}-${i}`,
+    user: users[Math.floor(Math.random() * users.length)],
+    rating: parseFloat((Math.random() * 5).toFixed(1)),
+    comment: comments[Math.floor(Math.random() * comments.length)],
+    date: new Date(Date.now() - Math.random() * 10_000_000_000).toISOString(),
+    avatar: `https://i.pravatar.cc/150?img=${1 + Math.floor(Math.random() * 5)}`,
+  }));
+}

@@ -32,6 +32,7 @@
 //   );
 // }
 import BottomSheetProvider from "@/context/BottomSheetProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
@@ -74,13 +75,15 @@ export default function RootLayout() {
         }}
       />
     );
-
+  const queryClient = new QueryClient();
   return (
-    <SafeAreaProvider>
-      <BottomSheetProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-        <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
-      </BottomSheetProvider>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <BottomSheetProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
+        </BottomSheetProvider>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }

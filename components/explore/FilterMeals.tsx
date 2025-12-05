@@ -1,8 +1,9 @@
-import { useMeals } from "@/store/useMealStore";
+import { useCategoriesQuery } from "@/hooks/useCategories";
+import { useMealsQuery } from "@/hooks/useMeals";
 import cn from "clsx";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import RadioButton from "../ui/RadioButton";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function FilterMeals({
@@ -23,7 +24,8 @@ export default function FilterMeals({
   const [cusines, setCusines] = useState<string[]>(
     params.categories ? JSON.parse(params.categories) : []
   );
-  const { categories } = useMeals();
+  const { data: categories, status } = useCategoriesQuery();
+  const { refetch } = useMealsQuery();
 
   function handleCuisine(cuis: string) {
     const exist = cusines.some((x) => x === cuis);
@@ -63,6 +65,7 @@ export default function FilterMeals({
     router.setParams(newParams);
 
     close();
+    refetch();
   }
 
   return (
@@ -109,28 +112,34 @@ export default function FilterMeals({
       <View className="gap-2">
         <Text className="font-roboto-bold text-xl text-black">Categories:</Text>
         <View className="flex flex-row flex-wrap gap-2">
-          {categories.map((cuis) => {
-            const exist = cusines.some((x) => x === cuis.name);
-            return (
-              <TouchableOpacity
-                key={cuis.id}
-                onPress={() => handleCuisine(cuis.name)}
-                className={cn(
-                  " w-[100px] h-9 rounded-xl flex items-center justify-center",
-                  exist ? "bg-primary " : "border border-grey"
-                )}
-              >
-                <Text
+          {status === "pending" ? (
+            <View className="flex gap-2 items-center justify-center w-full  ">
+              <ActivityIndicator size={"large"} color="#14B74D" />
+            </View>
+          ) : (
+            categories.map((cuis: { name: string; id: string }) => {
+              const exist = cusines.some((x) => x === cuis.name);
+              return (
+                <TouchableOpacity
+                  key={cuis.id}
+                  onPress={() => handleCuisine(cuis.name)}
                   className={cn(
-                    "text-sm font-roboto ",
-                    exist ? "text-white " : "text-black"
+                    " w-[100px] h-9 rounded-xl flex items-center justify-center",
+                    exist ? "bg-primary " : "border border-grey"
                   )}
                 >
-                  {cuis.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+                  <Text
+                    className={cn(
+                      "text-sm font-roboto ",
+                      exist ? "text-white " : "text-black"
+                    )}
+                  >
+                    {cuis.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })
+          )}
         </View>
       </View>
       <View className="gap-2">

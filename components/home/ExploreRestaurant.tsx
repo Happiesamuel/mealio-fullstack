@@ -1,4 +1,4 @@
-import { useMeals } from "@/store/useMealStore";
+import { useZustMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 export default function ExploreRestaurant() {
-  const { restaurants } = useMeals();
+  const { restaurants } = useZustMeals();
   return (
     <View className="gap-1">
       <View className="flex items-center justify-between flex-row w-full">

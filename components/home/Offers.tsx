@@ -1,12 +1,12 @@
+import { useMealsQuery } from "@/hooks/useMeals";
 import { OffersSkeleton } from "@/skeleton/OffersSkeleton";
-import { useMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import OffersCard from "./OffersCard";
 
 export default function Offers() {
-  const { todaysOffers, loading } = useMeals();
+  const { todaysOffers, status } = useMealsQuery();
 
   return (
     <View className="gap-2 mb-4">
@@ -24,7 +24,7 @@ export default function Offers() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <OffersCard item={item} />}
         ListEmptyComponent={() => {
-          if (loading) {
+          if (status === "pending") {
             return (
               <View className="flex-row flex-wrap gap-5 justify-between ">
                 {[...Array(6)].map((_, index) => (

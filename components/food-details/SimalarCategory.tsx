@@ -1,5 +1,4 @@
-import { useFetch } from "@/hooks/useFetch";
-import { fetchMealsByCat } from "@/lib/action";
+import { useSimmilarCategory } from "@/hooks/useSimilarCategory";
 import { PopularCardSkeleton } from "@/skeleton/PopularCardSkeleton";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -14,11 +13,8 @@ import {
 } from "react-native";
 
 export default function SimalarCategory({ cat }: { cat: string }) {
-  const { data, loading, error, refetch } = useFetch({
-    fn: fetchMealsByCat,
-    params: { cat },
-  });
-  if (loading) {
+  const { data, status, error } = useSimmilarCategory(cat, "cat");
+  if (status === "pending") {
     return (
       <ScrollView
         horizontal

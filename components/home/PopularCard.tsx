@@ -7,7 +7,9 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 export default function PopularCard({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      onPress={() =>
+        router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+      }
       style={{ width: 220 }}
       className="gap-2 "
     >

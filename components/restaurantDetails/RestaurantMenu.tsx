@@ -13,7 +13,9 @@ import RoundedFullButton from "../ui/RoundedFullButton";
 export default function RestaurantMenu({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      onPress={() =>
+        router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+      }
       className="gap-2 w-[48%] mb-2.5"
     >
       <View className="w-full relative">

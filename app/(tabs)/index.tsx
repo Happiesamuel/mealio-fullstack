@@ -7,8 +7,8 @@ import Offers from "@/components/home/Offers";
 import PopularMeals from "@/components/home/PopularMeals";
 import SearchBar from "@/components/home/SearchBar";
 import { categories } from "@/constnts/constant";
+import { useMealsQuery } from "@/hooks/useMeals";
 import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
-import { useMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import cn from "clsx";
 import { router, useLocalSearchParams } from "expo-router";
@@ -16,7 +16,7 @@ import { useState } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
-  const { featuredMeals, loading, error } = useMeals();
+  const { featuredMeals, status } = useMealsQuery();
   const params = useLocalSearchParams<{ fil: string }>();
   const [fil, setFil] = useState(params.fil || "all");
   function handlePressFilter(slug: string) {
@@ -78,7 +78,7 @@ export default function Index() {
           </>
         )}
         ListEmptyComponent={() => {
-          if (loading) {
+          if (status === "pending") {
             return (
               <View className="flex-row flex-wrap justify-between gap-y-4 px-1">
                 {[...Array(4)].map((_, index) => (

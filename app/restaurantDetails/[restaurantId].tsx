@@ -3,7 +3,8 @@ import RestaurantMenu from "@/components/restaurantDetails/RestaurantMenu";
 import RestaurantOffers from "@/components/restaurantDetails/RestaurantOffers";
 import RestaurantReviews from "@/components/restaurantDetails/RestaurantReviews";
 import { offers } from "@/constnts/constant";
-import { useMeals } from "@/store/useMealStore";
+import { useMealsQuery } from "@/hooks/useMeals";
+import { useZustMeals } from "@/store/useMealStore";
 import { ItemProp, Meal, RestaurantReview } from "@/types";
 import { EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import cn from "clsx";
@@ -19,8 +20,9 @@ export default function RestaurantDetail() {
     restaurantId: string;
   }>();
   const [tabSlug, setTabSlug] = useState(detail || "menu");
-  const { getMealsByRestaurant, restaurants, loading } = useMeals();
-  const food = getMealsByRestaurant(restaurantId);
+  const { meals, status } = useMealsQuery();
+  const { restaurants } = useZustMeals();
+  const food = meals.filter((m) => m.restaurantId === restaurantId);
   const res = restaurants.find((x) => x.id === restaurantId);
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3 pb-safe">
@@ -79,7 +81,7 @@ export default function RestaurantDetail() {
           </View>
         )}
         ListEmptyComponent={() => {
-          if (loading) {
+          if (status === "pending") {
             return (
               <View className="flex gap-2 items-center justify-center w-full h-[300px] ">
                 <ActivityIndicator size={"large"} color="#14B74D" />

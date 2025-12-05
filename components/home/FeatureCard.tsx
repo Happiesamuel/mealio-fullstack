@@ -11,7 +11,9 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 export default function FeatureCard({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      onPress={() =>
+        router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+      }
       className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl"
     >
       <View className="w-full relative">

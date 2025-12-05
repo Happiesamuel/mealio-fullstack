@@ -1,12 +1,12 @@
+import { useMealsQuery } from "@/hooks/useMeals";
 import { PopularCardSkeleton } from "@/skeleton/PopularCardSkeleton";
-import { useMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import PopularCard from "./PopularCard";
 
 export default function PopularMeals() {
-  const { popularMeals, loading } = useMeals();
+  const { popularMeals, status } = useMealsQuery();
 
   return (
     <View className="gap-2">
@@ -24,7 +24,7 @@ export default function PopularMeals() {
         }}
         horizontal
         ListEmptyComponent={() => {
-          if (loading) {
+          if (status === "pending") {
             return (
               <View className="flex-row flex-wrap gap-5 justify-between ">
                 {[...Array(6)].map((_, index) => (

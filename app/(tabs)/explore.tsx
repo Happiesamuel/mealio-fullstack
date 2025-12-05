@@ -2,8 +2,9 @@ import ExploreHeader from "@/components/explore/ExploreHeader";
 import ExploreTabHeader from "@/components/explore/ExploreTabHeader";
 import MealsCard from "@/components/explore/MealsCard";
 import RestuarantCard from "@/components/explore/ResturantCard";
+import { useMealsQuery } from "@/hooks/useMeals";
 import ExploreScreenSkeleton from "@/skeleton/ExploreScreenSkeleton";
-import { useMeals } from "@/store/useMealStore";
+import { useZustMeals } from "@/store/useMealStore";
 import { Meal, Restaurant } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import React, { useMemo, useState } from "react";
@@ -19,7 +20,8 @@ export default function Explore() {
     categories: string;
   }>();
   const [tabSlug, setTabSlug] = useState(tab || "meals");
-  const { meals, loading, restaurants } = useMeals();
+  const { meals, status } = useMealsQuery();
+  const { restaurants } = useZustMeals();
 
   const filteredMeals = useMemo(() => {
     if (!meals || meals.length === 0) return [];
@@ -73,7 +75,7 @@ export default function Explore() {
           )
         }
         ListEmptyComponent={() => {
-          if (loading)
+          if (status === "pending")
             return (
               <View className="gap-6">
                 {[...Array(6)].map((_, index) => (

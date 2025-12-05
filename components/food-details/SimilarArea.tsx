@@ -1,5 +1,4 @@
-import { useFetch } from "@/hooks/useFetch";
-import { fetchMealsByArea } from "@/lib/action";
+import { useSimmilarCategory } from "@/hooks/useSimilarCategory";
 import { OffersSkeleton } from "@/skeleton/OffersSkeleton";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -14,16 +13,8 @@ import {
 } from "react-native";
 
 export default function SimilarArea({ area }: { area: string }) {
-  const {
-    data: sims,
-    loading,
-    error,
-    refetch,
-  } = useFetch({
-    fn: fetchMealsByArea,
-    params: { area },
-  });
-  if (loading) {
+  const { data, status, error } = useSimmilarCategory(area, "area");
+  if (status === "pending") {
     return (
       <ScrollView
         horizontal
@@ -42,7 +33,7 @@ export default function SimilarArea({ area }: { area: string }) {
         Similar {area} foods
       </Text>
       <FlatList
-        data={sims.slice(0, 10)}
+        data={data.slice(0, 10)}
         showsHorizontalScrollIndicator={false}
         horizontal
         contentContainerClassName="gap-3.5  "
