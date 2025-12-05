@@ -1,8 +1,15 @@
 import { fetchMealsByArea, fetchMealsByCat } from "@/lib/action";
 import { useQuery } from "@tanstack/react-query";
+import { useMealsQuery } from "./useMeals";
 
-export function useSimmilarCategory(cat: string, type: string) {
-  const { data, status, error } = useQuery({
+export function useSimilarCategory(cat: string, type: "cat" | "area") {
+  const { meals } = useMealsQuery();
+
+  const {
+    data: sim,
+    status,
+    error,
+  } = useQuery({
     queryKey: ["similar-category", cat],
     queryFn: () =>
       type === "cat"
@@ -10,5 +17,11 @@ export function useSimmilarCategory(cat: string, type: string) {
         : fetchMealsByArea({ area: cat }),
     enabled: !!cat,
   });
+
+  const data =
+    sim
+      ?.slice(0, 10)
+      .map((x: any) => meals.find((y) => y.id === x.id))
+      .filter(Boolean) || [];
   return { data, status, error };
 }

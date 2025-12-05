@@ -77,11 +77,16 @@ export function formatReviewDate(isoDate: string) {
 export function randomReviews() {
   const users = ["Samuel", "Jane", "Ugo", "Chika", "Tolu", "Grace"];
   const comments = [
-    "Amazing meal!",
-    "Loved it",
-    "Good but could be better",
-    "Perfect flavors",
-    "Will order again",
+    "Absolutely loved this dish! The flavors were perfectly balanced, and every bite was a delight. Highly recommend trying it if you get the chance.",
+    "This meal exceeded my expectations. The ingredients were fresh, and the seasoning was spot on. Will definitely order again!",
+    "Really enjoyed the dish, although I felt it could use a little more spice. Overall, it was well-prepared and satisfying.",
+    "Perfectly cooked and beautifully presented! Every detail from the aroma to the taste was impressive. Five stars!",
+    "The meal was delicious and hearty. It felt like home-cooked food with a professional touch. Can't wait to try more dishes from here.",
+    "Loved the textures and combinations of flavors. The dish was creative yet comforting, and it made my dining experience memorable.",
+    "Tasty, flavorful, and generous portion sizes. Everything from the presentation to the taste was excellent. Highly recommend to anyone!",
+    "A truly delightful meal! The chef has done an amazing job blending the flavors. I would definitely come back just for this.",
+    "Good overall, though a bit on the salty side for my taste. Still, the dish was enjoyable and filling.",
+    "Amazing attention to detail and wonderful flavor profile. Each bite was better than the last. Definitely a five-star experience!",
   ];
 
   return Array.from({ length: 5 }).map((_, i) => ({

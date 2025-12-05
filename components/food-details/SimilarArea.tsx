@@ -1,4 +1,4 @@
-import { useSimmilarCategory } from "@/hooks/useSimilarCategory";
+import { useSimilarCategory } from "@/hooks/useSimilarCategory";
 import { OffersSkeleton } from "@/skeleton/OffersSkeleton";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 export default function SimilarArea({ area }: { area: string }) {
-  const { data, status, error } = useSimmilarCategory(area, "area");
+  const { data, status, error } = useSimilarCategory(area, "area");
   if (status === "pending") {
     return (
       <ScrollView
@@ -33,7 +33,7 @@ export default function SimilarArea({ area }: { area: string }) {
         Similar {area} foods
       </Text>
       <FlatList
-        data={data.slice(0, 10)}
+        data={data}
         showsHorizontalScrollIndicator={false}
         horizontal
         contentContainerClassName="gap-3.5  "
@@ -41,14 +41,16 @@ export default function SimilarArea({ area }: { area: string }) {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => router.push(`/fooddetail/${item.id}`)}
+              onPress={() =>
+                router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+              }
               style={{ width: 140 }}
               className="gap-1"
             >
               <View className="w-full relative">
                 <Image
                   className="rounded-lg w-full"
-                  source={{ uri: item.img }}
+                  source={{ uri: item.image }}
                   style={{ height: 120 }}
                 />
                 <View
@@ -69,7 +71,7 @@ export default function SimilarArea({ area }: { area: string }) {
                 className="font-roboto text-sm text-zinc-700"
                 numberOfLines={1}
               >
-                {item.name}
+                {item.title}
               </Text>
             </TouchableOpacity>
           );

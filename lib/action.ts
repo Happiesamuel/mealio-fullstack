@@ -23,6 +23,9 @@ export async function fetchMealsByArea({ area }: { area: string }) {
 
     return data.meals.map((ar: any) => ({
       name: ar.strMeal,
+      restaurantId: ["r1", "r2", "r3", "r4", "r5"][
+        Math.floor(Math.random() * 5)
+      ],
       id: ar.idMeal, // use idIngredient
       img: ar.strMealThumb, // ingredient image
     }));
@@ -45,6 +48,9 @@ export async function fetchMealsByCat({ cat }: { cat: string }) {
 
     return data.meals.map((ar: any) => ({
       name: ar.strMeal,
+      restaurantId: ["r1", "r2", "r3", "r4", "r5"][
+        Math.floor(Math.random() * 5)
+      ],
       id: ar.idMeal, // use idIngredient
       img: ar.strMealThumb, // ingredient image
     }));

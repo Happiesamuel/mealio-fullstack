@@ -13,7 +13,9 @@ export default function MealsCard({ item }: { item: Meal }) {
   return (
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
-        onPress={() => router.push(`/fooddetail/${item.id}`)}
+        onPress={() =>
+          router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+        }
         className="w-[166px] h-[129px]"
       >
         <Image
