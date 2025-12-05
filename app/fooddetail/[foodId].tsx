@@ -16,7 +16,8 @@ export default function FoodDetail() {
   const { foodId } = useLocalSearchParams<{
     foodId: string;
   }>();
-  const { fetchMealDetail, loading, error, ingredients } = useMeals();
+  const { fetchMealDetail, loading, error, ingredients, restaurants } =
+    useMeals();
   const [mealDetail, setMealDetail] = useState<MealDetail | null>(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function FoodDetail() {
         </View>
       </SafeAreaView>
     );
-
+  const res = restaurants.find((x) => x.id === mealDetail.restaurantId);
   const ings = mealDetail?.ingredients.map((x) =>
     ingredients.find((y) => y.name === x.ingredient)
   ) as Ingredients[];
@@ -54,7 +55,7 @@ export default function FoodDetail() {
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
             <View className="pb-8">
-              <DetailsBio data={mealDetail} />
+              <DetailsBio res={res} data={mealDetail} />
               {ings && ings?.length && (
                 <IngredientsDet
                   setActive={setActive}

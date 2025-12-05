@@ -1,9 +1,15 @@
-import { MealDetail } from "@/types";
-import { AntDesign } from "@expo/vector-icons";
+import { MealDetail, Restaurant } from "@/types";
+import { AntDesign, EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { useState } from "react";
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
-export default function DetailsBio({ data }: { data: MealDetail }) {
+export default function DetailsBio({
+  data,
+  res,
+}: {
+  data: MealDetail;
+  res: Restaurant | undefined;
+}) {
   const [quan, setQuan] = useState(1);
   const [expanded, setExpanded] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -17,15 +23,37 @@ export default function DetailsBio({ data }: { data: MealDetail }) {
   function handleIncrease() {
     setQuan((i) => (i += 1));
   }
+
   return (
     <View>
       <View className="gap-2.5 mt-4">
         <Image
           className="w-full rounded-2xl"
           source={{ uri: data?.image }}
-          style={{ height: Dimensions.get("screen").height / 2.6 }}
+          style={{ height: Dimensions.get("screen").height / 2.8 }}
           resizeMode="cover"
         />
+        <View className="flex items-center flex-row gap-2">
+          <Image
+            className="rounded-full size-11"
+            source={res?.image}
+            resizeMode="cover"
+          />
+          <View className="gap-1">
+            <View className="flex items-center flex-row gap-1.5">
+              <Text className="font-roboto-semibold text-base text-black">
+                {res?.name}
+              </Text>
+              <MaterialIcons name="verified" size={18} color="#14B74D" />
+            </View>
+            <View className="flex items-center flex-row gap-1">
+              <EvilIcons name="location" size={18} color="#A1A1A1" />
+              <Text className="font-roboto text-sm text-grey">
+                {res?.location}
+              </Text>
+            </View>
+          </View>
+        </View>
         <View className="flex items-center gap-2 justify-between flex-row">
           <Text className="font-roboto-semibold text-[24px] max-w-[85%]  text-black">
             {data?.title}
@@ -83,7 +111,7 @@ export default function DetailsBio({ data }: { data: MealDetail }) {
         </View>
         <View className=" " style={{ width: "100%" }}>
           <Text
-            className="text-base italic font-roboto-medium text-zinc-600"
+            className="text-sm  font-roboto text-zinc-600"
             numberOfLines={expanded ? undefined : 3}
             onTextLayout={(e) => {
               if (e.nativeEvent.lines.length > 3 && !expanded) {
