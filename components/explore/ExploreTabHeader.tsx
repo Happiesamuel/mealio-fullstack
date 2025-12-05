@@ -1,6 +1,6 @@
 import { useBottomSheet } from "@/context/BottomSheetProvider";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Animated, {
@@ -17,6 +17,13 @@ export default function ExploreTabHeader({
   tabSlug: string;
   setTabSlug: Dispatch<SetStateAction<string>>;
 }) {
+  const params = useLocalSearchParams<{
+    pricing: string;
+    rating: string;
+    sort: string;
+    categories: string;
+  }>();
+
   const tabs = [
     { name: "Meals", slug: "meals" },
     { name: "Restaurant", slug: "restaurant" },
@@ -60,7 +67,7 @@ export default function ExploreTabHeader({
         className="h-[80vh] gap-5"
         showsVerticalScrollIndicator={false}
       >
-        <FilterMeals />
+        <FilterMeals params={params} close={close} />
       </ScrollView>
     );
   };

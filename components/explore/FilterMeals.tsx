@@ -1,15 +1,30 @@
 import { useMeals } from "@/store/useMealStore";
 import cn from "clsx";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import RadioButton from "../ui/RadioButton";
 import RoundedFullButton from "../ui/RoundedFullButton";
-export default function FilterMeals() {
-  const [pricing, setPricing] = useState<string | null>(null);
-  const [rating, setRating] = useState<string | null>(null);
-  const [sort, setSort] = useState<string | null>(null);
-  const [cusines, setCusines] = useState<string[]>([]);
+export default function FilterMeals({
+  close,
+  params,
+}: {
+  close(): void;
+  params: {
+    pricing: string;
+    rating: string;
+    sort: string;
+    categories: string;
+  };
+}) {
+  const [pricing, setPricing] = useState<string | null>(params.pricing || null);
+  const [rating, setRating] = useState<string | null>(params.rating || null);
+  const [sort, setSort] = useState<string | null>(params.sort || null);
+  const [cusines, setCusines] = useState<string[]>(
+    params.categories ? JSON.parse(params.categories) : []
+  );
   const { categories } = useMeals();
+
   function handleCuisine(cuis: string) {
     const exist = cusines.some((x) => x === cuis);
     if (exist) {
@@ -18,6 +33,38 @@ export default function FilterMeals() {
       setCusines((i) => [...i, cuis]);
     }
   }
+  function handleApply() {
+    const newParams: any = {};
+
+    if (pricing && pricing !== "") {
+      newParams.pricing = pricing;
+    } else {
+      newParams.pricing = undefined;
+    }
+
+    if (rating && rating !== "") {
+      newParams.rating = rating;
+    } else {
+      newParams.rating = undefined;
+    }
+
+    if (sort && sort !== "") {
+      newParams.sort = sort;
+    } else {
+      newParams.sort = undefined;
+    }
+
+    if (cusines.length > 0) {
+      newParams.categories = JSON.stringify(cusines);
+    } else {
+      newParams.categories = undefined;
+    }
+
+    router.setParams(newParams);
+
+    close();
+  }
+
   return (
     <View className="gap-5">
       <View className="gap-2">
@@ -29,12 +76,16 @@ export default function FilterMeals() {
         <Text className="font-roboto-bold text-xl text-black">Pricing: </Text>
         <RadioButton
           state={pricing === "desc"}
-          setState={() => setPricing("desc")}
+          setState={() => {
+            return pricing === "desc" ? setPricing(null) : setPricing("desc");
+          }}
           text="High  -  Low"
         />
         <RadioButton
           state={pricing === "asc"}
-          setState={() => setPricing("asc")}
+          setState={() => {
+            return pricing === "asc" ? setPricing(null) : setPricing("asc");
+          }}
           text="Low  -  High"
         />
       </View>
@@ -42,12 +93,16 @@ export default function FilterMeals() {
         <Text className="font-roboto-bold text-xl text-black">Ratings: </Text>
         <RadioButton
           state={rating === "desc"}
-          setState={() => setRating("desc")}
+          setState={() => {
+            return rating === "desc" ? setRating(null) : setRating("desc");
+          }}
           text="High  -  Low"
         />
         <RadioButton
           state={rating === "asc"}
-          setState={() => setRating("asc")}
+          setState={() => {
+            return rating === "asc" ? setRating(null) : setRating("asc");
+          }}
           text="Low  -  High"
         />
       </View>
@@ -55,11 +110,11 @@ export default function FilterMeals() {
         <Text className="font-roboto-bold text-xl text-black">Categories:</Text>
         <View className="flex flex-row flex-wrap gap-2">
           {categories.map((cuis) => {
-            const exist = cusines.some((x) => x === cuis.id);
+            const exist = cusines.some((x) => x === cuis.name);
             return (
               <TouchableOpacity
                 key={cuis.id}
-                onPress={() => handleCuisine(cuis.id)}
+                onPress={() => handleCuisine(cuis.name)}
                 className={cn(
                   " w-[100px] h-9 rounded-xl flex items-center justify-center",
                   exist ? "bg-primary " : "border border-grey"
@@ -82,23 +137,30 @@ export default function FilterMeals() {
         <Text className="font-roboto-bold text-xl text-black">Sort:</Text>
         <RadioButton
           state={sort === "asc"}
-          setState={() => setSort("asc")}
+          setState={() => {
+            return sort === "asc" ? setSort(null) : setSort("asc");
+          }}
           text="A - Z (a - z)"
         />
         <RadioButton
           state={sort === "desc"}
-          setState={() => setSort("desc")}
+          setState={() => {
+            return sort === "desc" ? setSort(null) : setSort("desc");
+          }}
           text="Z - A (z - a)"
         />
       </View>
 
       <View className="gap-4 mt-6">
-        <RoundedFullButton className="bg-primary">
+        <RoundedFullButton onPress={() => handleApply()} className="bg-primary">
           <Text className="text-base font-roboto-bold text-white py-4 text-center">
             Apply Filter
           </Text>
         </RoundedFullButton>
-        <RoundedFullButton className="bg-transparent border border-primary">
+        <RoundedFullButton
+          onPress={close}
+          className="bg-transparent border border-primary"
+        >
           <Text className="text-base font-roboto-bold text-primary py-4 text-center">
             Cancel
           </Text>
