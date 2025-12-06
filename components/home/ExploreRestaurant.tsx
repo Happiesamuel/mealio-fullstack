@@ -13,7 +13,7 @@ import {
 export default function ExploreRestaurant() {
   const { restaurants } = useZustMeals();
   return (
-    <View className="gap-1">
+    <View className="gap-1 mt-4">
       <View className="flex items-center justify-between flex-row w-full">
         <Text className="font-roboto-medium text-sm text-black">
           Explore Restaurants
@@ -41,7 +41,7 @@ export default function ExploreRestaurant() {
           </TouchableOpacity>
         )}
         horizontal
-        contentContainerClassName="gap-5 my-4 h-fit"
+        contentContainerClassName="gap-6 my-4 h-fit"
         showsHorizontalScrollIndicator={false}
       />
     </View>

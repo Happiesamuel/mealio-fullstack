@@ -38,6 +38,7 @@ export default function Index() {
             <HomeHeader />
             <SearchBar onPress={() => router.push("/search")} />
             <Banner />
+            <ExploreRestaurant />
             <FlatList
               horizontal
               data={categories}
@@ -62,10 +63,9 @@ export default function Index() {
                   </Text>
                 </TouchableOpacity>
               )}
-              contentContainerClassName="gap-5 my-4 h-fit"
+              contentContainerClassName="gap-5 mt-4 mb-2 h-fit"
               showsHorizontalScrollIndicator={false}
             />
-            <ExploreRestaurant />
             <Offers />
             <MealForYou />
             <PopularMeals />

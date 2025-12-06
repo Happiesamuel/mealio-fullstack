@@ -73,7 +73,7 @@ export default function FoodDetail() {
                   />
                 ))}
               </View>
-              <View className="gap-3">
+              <View className="gap-5 mt-3">
                 <SimalarCategory cat={mealDetail.category} />
                 <SimilarArea area={mealDetail.area} />
               </View>

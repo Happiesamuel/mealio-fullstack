@@ -18,6 +18,7 @@ export default function TabsLayout() {
           borderTopRightRadius: 20,
           height: 90 + insets.bottom,
           paddingBottom: insets.bottom,
+          padding: 0,
         },
         tabBarItemStyle: {
           paddingVertical: 25,

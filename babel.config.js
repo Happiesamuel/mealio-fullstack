@@ -1,3 +1,22 @@
+// module.exports = function (api) {
+//   api.cache(true);
+//   return {
+//     presets: [
+//       ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+//       "nativewind/babel",
+//     ],
+//     plugins: [
+//       [
+//         "module:react-native-dotenv",
+//         {
+//           moduleName: "@env",
+//           path: ".env",
+//           allowUndefined: true,
+//         },
+//       ],
+//     ],
+//   };
+// };
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -6,14 +25,7 @@ module.exports = function (api) {
       "nativewind/babel",
     ],
     plugins: [
-      [
-        "module:react-native-dotenv",
-        {
-          moduleName: "@env",
-          path: ".env",
-          allowUndefined: true,
-        },
-      ],
+      // Remove the react-native-dotenv plugin completely
     ],
   };
 };

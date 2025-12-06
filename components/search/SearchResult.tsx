@@ -1,4 +1,4 @@
-import { FeatureCardProp } from "@/types";
+import { Meal } from "@/types";
 import {
   AntDesign,
   Ionicons,
@@ -8,16 +8,18 @@ import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function SearchResult({ item }: { item: FeatureCardProp }) {
+export default function SearchResult({ item }: { item: Meal }) {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      onPress={() =>
+        router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+      }
       className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl"
     >
       <View className="w-full relative">
         <Image
           className="rounded-lg w-full"
-          source={item.image}
+          source={{ uri: item.image }}
           style={{ height: 120 }}
           resizeMode="cover"
         />
@@ -35,7 +37,7 @@ export default function SearchResult({ item }: { item: FeatureCardProp }) {
         </View>
       </View>
       <Text className="font-roboto-semibold text-sm text-black">
-        {item.name}
+        {item.title}
       </Text>
       <Text className="font-roboto text-xs text-grey" numberOfLines={1}>
         {item.description}
@@ -48,7 +50,7 @@ export default function SearchResult({ item }: { item: FeatureCardProp }) {
           </Text>
         </View>
         <Text className="font-roboto text-xs text-grey">
-          ({item.reviews} reviews)
+          ({item.reviews.length} reviews)
         </Text>
       </View>
       <View className="flex justify-between flex-row items-center">

@@ -30,12 +30,14 @@ export default function AuthLayout() {
           />
 
           <View
-            className="bg-secondary pb-safe relative z-50 rounded-t-[34px] px-5  mt-28"
+            className="bg-secondary pb-safe relative z-50 rounded-t-[34px] px-5  flex-1  mt-28"
             style={{
               minHeight: Dimensions.get("screen").height - 112,
             }}
           >
-            <Slot />
+            <View className="pb-12">
+              <Slot />
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

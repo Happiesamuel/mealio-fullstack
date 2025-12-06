@@ -8,7 +8,11 @@ import meal from "@/assets/icons/mealio-icon.png";
 import successOrder from "@/assets/icons/success-order.png";
 import visa from "@/assets/icons/visa.png";
 
-import banner from "@/assets/images/banner.png";
+import bannerOne from "@/assets/images/banner_1.png";
+import bannerTwo from "@/assets/images/banner_2.png";
+import bannerThree from "@/assets/images/banner_3.png";
+import bannerFour from "@/assets/images/banner_4.png";
+import bannerFive from "@/assets/images/banner_5.png";
 import recipieSlideOne from "@/assets/images/details-1.png";
 import recipieSlideTwo from "@/assets/images/details-2.png";
 import recipieSlideThree from "@/assets/images/details-3.png";
@@ -41,7 +45,11 @@ export const images = {
   onboardingOne,
   onboardingTwo,
   icon,
-  banner,
+  bannerOne,
+  bannerTwo,
+  bannerThree,
+  bannerFour,
+  bannerFive,
   homeRecipeOne,
   homeRecipeTwo,
   homeRecipeThree,

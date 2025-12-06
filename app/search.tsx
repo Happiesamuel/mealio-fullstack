@@ -4,21 +4,61 @@ import RecentSearch from "@/components/search/RecentSearch";
 import SearchFavourite from "@/components/search/SearchFavourite";
 import SearchHeader from "@/components/search/SearchHeader";
 import SearchResult from "@/components/search/SearchResult";
-import { FeatureMeals } from "@/constnts/constant";
-import { FeatureCardProp } from "@/types";
+import { useMealSearch } from "@/hooks/useSearch";
+import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
+import { Meal } from "@/types";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
-import { FlatList, Text } from "react-native";
+import React, { useMemo } from "react";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Search() {
-  const params = useLocalSearchParams<{ query: string }>();
+  const { query, pricing, rating, categories, sort } = useLocalSearchParams<{
+    query: string;
+    pricing: string;
+    rating: string;
+    sort: string;
+    categories: string;
+  }>();
+  const { data: meals, status } = useMealSearch(query);
   function handleSearch(test: string) {
     if (test) router.setParams({ query: test });
   }
-  const data = [
-    ...FeatureMeals.filter((text) => text.name.startsWith(params.query)),
-  ];
+
+  const filteredMeals = useMemo(() => {
+    if (!meals || meals.length === 0) return [];
+
+    let list = [...meals];
+
+    const cats = categories ? JSON.parse(categories) : [];
+
+    if (cats.length > 0) {
+      list = list.filter((item) => cats.includes(item.category));
+    }
+
+    if (pricing === "asc") {
+      list = list.sort((a, b) => a.price - b.price);
+    }
+    if (pricing === "desc") {
+      list = list.sort((a, b) => b.price - a.price);
+    }
+
+    if (rating === "desc") {
+      list = list.sort((a, b) => b.rating - a.rating);
+    }
+    if (rating === "asc") {
+      list = list.sort((a, b) => a.rating - b.rating);
+    }
+
+    if (sort === "asc") {
+      list = list.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    if (sort === "desc") {
+      list = list.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    return list;
+  }, [meals, categories, rating, pricing, sort]);
   return (
     <SafeAreaView
       edges={["top"]}
@@ -26,25 +66,36 @@ export default function Search() {
     >
       <>
         <SearchHeader />
-        <SearchBar handleSearch={handleSearch} value={params.query} />
-        {params.query && (
-          <Text className="text-black font-roboto-semibold text-sm">
-            {data.length} Results Found
-          </Text>
-        )}
+        <SearchBar handleSearch={handleSearch} value={query} />
+        {query &&
+          (status === "pending" ? (
+            <View className="w-full items-start">
+              <ActivityIndicator size="small" color="#14b74d" />
+            </View>
+          ) : (
+            <Text className="text-black font-roboto-semibold text-sm">
+              {meals?.length} Results Found
+            </Text>
+          ))}
       </>
       <FlatList
-        data={data}
-        renderItem={({ item }: { item: FeatureCardProp }) => (
-          <SearchResult item={item} />
-        )}
+        data={filteredMeals}
+        renderItem={({ item }: { item: Meal }) => <SearchResult item={item} />}
         numColumns={2}
         keyExtractor={(item) => item.id}
         contentContainerClassName="pb-6"
         columnWrapperClassName="flex gap-2  my-2  "
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => {
-          return <>{params.query ? <NoSearchResult /> : <RecentSearch />}</>;
+          if (status === "pending" && query)
+            return (
+              <View className="flex-row flex-wrap justify-between gap-y-4 px-1">
+                {[...Array(6)].map((_, index) => (
+                  <FeturedCardSkeleton key={index} />
+                ))}
+              </View>
+            );
+          return <>{query ? <NoSearchResult /> : <RecentSearch />}</>;
         }}
         ListFooterComponent={<SearchFavourite />}
       />

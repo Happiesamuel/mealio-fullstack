@@ -2,6 +2,7 @@
 //   EXPO_PUBLIC_SPOONACULAR_API_KEY,
 //   EXPO_PUBLIC_SPOONACULAR_BASE_URL,
 // } from "@env";
+import { Meal } from "@/types";
 import { randomReviews } from "./helper";
 // const config = {
 //   spoonacularApiKey: EXPO_PUBLIC_SPOONACULAR_API_KEY,
@@ -145,4 +146,31 @@ export async function fetchMealDetailApi(mealId: string) {
       }))
       .filter((x) => x.ingredient && x.ingredient.trim() !== ""),
   };
+}
+export async function fetchMealsBySearch(query: string): Promise<Meal[]> {
+  if (!query) return [];
+
+  const res = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+  );
+  if (!res.ok) throw new Error("Failed to fetch meals");
+
+  const data = await res.json();
+  if (!data.meals) return [];
+
+  // Format meals like your existing meals
+  return data.meals.map((m: any) => ({
+    id: m.idMeal,
+    title: m.strMeal,
+    category: m.strCategory,
+    area: m.strArea,
+    image: m.strMealThumb,
+    price: Math.floor(Math.random() * 2000) + 500,
+    rating: parseFloat((Math.random() * 5).toFixed(1)),
+    restaurantId: ["r1", "r2", "r3", "r4", "r5"][Math.floor(Math.random() * 5)],
+    discountPercent: [0, 10, 15, 20][Math.floor(Math.random() * 4)],
+    time: `${Math.floor(Math.random() * 30) + 10} mins`,
+    description: m.strInstructions || "Delicious meal ready to enjoy!",
+    reviews: randomReviews(),
+  }));
 }
