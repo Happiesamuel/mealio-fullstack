@@ -106,7 +106,7 @@ function BannerSlide({ item, animationValue }: SlideProps) {
 
         <View className="bg-[#000000]/30 absolute size-full rounded-3xl" />
 
-        <View className="absolute bottom-5 left-4 w-full gap-4 ">
+        <View className="absolute bottom-9 left-4 w-full gap-3.5 ">
           <View className="gap-2">
             <Text className="text-sm font-roboto-bold text-white w-[60%]">
               {item.title}

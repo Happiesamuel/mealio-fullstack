@@ -18,7 +18,7 @@ export function useMealsQuery() {
   const featuredMeals = meals
     .slice()
     .sort(() => 0.5 - Math.random())
-    .slice(0, 10);
+    .slice(0, 26);
 
   const mealsForYou = meals
     .slice()

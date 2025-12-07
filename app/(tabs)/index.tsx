@@ -1,4 +1,5 @@
 import Banner from "@/components/home/Banner";
+import Categories from "@/components/home/Categories";
 import ExploreRestaurant from "@/components/home/ExploreRestaurant";
 import FeatureCard from "@/components/home/FeatureCard";
 import HomeHeader from "@/components/home/HomeHeader";
@@ -6,31 +7,38 @@ import MealForYou from "@/components/home/MealForYou";
 import Offers from "@/components/home/Offers";
 import PopularMeals from "@/components/home/PopularMeals";
 import SearchBar from "@/components/home/SearchBar";
-import { categories } from "@/constnts/constant";
 import { useMealsQuery } from "@/hooks/useMeals";
 import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
 import { FontAwesome } from "@expo/vector-icons";
-import cn from "clsx";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const { featuredMeals, status } = useMealsQuery();
   const params = useLocalSearchParams<{ fil: string }>();
-  const [fil, setFil] = useState(params.fil || "all");
+
+  const [fil, setFil] = useState(params.fil || "All");
+
+  // Compute filtered meals
+  const filteredMeals =
+    fil === "All"
+      ? featuredMeals
+      : featuredMeals.filter((x) => x.category === fil);
+
   function handlePressFilter(slug: string) {
+    console.log(slug);
     setFil(slug);
     router.setParams({ fil: slug });
   }
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3  ">
       <FlatList
-        data={featuredMeals}
+        data={filteredMeals}
         showsVerticalScrollIndicator={false}
         numColumns={2}
         keyExtractor={(item) => item.id}
-        contentContainerClassName="pb-6 "
+        contentContainerClassName="pb-4 "
         columnWrapperClassName="flex gap-2   "
         renderItem={({ item }) => <FeatureCard item={item} />}
         ListHeaderComponent={() => (
@@ -39,42 +47,21 @@ export default function Index() {
             <SearchBar onPress={() => router.push("/search")} />
             <Banner />
             <ExploreRestaurant />
-            <FlatList
-              horizontal
-              data={categories}
-              extraData={fil}
-              initialScrollIndex={0}
-              keyExtractor={(item) => item.slug}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => handlePressFilter(item.slug)}
-                  className={cn(
-                    "px-3 py-1 rounded-lg h-fit",
-                    fil === item.slug ? "bg-primary" : "bg-[#EEEEEE]"
-                  )}
-                >
-                  <Text
-                    className={cn(
-                      "font-roboto-semibold text-sm ",
-                      fil === item.slug ? "text-white" : "text-[#767676]"
-                    )}
-                  >
-                    {item.name}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              contentContainerClassName="gap-5 mt-4 mb-2 h-fit"
-              showsHorizontalScrollIndicator={false}
-            />
-            <Offers />
-            <MealForYou />
-            <PopularMeals />
+            <Categories handlePressFilter={handlePressFilter} fil={fil} />
+
             <View className="flex items-center justify-between flex-row w-full mt-4 mb-2">
               <Text className="font-roboto-medium text-sm text-black py-2">
                 Feature Meals
               </Text>
               <FontAwesome name="angle-right" size={20} color="black" />
             </View>
+          </>
+        )}
+        ListFooterComponent={() => (
+          <>
+            <Offers />
+            <MealForYou />
+            <PopularMeals />
           </>
         )}
         ListEmptyComponent={() => {
