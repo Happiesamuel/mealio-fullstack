@@ -28,13 +28,7 @@ export interface MealProp {
   image: any;
   id: string;
 }
-export interface ResturntProp {
-  name: string;
-  slug: string;
-  image: any;
-  location: string;
-  rating: number;
-}
+
 export interface Notification {
   id: string;
   title: string;
@@ -129,4 +123,5 @@ export interface MealDetail {
   discountPercent?: number;
   time: string;
   ingredients: Ingredient[];
+  price: number;
 }

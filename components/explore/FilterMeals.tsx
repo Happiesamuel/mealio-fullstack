@@ -1,5 +1,4 @@
 import { useCategoriesQuery } from "@/hooks/useCategories";
-import { useMealsQuery } from "@/hooks/useMeals";
 import cn from "clsx";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -25,7 +24,6 @@ export default function FilterMeals({
     params.categories ? JSON.parse(params.categories) : []
   );
   const { data: categories, status } = useCategoriesQuery();
-  const { refetch } = useMealsQuery();
 
   function handleCuisine(cuis: string) {
     const exist = cusines.some((x) => x === cuis);
@@ -65,7 +63,6 @@ export default function FilterMeals({
     router.setParams(newParams);
 
     close();
-    refetch();
   }
 
   return (

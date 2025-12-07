@@ -4,6 +4,8 @@ import RecentSearch from "@/components/search/RecentSearch";
 import SearchFavourite from "@/components/search/SearchFavourite";
 import SearchHeader from "@/components/search/SearchHeader";
 import SearchResult from "@/components/search/SearchResult";
+import Error from "@/components/ui/Error";
+import { useMealsQuery } from "@/hooks/useMeals";
 import { useMealSearch } from "@/hooks/useSearch";
 import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
 import { Meal } from "@/types";
@@ -20,7 +22,8 @@ export default function Search() {
     sort: string;
     categories: string;
   }>();
-  const { data: meals, status } = useMealSearch(query);
+  const { data: meals, status, error, refetch } = useMealSearch(query);
+  const { error: mealErr } = useMealsQuery();
   function handleSearch(test: string) {
     if (test) router.setParams({ query: test });
   }
@@ -67,8 +70,10 @@ export default function Search() {
       <>
         <SearchHeader />
         <SearchBar handleSearch={handleSearch} value={query} />
-        {query &&
-          (status === "pending" ? (
+        {error || mealErr ? (
+          <Error error={error?.message || mealErr?.message} onPress={refetch} />
+        ) : query ? (
+          status === "pending" ? (
             <View className="w-full items-start">
               <ActivityIndicator size="small" color="#14b74d" />
             </View>
@@ -76,29 +81,36 @@ export default function Search() {
             <Text className="text-black font-roboto-semibold text-sm">
               {meals?.length} Results Found
             </Text>
-          ))}
+          )
+        ) : (
+          ""
+        )}
       </>
-      <FlatList
-        data={filteredMeals}
-        renderItem={({ item }: { item: Meal }) => <SearchResult item={item} />}
-        numColumns={2}
-        keyExtractor={(item) => item.id}
-        contentContainerClassName="pb-6"
-        columnWrapperClassName="flex gap-2  my-2  "
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() => {
-          if (status === "pending" && query)
-            return (
-              <View className="flex-row flex-wrap justify-between gap-y-4 px-1">
-                {[...Array(6)].map((_, index) => (
-                  <FeturedCardSkeleton key={index} />
-                ))}
-              </View>
-            );
-          return <>{query ? <NoSearchResult /> : <RecentSearch />}</>;
-        }}
-        ListFooterComponent={<SearchFavourite />}
-      />
+      {!error && !mealErr && (
+        <FlatList
+          data={filteredMeals}
+          renderItem={({ item }: { item: Meal }) => (
+            <SearchResult item={item} />
+          )}
+          numColumns={2}
+          keyExtractor={(item) => item.id}
+          contentContainerClassName="pb-6"
+          columnWrapperClassName="flex gap-2  my-2  "
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => {
+            if (status === "pending" && query)
+              return (
+                <View className="flex-row flex-wrap justify-between gap-y-4 px-1">
+                  {[...Array(6)].map((_, index) => (
+                    <FeturedCardSkeleton key={index} />
+                  ))}
+                </View>
+              );
+            return <>{query ? <NoSearchResult /> : <RecentSearch />}</>;
+          }}
+          ListFooterComponent={<SearchFavourite />}
+        />
+      )}
     </SafeAreaView>
   );
 }

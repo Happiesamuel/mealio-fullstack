@@ -1,5 +1,4 @@
 import { useCategoriesQuery } from "@/hooks/useCategories";
-import { useMealsQuery } from "@/hooks/useMeals";
 import { FontAwesome } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
@@ -36,7 +35,6 @@ export default function FilterSearch({
     params.categories ? JSON.parse(params.categories) : []
   );
   const { data: categories, status } = useCategoriesQuery();
-  const { refetch } = useMealsQuery();
 
   function handleCuisine(cuis: string) {
     const exist = cusines.some((x) => x === cuis);
@@ -76,7 +74,6 @@ export default function FilterSearch({
     router.setParams(newParams);
 
     close?.();
-    refetch();
   }
 
   return (

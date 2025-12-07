@@ -9,6 +9,7 @@ export function useMealSearch(query: string) {
     data: sim,
     status,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["search-meals", query],
     queryFn: () => fetchMealsBySearch(query),
@@ -18,5 +19,5 @@ export function useMealSearch(query: string) {
   const data =
     sim?.map((x: any) => meals.find((y) => y.id === x.id)).filter(Boolean) ||
     [];
-  return { data, status, error };
+  return { data, status, error, refetch };
 }

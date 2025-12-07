@@ -2,6 +2,7 @@ import ExploreHeader from "@/components/explore/ExploreHeader";
 import ExploreTabHeader from "@/components/explore/ExploreTabHeader";
 import MealsCard from "@/components/explore/MealsCard";
 import RestuarantCard from "@/components/explore/ResturantCard";
+import Error from "@/components/ui/Error";
 import { useMealsQuery } from "@/hooks/useMeals";
 import ExploreScreenSkeleton from "@/skeleton/ExploreScreenSkeleton";
 import { useZustMeals } from "@/store/useMealStore";
@@ -20,7 +21,7 @@ export default function Explore() {
     categories: string;
   }>();
   const [tabSlug, setTabSlug] = useState(tab || "meals");
-  const { meals, status } = useMealsQuery();
+  const { meals, status, error, refetch } = useMealsQuery();
   const { restaurants } = useZustMeals();
 
   const filteredMeals = useMemo(() => {
@@ -64,29 +65,32 @@ export default function Explore() {
         <ExploreHeader />
         <ExploreTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />
       </View>
-      <FlatList<ItemType>
-        keyExtractor={(item) => ("price" in item ? item.id : item.id)}
-        data={tabSlug === "meals" ? filteredMeals : restaurants}
-        renderItem={({ item }) =>
-          "price" in item ? (
-            <MealsCard item={item as unknown as Meal} />
-          ) : (
-            <RestuarantCard item={item as unknown as Restaurant} />
-          )
-        }
-        ListEmptyComponent={() => {
-          if (status === "pending")
-            return (
-              <View className="gap-6">
-                {[...Array(6)].map((_, index) => (
-                  <ExploreScreenSkeleton key={index} />
-                ))}
-              </View>
-            );
-        }}
-        showsVerticalScrollIndicator={false}
-        contentContainerClassName="pb-8 gap-6"
-      />
+      {error && <Error error={error.message} onPress={refetch} />}
+      {!error && (
+        <FlatList<ItemType>
+          keyExtractor={(item) => ("price" in item ? item.id : item.id)}
+          data={tabSlug === "meals" ? filteredMeals : restaurants}
+          renderItem={({ item }) =>
+            "price" in item ? (
+              <MealsCard item={item as unknown as Meal} />
+            ) : (
+              <RestuarantCard item={item as unknown as Restaurant} />
+            )
+          }
+          ListEmptyComponent={() => {
+            if (status === "pending")
+              return (
+                <View className="gap-6">
+                  {[...Array(6)].map((_, index) => (
+                    <ExploreScreenSkeleton key={index} />
+                  ))}
+                </View>
+              );
+          }}
+          showsVerticalScrollIndicator={false}
+          contentContainerClassName="pb-8 gap-6"
+        />
+      )}
     </SafeAreaView>
   );
 }

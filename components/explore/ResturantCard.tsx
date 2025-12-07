@@ -1,4 +1,4 @@
-import { ResturntProp } from "@/types";
+import { Restaurant } from "@/types";
 import {
   AntDesign,
   EvilIcons,
@@ -7,19 +7,23 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import cn from "clsx";
+import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
-export default function RestuarantCard({ item }: { item: ResturntProp }) {
+export default function RestuarantCard({ item }: { item: Restaurant }) {
   return (
     <View className="flex flex-row items-center justify-between gap-5">
-      <View className="w-[166px] h-[129px]">
+      <TouchableOpacity
+        onPress={() => router.push(`/restaurantDetails/${item.id}`)}
+        className="w-[166px] h-[129px]"
+      >
         <Image
           resizeMode="cover"
           source={item.image}
           className="size-full rounded-2xl"
         />
-      </View>
+      </TouchableOpacity>
       <View className="gap-6 flex-1">
         <View className="gap-2">
           <View className="flex items-center flex-row gap-2">
