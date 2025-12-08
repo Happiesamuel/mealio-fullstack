@@ -1,4 +1,4 @@
-import { cart } from "@/constnts/constant";
+import { useCartStorage } from "@/store/useCartStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { Tabs } from "expo-router";
@@ -83,6 +83,8 @@ function TabBarIcon({
   iconName: any;
   focused: boolean;
 }) {
+  const { totalCartQuantity } = useCartStorage();
+  const quan = totalCartQuantity();
   return (
     <View className="gap-2 flex items-center justify-center relative  ">
       <MaterialCommunityIcons
@@ -97,10 +99,10 @@ function TabBarIcon({
       >
         {title}
       </Text>
-      {iconName === "cart" && (
+      {iconName === "cart" && quan && (
         <View className="size-5  flex items-center justify-center bg-error rounded-full absolute -top-3.5 -right-2">
           <Text className="text-white text-[10px] font-roboto-semibold">
-            {cart.length}
+            {quan}
           </Text>
         </View>
       )}

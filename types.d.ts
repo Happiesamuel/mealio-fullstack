@@ -125,3 +125,12 @@ export interface MealDetail {
   ingredients: Ingredient[];
   price: number;
 }
+interface CartItem {
+  price: number;
+  rating: number | undefined;
+  title: string;
+  id: string;
+  restaurantId: string | undefined;
+  image: string;
+  quantity: number;
+}

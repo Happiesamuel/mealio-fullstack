@@ -1,3 +1,4 @@
+import useAllCart from "@/hooks/useAllCart";
 import { Meal } from "@/types";
 import {
   AntDesign,
@@ -8,9 +9,11 @@ import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import QuantityChange from "../ui/QuantityChange";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function RestaurantMenu({ item }: { item: Meal }) {
+  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
   return (
     <TouchableOpacity
       onPress={() =>
@@ -57,21 +60,25 @@ export default function RestaurantMenu({ item }: { item: Meal }) {
         <Text className="font-roboto-medium text-sm text-black">
           ${item.price.toFixed(2)}
         </Text>
-        <RoundedFullButton
-          onPress={() => null}
-          className={cn(
-            "bg-primary flex flex-row w-fit px-3 items-center py-1.5 justify-center gap-2"
-          )}
-        >
-          <MaterialCommunityIcons
-            name={`cart-outline`}
-            size={14}
-            color={"white"}
-          />
-          <Text className="text-xs font-roboto-bold text-white text-center">
-            Order Now
-          </Text>
-        </RoundedFullButton>
+        {isInCart ? (
+          <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+        ) : (
+          <RoundedFullButton
+            onPress={handleCart}
+            className={cn(
+              "bg-primary flex flex-row w-fit px-3 items-center py-1.5 justify-center gap-2"
+            )}
+          >
+            <MaterialCommunityIcons
+              name={`cart-outline`}
+              size={14}
+              color={"white"}
+            />
+            <Text className="text-xs font-roboto-bold text-white text-center">
+              Order Now
+            </Text>
+          </RoundedFullButton>
+        )}
       </View>
     </TouchableOpacity>
   );

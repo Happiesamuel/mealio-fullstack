@@ -1,9 +1,9 @@
+import FeatureCard from "@/components/home/FeatureCard";
 import SearchBar from "@/components/home/SearchBar";
 import NoSearchResult from "@/components/search/NoSearchResult";
 import RecentSearch from "@/components/search/RecentSearch";
 import SearchFavourite from "@/components/search/SearchFavourite";
 import SearchHeader from "@/components/search/SearchHeader";
-import SearchResult from "@/components/search/SearchResult";
 import Error from "@/components/ui/Error";
 import { useMealsQuery } from "@/hooks/useMeals";
 import { useMealSearch } from "@/hooks/useSearch";
@@ -89,9 +89,7 @@ export default function Search() {
       {!error && !mealErr && (
         <FlatList
           data={filteredMeals}
-          renderItem={({ item }: { item: Meal }) => (
-            <SearchResult item={item} />
-          )}
+          renderItem={({ item }: { item: Meal }) => <FeatureCard item={item} />}
           numColumns={2}
           keyExtractor={(item) => item.id}
           contentContainerClassName="pb-6"

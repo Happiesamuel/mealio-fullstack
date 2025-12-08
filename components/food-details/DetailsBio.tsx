@@ -6,23 +6,16 @@ import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
 export default function DetailsBio({
   data,
   res,
+  handleQuantity,
+  quan,
 }: {
   data: MealDetail;
   res: Restaurant | undefined;
+  handleQuantity(type: string): void;
+  quan: number;
 }) {
-  const [quan, setQuan] = useState(1);
   const [expanded, setExpanded] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  function handleDecrease() {
-    if (quan === 1) {
-      setQuan(1);
-    } else {
-      setQuan((i) => (i -= 1));
-    }
-  }
-  function handleIncrease() {
-    setQuan((i) => (i += 1));
-  }
 
   return (
     <View>
@@ -82,7 +75,7 @@ export default function DetailsBio({
                   ? "border-grey bg-transparent"
                   : "border-primary bg-primary/10"
               )}
-              onPress={handleDecrease}
+              onPress={() => handleQuantity("decrease")}
             >
               <AntDesign
                 name="minus"
@@ -95,7 +88,7 @@ export default function DetailsBio({
             </Text>
             <TouchableOpacity
               className="border border-primary bg-primary/10 size-9 rounded-lg flex items-center justify-center"
-              onPress={handleIncrease}
+              onPress={() => handleQuantity("increase")}
             >
               <AntDesign name="plus" size={14} color="#14B74D" />
             </TouchableOpacity>

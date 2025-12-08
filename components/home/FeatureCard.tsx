@@ -1,14 +1,17 @@
+import useAllCart from "@/hooks/useAllCart";
 import { Meal } from "@/types";
 import {
   AntDesign,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-
+import QuantityChange from "../ui/QuantityChange";
 export default function FeatureCard({ item }: { item: Meal }) {
+  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
   return (
     <TouchableOpacity
       onPress={() =>
@@ -60,13 +63,23 @@ export default function FeatureCard({ item }: { item: Meal }) {
         <Text className="font-roboto-medium text-sm text-black">
           ${item.price.toFixed(2)}
         </Text>
-        <View className=" rounded-md size-7 flex items-center justify-center border border-primary/30">
-          <MaterialCommunityIcons
-            name="cart-outline"
-            size={15}
-            color="#14b74d"
-          />
-        </View>
+        {isInCart ? (
+          <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+        ) : (
+          <TouchableOpacity
+            onPress={handleCart}
+            className={cn(
+              " rounded-md size-7 flex items-center justify-center ",
+              isInCart ? "bg-primary" : "border border-primary/30"
+            )}
+          >
+            <MaterialCommunityIcons
+              name="cart-outline"
+              size={15}
+              color={isInCart ? "white" : "#14b74d"}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

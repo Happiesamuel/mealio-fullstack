@@ -27,7 +27,6 @@ export default function Index() {
       : featuredMeals.filter((x) => x.category === fil);
 
   function handlePressFilter(slug: string) {
-    console.log(slug);
     setFil(slug);
     router.setParams({ fil: slug });
   }

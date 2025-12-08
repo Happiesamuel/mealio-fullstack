@@ -6,14 +6,22 @@ import SimilarArea from "@/components/food-details/SimilarArea";
 import RestaurantReviews from "@/components/restaurantDetails/RestaurantReviews";
 import Error from "@/components/ui/Error";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import useAllCart from "@/hooks/useAllCart";
 import { useMealDetailQuery } from "@/hooks/useFetchMealDetail";
 import { useIngredientsQuery } from "@/hooks/useIngredients";
 import { useZustMeals } from "@/store/useMealStore";
 import { Ingredients, MealDetail, RestaurantReview } from "@/types";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function FoodDetail() {
   const { foodId, res: resId } = useLocalSearchParams<{
@@ -21,14 +29,19 @@ export default function FoodDetail() {
     res: string;
   }>();
   const { restaurants } = useZustMeals();
+
   const {
     data: mealDetail,
     status: mealStatus,
     error,
     refetch,
   } = useMealDetailQuery(foodId);
+  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(
+    mealDetail as MealDetail
+  );
   const { data: ingredients, status: ingStatus } = useIngredientsQuery();
   const [active, setActive] = useState<string | null>(null);
+
   if (mealStatus === "pending" || ingStatus === "pending")
     return (
       <SafeAreaView
@@ -42,10 +55,12 @@ export default function FoodDetail() {
         </View>
       </SafeAreaView>
     );
+
   const res = restaurants.find((x) => x.id === resId);
   const ings = mealDetail?.ingredients!.map((x) =>
     ingredients.find((y: any) => y.name === x.ingredient)
   ) as Ingredients[];
+
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full pb-safe">
       <DetailsHeader />
@@ -60,7 +75,12 @@ export default function FoodDetail() {
               showsVerticalScrollIndicator={false}
               ListHeaderComponent={() => (
                 <View className="pb-8">
-                  <DetailsBio res={res} data={mealDetail as MealDetail} />
+                  <DetailsBio
+                    quan={quan}
+                    res={res}
+                    handleQuantity={handleQuantity}
+                    data={mealDetail as MealDetail}
+                  />
                   {ings && ings?.length && (
                     <IngredientsDet
                       setActive={setActive}
@@ -95,18 +115,48 @@ export default function FoodDetail() {
               </Text>
             </View>
 
-            <RoundedFullButton className="bg-primary w-[70%] self-end">
-              <View className="py-4 flex items-center justify-center flex-row gap-2">
-                <MaterialCommunityIcons
-                  name="cart-outline"
-                  size={24}
-                  color={"white"}
-                />
-                <Text className="font-roboto-bold text-base text-white">
-                  Add to Cart
+            {isInCart ? (
+              <View className="flex items-center flex-row gap-6">
+                <TouchableOpacity
+                  className={cn(
+                    "  size-12 rounded-full flex items-center justify-center",
+                    quan <= 1 ? "bg-primary/50" : "bg-primary"
+                  )}
+                  onPress={() => handleQuantity("decrease")}
+                >
+                  <AntDesign
+                    name="minus"
+                    size={14}
+                    color={quan <= 1 ? "white" : "white"}
+                  />
+                </TouchableOpacity>
+                <Text className="text-2xl font-roboto-semibold text-black">
+                  {quan}
                 </Text>
+                <TouchableOpacity
+                  className="bg-primary  size-12 rounded-full flex items-center justify-center"
+                  onPress={() => handleQuantity("increase")}
+                >
+                  <AntDesign name="plus" size={18} color="white" />
+                </TouchableOpacity>
               </View>
-            </RoundedFullButton>
+            ) : (
+              <RoundedFullButton
+                onPress={handleCart}
+                className="bg-primary w-[70%] self-end"
+              >
+                <View className="py-4 flex items-center justify-center flex-row gap-2">
+                  <MaterialCommunityIcons
+                    name="cart-outline"
+                    size={24}
+                    color={"white"}
+                  />
+                  <Text className="font-roboto-bold text-base text-white">
+                    Add to Cart
+                  </Text>
+                </View>
+              </RoundedFullButton>
+            )}
           </View>
         </>
       )}

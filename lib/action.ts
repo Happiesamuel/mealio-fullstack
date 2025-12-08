@@ -174,3 +174,25 @@ export async function fetchMealsBySearch(query: string): Promise<Meal[]> {
     reviews: randomReviews(),
   }));
 }
+export async function plunk() {
+  try {
+    const response = await fetch(
+      "https://plunk-email.vercel.app/api/sendEmail",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "odioneghogho@gmail.com" }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log("OTP sent successfully!");
+    } else {
+      console.log("Failed to send OTP: " + data.error);
+    }
+  } catch (err) {
+    console.error("Error sending OTP:", err);
+  }
+}
