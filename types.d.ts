@@ -126,7 +126,7 @@ export interface MealDetail {
   ingredients: Ingredient[];
   price: number;
 }
-interface CartItem {
+export interface CartItem {
   price: number;
   rating: number | undefined;
   title: string;
@@ -134,6 +134,15 @@ interface CartItem {
   restaurantId: string | undefined;
   image: string;
   quantity: number;
+}
+export interface FavouriteMeal {
+  price: number;
+  rating: number | undefined;
+  title: string;
+  id: string;
+  restaurantId: string | undefined;
+  image: string;
+  time?: number | string;
 }
 export interface CartProp {
   id: string;

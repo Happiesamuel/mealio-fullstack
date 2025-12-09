@@ -1,10 +1,13 @@
+import useAllFavourite from "@/hooks/useAllFavourite";
 import { Meal } from "@/types";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import FavouriteIcon from "../ui/FavouriteIcon";
 
 export default function PopularCard({ item }: { item: Meal }) {
+  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
   return (
     <TouchableOpacity
       onPress={() =>
@@ -19,18 +22,10 @@ export default function PopularCard({ item }: { item: Meal }) {
           source={{ uri: item.image }}
           style={{ height: 120 }}
         />
-        <View
-          className=" flex items-center justify-center  z-10 flex-row absolute  rounded-full"
-          style={{
-            backgroundColor: "#2E2E2E26",
-            width: 32,
-            height: 32,
-            right: 8,
-            top: 8,
-          }}
-        >
-          <Ionicons name="heart-outline" size={20} color="white" />
-        </View>
+        <FavouriteIcon
+          handlePress={() => handlePress("meals")}
+          isInFavourite={isInFavourite}
+        />
       </View>
 
       <View className="flex justify-between flex-row items-center">
