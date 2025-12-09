@@ -7,20 +7,20 @@ export default function CartModal({
   visible,
   onCancel,
   onConfirm,
+  children,
 }: {
   visible: boolean;
   onCancel: () => void;
   onConfirm: () => void;
+  children: React.ReactNode;
 }) {
   return (
     <Modal visible={visible} transparent animationType="fade">
-      <View className="flex-1 bg-black/50 justify-center items-center">
-        <View className="w-[80%] bg-white rounded-2xl py-8 items-center shadow-xl">
+      <View className="flex-1 bg-black/50 justify-center items-center ">
+        <View className="w-[80%] bg-white rounded-2xl py-8 items-center shadow-xl px-6">
           <FontAwesome name="trash" size={48} color="#FD3F3F" />
 
-          <Text className=" font-roboto-medium text-2xl mt-4 mb-6">
-            Remove Item?
-          </Text>
+          {children}
 
           <View className="flex-row w-[85%] justify-between">
             <RoundedFullButton

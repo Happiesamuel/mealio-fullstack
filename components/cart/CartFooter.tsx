@@ -1,4 +1,5 @@
 import { cart } from "@/constnts/constant";
+import { useCartStorage } from "@/store/useCartStore";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
@@ -7,9 +8,12 @@ import Foot from "../ui/Foot";
 import RoundedFullButton from "../ui/RoundedFullButton";
 import PromoCode from "./PromoCode";
 export default function CartFooter() {
+  const { totalCartPrice, total } = useCartStorage();
   function handleCheckout() {
     router.push("/check/checkout");
   }
+  const price = totalCartPrice();
+  const totalPrice = total();
   return (
     <View className="gap-3 mt-4">
       <View className="">
@@ -18,25 +22,25 @@ export default function CartFooter() {
         <View className="gap-2.5">
           <Foot
             title="Subtotal"
-            price={157}
+            price={price ? price : 0}
             priceClass="text-sm"
             titleClass="text-grey text-sm"
           />
           <Foot
             title="Delivery Fees"
-            price={20}
+            price={price ? 20 : 0}
             priceClass="text-sm"
             titleClass="text-grey text-sm"
           />
           <Foot
             title="Discount"
-            price={0}
+            price={price ? 15 : 0}
             priceClass="text-sm"
             titleClass="text-black text-sm"
           />
           <Foot
             title="Total"
-            price={162}
+            price={totalPrice ? Math.floor(totalPrice - 15 + 20) : 0}
             priceClass="text-[22px]"
             titleClass="text-black text-xl"
           />

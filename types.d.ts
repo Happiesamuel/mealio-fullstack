@@ -59,6 +59,7 @@ export interface Orders {
     image: any;
   }[];
 }
+
 export interface Meal {
   id: string;
   title: string;
@@ -133,4 +134,12 @@ interface CartItem {
   restaurantId: string | undefined;
   image: string;
   quantity: number;
+}
+export interface CartProp {
+  id: string;
+  title: string;
+  image: string;
+  price: number;
+  rating: number;
+  restaurantId: string;
 }

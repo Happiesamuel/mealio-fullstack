@@ -46,8 +46,13 @@ export function useCartStorage() {
   const cart = useCartStore((s) => s.items);
   const setQuantity = useCartStore((s) => s.setQuantity);
   const totalCartQuantity = () =>
-    cart.map((x) => x.quantity).reduce((a, b) => a + b);
-  const totalCartPrice = () => cart.map((x) => x.price).reduce((a, b) => a + b);
+    cart.length ? cart.map((x) => x.quantity).reduce((a, b) => a + b) : 0;
+  const totalCartPrice = () =>
+    cart.length ? cart.map((x) => x.price).reduce((a, b) => a + b) : 0;
+  const total = () =>
+    cart.length
+      ? cart.map((x) => x.quantity * x.price).reduce((a, b) => a + b)
+      : 0;
   return {
     addItem,
     removeItem,
@@ -57,5 +62,6 @@ export function useCartStorage() {
     setQuantity,
     totalCartQuantity,
     totalCartPrice,
+    total,
   };
 }

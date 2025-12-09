@@ -1,8 +1,8 @@
 import { useCartStorage } from "@/store/useCartStore";
-import { CartItem, Meal, MealDetail } from "@/types";
+import { CartItem, CartProp, Meal, MealDetail } from "@/types";
 import { useEffect, useState } from "react";
 
-export default function useAllCart(item: Meal | MealDetail) {
+export default function useAllCart(item: Meal | MealDetail | CartProp) {
   const [quan, setQuan] = useState(1);
   const { cart, addItem, removeItem, setQuantity } = useCartStorage();
   const isInCart = cart.some((x) => x.id === item.id);
@@ -40,5 +40,5 @@ export default function useAllCart(item: Meal | MealDetail) {
       setQuantity(item.id, quan + 1);
     }
   }
-  return { handleQuantity, handleCart, quan, isInCart };
+  return { handleQuantity, handleCart, quan, isInCart, removeItem };
 }

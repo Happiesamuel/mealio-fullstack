@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMealsQuery } from "./useMeals";
 
 export function useSimilarCategory(cat: string, type: "cat" | "area") {
-  const { meals } = useMealsQuery();
+  const { meals, status: mealStatus } = useMealsQuery();
 
   const {
     data: sim,
@@ -15,7 +15,7 @@ export function useSimilarCategory(cat: string, type: "cat" | "area") {
       type === "cat"
         ? fetchMealsByCat({ cat })
         : fetchMealsByArea({ area: cat }),
-    enabled: !!cat,
+    enabled: !!cat && mealStatus === "success",
   });
 
   const data =

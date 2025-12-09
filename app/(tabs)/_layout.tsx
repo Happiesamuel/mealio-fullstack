@@ -102,7 +102,7 @@ function TabBarIcon({
       {iconName === "cart" && quan && (
         <View className="size-5  flex items-center justify-center bg-error rounded-full absolute -top-3.5 -right-2">
           <Text className="text-white text-[10px] font-roboto-semibold">
-            {quan}
+            {quan > 99 ? "99+" : quan}
           </Text>
         </View>
       )}

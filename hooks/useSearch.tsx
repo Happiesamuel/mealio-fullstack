@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMealsQuery } from "./useMeals";
 
 export function useMealSearch(query: string) {
-  const { meals } = useMealsQuery();
+  const { meals, status: mealStatus } = useMealsQuery();
   const {
     data: sim,
     status,
@@ -13,7 +13,7 @@ export function useMealSearch(query: string) {
   } = useQuery({
     queryKey: ["search-meals", query],
     queryFn: () => fetchMealsBySearch(query),
-    enabled: !!query, // only fetch if query is not empty
+    enabled: !!query && mealStatus === "success", // only fetch if query is not empty
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
   const data =
