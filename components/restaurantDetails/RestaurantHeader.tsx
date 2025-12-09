@@ -1,3 +1,5 @@
+import useAllFavourite from "@/hooks/useAllFavourite";
+import { Restaurant } from "@/types";
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -8,8 +10,13 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
-export default function RestaurantHeader() {
+export default function RestaurantHeader({
+  item,
+}: {
+  item: Restaurant | undefined;
+}) {
   const [open, setOpen] = useState(false);
+  const { handlePress, isInFavourite } = useAllFavourite(item!, "restaurants");
   return (
     <View className="flex relative flex-row items-center justify-between my-1 pt-4">
       <RoundedFullButton
@@ -46,10 +53,19 @@ export default function RestaurantHeader() {
             </Text>
           </Pressable>
 
-          <Pressable className="flex-row items-center gap-2 py-2.5">
-            <MaterialCommunityIcons name="heart-outline" size={20} />
+          <Pressable
+            onPress={() => {
+              handlePress("restaurants");
+              setOpen(!open);
+            }}
+            className="flex-row items-center gap-2 py-2.5"
+          >
+            <MaterialCommunityIcons
+              name={isInFavourite ? "heart" : "heart-outline"}
+              size={20}
+            />
             <Text className="text-base font-roboto text-black">
-              Add to Favorites
+              {isInFavourite ? "Remove from Favorites" : "Add to Favorites"}
             </Text>
           </Pressable>
 

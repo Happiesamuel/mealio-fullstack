@@ -10,10 +10,7 @@ import FavouriteIcon from "../ui/FavouriteIcon";
 import QuantityChange from "../ui/QuantityChange";
 export default function FeatureCard({ item }: { item: Meal }) {
   const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
-  const { handlePress, isInFavourite, favourite } = useAllFavourite(
-    item,
-    "meals"
-  );
+  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
   return (
     <TouchableOpacity
       onPress={() =>

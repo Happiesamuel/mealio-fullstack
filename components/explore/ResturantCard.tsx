@@ -1,3 +1,4 @@
+import useAllFavourite from "@/hooks/useAllFavourite";
 import { Restaurant } from "@/types";
 import {
   AntDesign,
@@ -12,6 +13,7 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function RestuarantCard({ item }: { item: Restaurant }) {
+  const { handlePress, isInFavourite } = useAllFavourite(item, "restaurants");
   return (
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
@@ -66,8 +68,15 @@ export default function RestuarantCard({ item }: { item: Restaurant }) {
               Order Now
             </Text>
           </RoundedFullButton>
-          <RoundedFullButton className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] ">
-            <Ionicons name="heart-outline" size={18} color="black" />
+          <RoundedFullButton
+            onPress={() => handlePress("restaurants")}
+            className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+          >
+            <Ionicons
+              name={isInFavourite ? "heart" : "heart-outline"}
+              size={18}
+              color={isInFavourite ? "#ff1414" : "white"}
+            />
           </RoundedFullButton>
         </View>
       </View>

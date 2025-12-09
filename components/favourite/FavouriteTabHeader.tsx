@@ -1,11 +1,13 @@
+import { useFavouriteStorage } from "@/store/useFavouriteStore";
 import { router } from "expo-router";
-import React, { Dispatch, SetStateAction, useRef } from "react";
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import CartModal from "../cart/CartModal";
 
 export default function FavouriteTabHeader({
   tabSlug,
@@ -14,6 +16,9 @@ export default function FavouriteTabHeader({
   tabSlug: string;
   setTabSlug: Dispatch<SetStateAction<string>>;
 }) {
+  const [showModal, setShowModal] = useState(false);
+
+  const { clearFavourite } = useFavouriteStorage();
   const tabs = [
     { name: "Meals", slug: "meals" },
     { name: "Restaurant", slug: "restaurant" },
@@ -89,11 +94,28 @@ export default function FavouriteTabHeader({
           ]}
         />
       </View>
-      <Pressable>
+      <Pressable onPress={() => setShowModal(!showModal)}>
         <Text className="font-roboto-medium text-base text-primary">
           Clear all
         </Text>
       </Pressable>
+      {showModal && (
+        <CartModal
+          visible={showModal}
+          onCancel={() => setShowModal(false)}
+          onConfirm={() => {
+            setShowModal(false);
+            return tabSlug === "meals"
+              ? clearFavourite("meals")
+              : clearFavourite("restaurants");
+          }}
+        >
+          <Text className=" font-roboto-medium text-center text-2xl mt-4 mb-6 ">
+            Are you sure you want to clear all your favourite{" "}
+            {tabSlug === "meals" ? "meal" : "restaurant"}
+          </Text>
+        </CartModal>
+      )}
     </View>
   );
 }

@@ -1,4 +1,5 @@
-import { ResturntProp } from "@/types";
+import useAllFavourite from "@/hooks/useAllFavourite";
+import { Restaurant } from "@/types";
 import {
   AntDesign,
   EvilIcons,
@@ -7,20 +8,25 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import cn from "clsx";
+import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
-export default function FavouriteRestaurant({ item }: { item: ResturntProp }) {
+export default function FavouriteRestaurant({ item }: { item: Restaurant }) {
+  const { handlePress, isInFavourite } = useAllFavourite(item, "restaurants");
   return (
-    <View className="flex flex-col border border-zinc-200 rounded-xl p-2 bg-zinc-200/10  justify-between gap-3">
-      <View className="w-full h-[160px]">
+    <View className="flex flex-col border border-zinc-200 rounded-xl p-2 bg-zinc-200/10   gap-3">
+      <TouchableOpacity
+        onPress={() => router.push(`/restaurantDetails/${item.id}`)}
+        className="w-full "
+      >
         <Image
           resizeMode="cover"
           source={item.image}
-          className="size-full rounded-t-xl"
+          className="size-full rounded-t-xl h-[160px]"
         />
-      </View>
-      <View className="gap-4 flex-1">
+      </TouchableOpacity>
+      <View className="gap-4 ">
         <View className="gap-1">
           <View className="flex items-center flex-row gap-2">
             <Text
@@ -47,8 +53,15 @@ export default function FavouriteRestaurant({ item }: { item: ResturntProp }) {
               </View>
             </View>
             <View className="flex flex-row items-center gap-4">
-              <RoundedFullButton className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] ">
-                <Ionicons name="heart-outline" size={18} color="black" />
+              <RoundedFullButton
+                onPress={() => handlePress("restaurants")}
+                className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+              >
+                <Ionicons
+                  name={isInFavourite ? "heart" : "heart-outline"}
+                  size={18}
+                  color={isInFavourite ? "#ff1414" : "white"}
+                />
               </RoundedFullButton>
               <RoundedFullButton
                 onPress={() => null}

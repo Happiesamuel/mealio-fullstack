@@ -5,7 +5,8 @@ export default function useAllFavourite(
   item: FavouriteMeal | Restaurant,
   type: "meals" | "restaurants"
 ) {
-  const { addItem, removeItem, favourite } = useFavouriteStorage();
+  const { addItem, removeItem, favourite, clearFavourite } =
+    useFavouriteStorage();
   const isInFavourite = favourite[type].some((x) => x.id === item.id);
   function handlePress(type: "meals" | "restaurants") {
     let fav: FavouriteMeal | Restaurant;
@@ -13,7 +14,7 @@ export default function useAllFavourite(
       fav = {
         price: item.price,
         rating: item.rating,
-        name: item.title,
+        title: item.title,
         id: item.id,
         restaurantId: item.restaurantId,
         image: item.image,
@@ -24,5 +25,5 @@ export default function useAllFavourite(
     }
     return isInFavourite ? removeItem(item.id, type) : addItem(fav, type);
   }
-  return { handlePress, favourite, isInFavourite };
+  return { handlePress, favourite, isInFavourite, clearFavourite };
 }

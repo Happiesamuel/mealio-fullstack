@@ -1,19 +1,18 @@
 import useAllCart from "@/hooks/useAllCart";
+import useAllFavourite from "@/hooks/useAllFavourite";
 import { Meal } from "@/types";
-import {
-  AntDesign,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import FavouriteIcon from "../ui/FavouriteIcon";
 import QuantityChange from "../ui/QuantityChange";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function RestaurantMenu({ item }: { item: Meal }) {
   const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
+  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
   return (
     <TouchableOpacity
       onPress={() =>
@@ -28,18 +27,10 @@ export default function RestaurantMenu({ item }: { item: Meal }) {
           style={{ height: 160 }}
           resizeMode="cover"
         />
-        <View
-          className=" flex items-center justify-center  z-10 flex-row absolute  rounded-full"
-          style={{
-            backgroundColor: "#2E2E2E26",
-            width: 32,
-            height: 32,
-            right: 8,
-            top: 8,
-          }}
-        >
-          <Ionicons name="heart-outline" size={20} color="white" />
-        </View>
+        <FavouriteIcon
+          handlePress={() => handlePress("meals")}
+          isInFavourite={isInFavourite}
+        />
       </View>
       <Text className="font-roboto-semibold text-sm text-black">
         {item.title}

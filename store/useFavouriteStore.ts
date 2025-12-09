@@ -16,7 +16,7 @@ interface FavouriteState {
   removeItem: (id: string, type: "meals" | "restaurants") => void;
 
   setFavourite: (items: FavouriteState["items"]) => void;
-  clearFavourite: () => void;
+  clearFavourite: (type: "meals" | "restaurants") => void;
 }
 
 export const useFavouriteStore = create<FavouriteState>()(
@@ -42,7 +42,7 @@ export const useFavouriteStore = create<FavouriteState>()(
 
       setFavourite: (items) => set({ items }),
 
-      clearFavourite: () => set({ items: { meals: [], restaurants: [] } }),
+      clearFavourite: (type) => set({ items: { ...get().items, [type]: [] } }),
     }),
     {
       name: "favourite-cart",

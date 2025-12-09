@@ -1,16 +1,8 @@
 import { useSimilarCategory } from "@/hooks/useSimilarCategory";
 import { OffersSkeleton } from "@/skeleton/OffersSkeleton";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
+import { SimilarAreaCard } from "./SimilarCard";
 
 export default function SimilarArea({ area }: { area: string }) {
   const { data, status, error } = useSimilarCategory(area, "area");
@@ -39,42 +31,7 @@ export default function SimilarArea({ area }: { area: string }) {
         contentContainerClassName="gap-3.5  "
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() =>
-                router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
-              }
-              style={{ width: 140 }}
-              className="gap-1"
-            >
-              <View className="w-full relative">
-                <Image
-                  className="rounded-lg w-full"
-                  source={{ uri: item.image }}
-                  style={{ height: 120 }}
-                />
-                <View
-                  className=" flex items-center justify-center  z-10 flex-row absolute  rounded-full"
-                  style={{
-                    backgroundColor: "#2E2E2E26",
-                    width: 32,
-                    height: 32,
-                    right: 8,
-                    top: 8,
-                  }}
-                >
-                  <Ionicons name="heart-outline" size={20} color="white" />
-                </View>
-              </View>
-
-              <Text
-                className="font-roboto text-sm text-zinc-700"
-                numberOfLines={1}
-              >
-                {item.title}
-              </Text>
-            </TouchableOpacity>
-          );
+          return <SimilarAreaCard item={item} />;
         }}
         ListEmptyComponent={() => {
           return (

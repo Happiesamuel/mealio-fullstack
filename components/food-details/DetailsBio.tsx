@@ -1,8 +1,10 @@
+import useAllFavourite from "@/hooks/useAllFavourite";
 import { MealDetail, Restaurant } from "@/types";
 import { AntDesign, EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { useState } from "react";
 import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
+import FavouriteIcon from "../ui/FavouriteIcon";
 export default function DetailsBio({
   data,
   res,
@@ -16,7 +18,7 @@ export default function DetailsBio({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showMore, setShowMore] = useState(false);
-
+  const { handlePress, isInFavourite } = useAllFavourite(data, "meals");
   return (
     <View>
       <View className="gap-2.5 mt-4">
@@ -26,26 +28,32 @@ export default function DetailsBio({
           style={{ height: Dimensions.get("screen").height / 2.8 }}
           resizeMode="cover"
         />
-        <View className="flex items-center flex-row gap-2">
-          <Image
-            className="rounded-full size-11"
-            source={res?.image}
-            resizeMode="cover"
-          />
-          <View className="gap-1">
-            <View className="flex items-center flex-row gap-1.5">
-              <Text className="font-roboto-semibold text-base text-black">
-                {res?.name}
-              </Text>
-              <MaterialIcons name="verified" size={18} color="#14B74D" />
-            </View>
-            <View className="flex items-center flex-row gap-1">
-              <EvilIcons name="location" size={18} color="#A1A1A1" />
-              <Text className="font-roboto text-sm text-grey">
-                {res?.location}
-              </Text>
+        <View className="flex items-start flex-row justify-between ">
+          <View className="flex items-center flex-row gap-2">
+            <Image
+              className="rounded-full size-11"
+              source={res?.image}
+              resizeMode="cover"
+            />
+            <View className="gap-1">
+              <View className="flex items-center flex-row gap-1.5">
+                <Text className="font-roboto-semibold text-base text-black">
+                  {res?.name}
+                </Text>
+                <MaterialIcons name="verified" size={18} color="#14B74D" />
+              </View>
+              <View className="flex items-center flex-row gap-1">
+                <EvilIcons name="location" size={18} color="#A1A1A1" />
+                <Text className="font-roboto text-sm text-grey">
+                  {res?.location}
+                </Text>
+              </View>
             </View>
           </View>
+          <FavouriteIcon
+            handlePress={() => handlePress("meals")}
+            isInFavourite={isInFavourite}
+          />
         </View>
         <View className="flex items-center gap-2 justify-between flex-row">
           <Text className="font-roboto-semibold text-[24px] max-w-[85%]  text-black">

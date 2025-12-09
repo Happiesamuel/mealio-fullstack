@@ -1,4 +1,5 @@
 import useAllCart from "@/hooks/useAllCart";
+import useAllFavourite from "@/hooks/useAllFavourite";
 import { Meal } from "@/types";
 import {
   AntDesign,
@@ -13,6 +14,7 @@ import QuantityChange from "../ui/QuantityChange";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function MealsCard({ item }: { item: Meal }) {
   const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
+  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
   return (
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
@@ -71,8 +73,15 @@ export default function MealsCard({ item }: { item: Meal }) {
               </Text>
             </RoundedFullButton>
           )}
-          <RoundedFullButton className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] ">
-            <Ionicons name="heart-outline" size={18} color="black" />
+          <RoundedFullButton
+            onPress={() => handlePress("meals")}
+            className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+          >
+            <Ionicons
+              name={isInFavourite ? "heart" : "heart-outline"}
+              size={18}
+              color={isInFavourite ? "#ff1414" : "white"}
+            />
           </RoundedFullButton>
         </View>
       </View>

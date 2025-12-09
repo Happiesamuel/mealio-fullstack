@@ -27,7 +27,7 @@ export default function RestaurantDetail() {
   const res = restaurants.find((x) => x.id === restaurantId);
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3 pb-safe">
-      <RestaurantHeader />
+      <RestaurantHeader item={res} />
       {error ? (
         <Error error={error.message} onPress={refetch} />
       ) : (
