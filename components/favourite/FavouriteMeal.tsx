@@ -14,7 +14,9 @@ export default function FavouriteMeal({ item }: { item: Fav }) {
   const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/fooddetail/${item.id}`)}
+      onPress={() =>
+        router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
+      }
       className="flex flex-col border border-zinc-200 rounded-xl p-2 bg-zinc-200/10  justify-between gap-3"
     >
       <View className="w-full h-[160px]">

@@ -1,13 +1,5 @@
-// import {
-//   EXPO_PUBLIC_SPOONACULAR_API_KEY,
-//   EXPO_PUBLIC_SPOONACULAR_BASE_URL,
-// } from "@env";
 import { Meal } from "@/types";
 import { randomReviews } from "./helper";
-// const config = {
-//   spoonacularApiKey: EXPO_PUBLIC_SPOONACULAR_API_KEY,
-//   spoonacularBaseUrl: EXPO_PUBLIC_SPOONACULAR_BASE_URL,
-// };
 
 export async function fetchMealsByArea({ area }: { area: string }) {
   try {

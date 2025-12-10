@@ -38,6 +38,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import "react-native-url-polyfill/auto";
 import "./globals.css";
 import Splash from "./Splash";
 

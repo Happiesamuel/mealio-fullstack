@@ -1,5 +1,7 @@
-// // types/env.d.ts
-// declare module "@env" {
-//   export const EXPO_PUBLIC_SPOONACULAR_API_KEY: string;
-//   export const EXPO_PUBLIC_SPOONACULAR_BASE_URL: string;
-// }
+declare namespace NodeJS {
+  interface ProcessEnv {
+    EXPO_PUBLIC_API_KEY: string;
+    EXPO_PUBLIC_BASE_URL: string;
+    EXPO_PUBLIC_STRIPE_KEY: string;
+  }
+}
