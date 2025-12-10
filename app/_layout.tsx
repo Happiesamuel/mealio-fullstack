@@ -83,7 +83,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <BottomSheetProvider>
           <Stack screenOptions={{ headerShown: false }} />
-          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />{" "}
+          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
           <Toast config={toastConfig} />
         </BottomSheetProvider>
       </SafeAreaProvider>

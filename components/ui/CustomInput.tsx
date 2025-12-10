@@ -53,7 +53,7 @@ export default function CustomInput({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           secureTextEntry={show ? true : false}
-          className="py-4  w-[80%] px-4"
+          className="py-4  w-[80%] px-4 font-roboto"
         />
         {type === "password" && (
           <Pressable onPress={() => setShow(!show)} className="pr-4">

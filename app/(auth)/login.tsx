@@ -1,16 +1,85 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
+import useAuth from "@/hooks/useAuth";
+import { loginInput, loginSchema } from "@/lib/schemas";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { ActivityIndicator, Image, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
+import { ZodError } from "zod";
 
 export default function Login() {
+  const { mutate, status, error } = useAuth("login");
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  // const error = "The password you entered doesn't match";
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof loginInput, string>>
+  >({});
+  const handleChange = (field: keyof typeof form, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+
+    try {
+      loginSchema.pick({ [field]: true }).parse({ [field]: value });
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const fieldErrors = err.flatten().fieldErrors as Record<
+          keyof loginInput,
+          string[] | undefined
+        >;
+        setErrors((prev) => ({ ...prev, [field]: fieldErrors[field]?.[0] }));
+      }
+    }
+  };
+
+  const handleSubmit = () => {
+    try {
+      const validatedData: loginInput = loginSchema.parse(form);
+      setErrors({});
+
+      mutate(
+        { email: validatedData.email, password: validatedData.password },
+        {
+          onSuccess: (data) => {
+            Toast.show({
+              type: "success",
+              text1: "Login successful",
+              text2: "Fresh meals are just a tap away!",
+            });
+            router.push(`/(tabs)`);
+          },
+          onError: () => {
+            Toast.show({
+              type: "error",
+              text1: "Failed to login",
+              text2: error?.message,
+            });
+          },
+        }
+      );
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const fieldErrors = err.flatten().fieldErrors as Partial<
+          Record<keyof loginInput, string[]>
+        >;
+
+        const formattedErrors: Partial<Record<keyof loginInput, string>> = {};
+        (Object.keys(fieldErrors) as (keyof loginInput)[]).forEach((key) => {
+          if (fieldErrors[key] && fieldErrors[key]?.length > 0) {
+            formattedErrors[key] = fieldErrors[key]![0];
+          }
+        });
+
+        setErrors(formattedErrors);
+      } else {
+        console.error("Unexpected error:", err);
+      }
+    }
+  };
+
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -22,21 +91,22 @@ export default function Login() {
 
       <View className="gap-6 my-10">
         <CustomInput
-          handleChange={(text) => setForm({ ...form, email: text })}
+          handleChange={(text) => handleChange("email", text)}
           value={form.email}
           label="Email"
           placeholder="Your email"
           keyboardType="email-address"
           type="normal"
-          // error={error}
+          error={errors?.email}
         />
         <View className="gap-1.5">
           <CustomInput
-            handleChange={(text) => setForm({ ...form, password: text })}
+            handleChange={(text) => handleChange("password", text)}
             value={form.password}
             label="Password"
             placeholder="Enter your password"
             type="password"
+            error={errors?.password}
           />
           <Link
             className="font-roboto-medium text-xs text-black self-end"
@@ -49,11 +119,17 @@ export default function Login() {
 
       <RoundedFullButton
         className="bg-primary"
-        onPress={() => router.push("/(tabs)")}
+        onPress={() => (status === "pending" ? null : handleSubmit())}
       >
-        <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
-          Login
-        </Text>
+        {status === "pending" ? (
+          <View className="py-4">
+            <ActivityIndicator size={20} color={"white"} />
+          </View>
+        ) : (
+          <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
+            Login
+          </Text>
+        )}
       </RoundedFullButton>
 
       <View className="w-full flex-row items-center justify-center my-6">

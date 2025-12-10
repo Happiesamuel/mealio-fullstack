@@ -1,4 +1,5 @@
 import { profile } from "@/constnts/constant";
+import { logout } from "@/lib/databse";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -9,14 +10,21 @@ export default function ProfileList() {
     <View className="gap-4">
       {profile.map((prof) => (
         <View key={prof.name} className="gap-2">
-          <Text className="font-roboto text-base text-grey">{prof.name}</Text>
+          <Text className="font-roboto text-base text-grey">
+            {prof?.name ?? ""}
+          </Text>
           <View className="py-4 bg-[#F3F3F3] rounded-2xl border border-grey px-4">
             {prof.subjects.map((sub) => (
               <TouchableOpacity
                 key={sub.name}
-                onPress={() =>
-                  sub.route !== "/" ? router.push(sub.route) : null
-                }
+                onPress={async () => {
+                  if (sub.route === "logout") {
+                    await logout();
+                    router.push("/(tabs)");
+                  } else if (sub.route !== "/") {
+                    router.push(sub.route);
+                  }
+                }}
                 className="flex items-center flex-row justify-between py-2.5"
               >
                 <View className="flex items-center gap-2 flex-row">

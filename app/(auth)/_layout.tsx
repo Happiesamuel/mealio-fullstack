@@ -35,7 +35,7 @@ export default function AuthLayout() {
               minHeight: Dimensions.get("screen").height - 112,
             }}
           >
-            <View className="pb-12">
+            <View className="pb-12 h-full">
               <Slot />
             </View>
           </View>

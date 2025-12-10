@@ -121,10 +121,10 @@ export default function SignUp() {
         />
         <CustomInput
           label="Password"
-          handleChange={(text) => handleChange("password", text)}
           value={form.password}
           placeholder="Enter your password"
           type="password"
+          handleChange={(text) => handleChange("password", text)}
           error={errors?.password}
         />
         <CustomInput

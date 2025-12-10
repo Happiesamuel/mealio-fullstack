@@ -124,6 +124,24 @@ export async function getGuestById(userId: string) {
     throw new Error(err.message || "Failed to fetch guest");
   }
 }
+export async function getGuestByEmail(email: string) {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.guestsCollectionId,
+      [Query.equal("email", email)]
+    );
+
+    if (result.documents.length === 0) {
+      throw new Error("User not found");
+    }
+
+    return result.documents[0];
+  } catch (err: any) {
+    console.error("Error fetching guest by email:", err);
+    throw new Error(err.message || "Failed to fetch guest");
+  }
+}
 
 export const login = async (email: string, password: string) => {
   try {
@@ -133,7 +151,47 @@ export const login = async (email: string, password: string) => {
     throw new Error(error as string);
   }
 };
+export async function getCurrentUser() {
+  try {
+    const user = await account.get();
+    return user;
+  } catch (err: any) {
+    console.error("No logged in user:", err);
+    return null; // not logged in
+  }
+}
 
+export async function logout() {
+  try {
+    await account.deleteSession("current"); // logs out current session
+    console.log("User logged out successfully");
+  } catch (err: any) {
+    console.error("Failed to logout:", err);
+  }
+}
+export async function changePassword(
+  newPassword: string,
+  oldPassword: string,
+  userId: string
+) {
+  try {
+    console.log(newPassword, oldPassword, userId);
+    await account.updatePassword(newPassword, oldPassword);
+    await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.guestsCollectionId,
+      userId,
+      {
+        password: newPassword,
+      }
+    );
+
+    return { success: true, message: "Password updated successfully" };
+  } catch (err: any) {
+    console.log(err);
+    throw new Error(err.message || "Failed to update password");
+  }
+}
 export const createGuest = async (
   userId: string,
   firstName: string,

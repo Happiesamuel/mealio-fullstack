@@ -16,7 +16,7 @@ import {
 import Toast from "react-native-toast-message";
 export default function OTP() {
   const { from, userId } = useLocalSearchParams<{
-    from: string;
+    from: "reset-password" | "sign-up";
     userId: string;
   }>();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -96,13 +96,17 @@ export default function OTP() {
       { userId, otp: code },
       {
         onSuccess: () => {
-          mutate({ email: guest.email, password: guest.password });
           Toast.show({
             type: "success",
             text1: "OTP verified",
-            text2: "Welcome to Mealio",
+            text2:
+              from === "sign-up" ? "Welcome to Mealio" : "Reset your password",
           });
-          router.push("/(tabs)");
+          from === "sign-up" &&
+            mutate({ email: guest.email, password: guest.password });
+          router.push(
+            from === "sign-up" ? "/(tabs)" : `/new-password?userId=${userId}`
+          );
         },
         onError: () => {
           setError(true);
@@ -144,7 +148,7 @@ export default function OTP() {
               onBlur={() => setFocusedIndex(null)}
               onChangeText={(text) => handleChange(text, i)}
               className={cn(
-                "w-12 h-12 border text-3xl rounded-lg text-center bg-[#E8E8E8]",
+                "w-12 h-12 border text-xl rounded-lg text-center font-roboto bg-[#E8E8E8]",
                 error
                   ? "border-red-500"
                   : focusedIndex === i

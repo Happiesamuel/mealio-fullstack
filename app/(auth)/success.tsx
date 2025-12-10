@@ -1,12 +1,13 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { logout } from "@/lib/databse";
 import { router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 
 export default function success() {
   return (
-    <View className="flex-1 items-center justify-center relative">
-      <View className="gap-2 flex items-center justify-center px-5">
+    <View className="flex-1 h-full items-center justify-center relative">
+      <View className="gap-2   flex items-center justify-center px-5">
         <Text className=" text-black font-roboto-semibold text-3xl">
           Password Changed
         </Text>
@@ -21,7 +22,10 @@ export default function success() {
       <View className=" -bottom-[35%] w-full">
         <RoundedFullButton
           className="bg-primary w-full"
-          onPress={() => router.push("/login")}
+          onPress={async () => {
+            await logout();
+            router.push("/login");
+          }}
         >
           <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
             Login
