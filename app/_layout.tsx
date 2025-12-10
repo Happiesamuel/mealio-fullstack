@@ -32,16 +32,17 @@
 //   );
 // }
 import BottomSheetProvider from "@/context/BottomSheetProvider";
+import { toastConfig } from "@/lib/toastConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import "react-native-url-polyfill/auto";
 import "./globals.css";
 import Splash from "./Splash";
-
 // Keep splash on screen until we manually hide it
 SplashScreen.preventAutoHideAsync();
 
@@ -82,7 +83,8 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <BottomSheetProvider>
           <Stack screenOptions={{ headerShown: false }} />
-          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
+          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />{" "}
+          <Toast config={toastConfig} />
         </BottomSheetProvider>
       </SafeAreaProvider>
     </QueryClientProvider>

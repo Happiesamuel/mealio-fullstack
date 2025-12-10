@@ -152,3 +152,9 @@ export interface CartProp {
   rating: number;
   restaurantId: string;
 }
+export interface SignupProps {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}

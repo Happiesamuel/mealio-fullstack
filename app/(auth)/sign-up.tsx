@@ -1,13 +1,16 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
+import useAuth from "@/hooks/useAuth";
 import { SignupInput, signupSchema } from "@/lib/schemas";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { ActivityIndicator, Image, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { ZodError } from "zod";
 
 export default function SignUp() {
+  const { mutate, status, error } = useAuth("sign-up");
   const [errors, setErrors] = useState<
     Partial<Record<keyof SignupInput, string>>
   >({});
@@ -38,10 +41,25 @@ export default function SignUp() {
   const handleSubmit = () => {
     try {
       const validatedData: SignupInput = signupSchema.parse(form);
-      setErrors({}); // Clear previous errors
-
-      console.log("Validated data:", validatedData);
-      // Proceed with signup, avatar, document creation
+      setErrors({});
+      const { confirmPassword, ...rest } = validatedData;
+      mutate(rest, {
+        onSuccess: (data) => {
+          Toast.show({
+            type: "success",
+            text1: "Signup successful",
+            text2: "Fresh meals are just a tap away!",
+          });
+          router.push(`/otp?from=sign-up&userId=${data.$id}`);
+        },
+        onError: () => {
+          Toast.show({
+            type: "error",
+            text1: "Failed to signup",
+            text2: error?.toString(),
+          });
+        },
+      });
     } catch (err) {
       if (err instanceof ZodError) {
         const fieldErrors = err.flatten().fieldErrors as Partial<
@@ -119,10 +137,19 @@ export default function SignUp() {
         />
       </View>
 
-      <RoundedFullButton className="bg-primary" onPress={handleSubmit}>
-        <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
-          Create Account
-        </Text>
+      <RoundedFullButton
+        className="bg-primary"
+        onPress={() => (status === "pending" ? null : handleSubmit())}
+      >
+        {status === "pending" ? (
+          <View className="py-4">
+            <ActivityIndicator size={20} color={"white"} />
+          </View>
+        ) : (
+          <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
+            Create Account
+          </Text>
+        )}
       </RoundedFullButton>
 
       <View className="w-full flex-row items-center justify-center my-6">

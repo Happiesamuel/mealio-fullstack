@@ -1,14 +1,77 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import useAuth from "@/hooks/useAuth";
+import useOtpVerification from "@/hooks/useOtpVerification";
+import useResendOtp from "@/hooks/useResendOtp";
+import { getGuestById } from "@/lib/databse";
 import cn from "clsx";
-import { router } from "expo-router";
-import React, { useRef, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Toast from "react-native-toast-message";
 export default function OTP() {
+  const { from, userId } = useLocalSearchParams<{
+    from: string;
+    userId: string;
+  }>();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
+  const { verify, status, error: verifyErr } = useOtpVerification();
+  const { resend, error: resendErr } = useResendOtp();
   const inputs = useRef<(TextInput | null)[]>([]);
+  const { mutate } = useAuth("login");
+  const [timer, setTimer] = useState(60); // 60 seconds
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+
+    if (disabled) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setDisabled(false);
+            return 60; // reset timer for next use
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [disabled]);
+
+  const handlePress = async () => {
+    const guest = await getGuestById(userId);
+    resend(
+      { userId: guest.$id, email: guest.email },
+      {
+        onSuccess: (data) => {
+          Toast.show({
+            type: "success",
+            text1: "OTP verified",
+            text2: "OTP has been sent to your email",
+          });
+          setDisabled(true);
+          setTimer(60);
+        },
+        onError: () => {
+          Toast.show({
+            type: "error",
+            text1: "Failed",
+            text2: resendErr?.message,
+          });
+        },
+      }
+    );
+  };
 
   const handleChange = (text: string, index: number) => {
     const newOtp = [...otp];
@@ -25,12 +88,32 @@ export default function OTP() {
     setError(false);
   };
 
-  const verify = () => {
+  const verifyFun = async () => {
     const code = otp.join("");
-
-    if (code !== "154806") {
-      setError(true);
-    }
+    const guest = await getGuestById(userId);
+    setError(false);
+    verify(
+      { userId, otp: code },
+      {
+        onSuccess: () => {
+          mutate({ email: guest.email, password: guest.password });
+          Toast.show({
+            type: "success",
+            text1: "OTP verified",
+            text2: "Welcome to Mealio",
+          });
+          router.push("/(tabs)");
+        },
+        onError: () => {
+          setError(true);
+          Toast.show({
+            type: "error",
+            text1: "Failed",
+            text2: verifyErr?.message,
+          });
+        },
+      }
+    );
   };
   const setInputRef = (index: number): React.RefCallback<TextInput> => {
     return (ref) => {
@@ -71,33 +154,52 @@ export default function OTP() {
             />
           ))}
         </View>
-        <TouchableOpacity className=" self-end ">
-          <Text className="font-roboto-bold text-base text-primary">
-            Resend Code
+        <TouchableOpacity
+          className="self-end"
+          onPress={handlePress}
+          disabled={disabled}
+        >
+          <Text
+            className={`font-roboto-bold text-base ${
+              disabled ? "text-gray-400" : "text-primary"
+            }`}
+          >
+            {disabled ? `Resend Code (${timer}s)` : "Resend Code"}
           </Text>
         </TouchableOpacity>
       </View>
 
       <View className="flex flex-row items-center w-full justify-evenly -bottom-[100%] ">
-        <View className="flex-1  items-start w-[100%]">
-          <RoundedFullButton
-            className="bg-transparent border border-primary w-[75%]"
-            onPress={() => router.back()}
-          >
-            <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
-              Back
-            </Text>
-          </RoundedFullButton>
-        </View>
+        {from !== "sign-up" && (
+          <View className="flex-1  items-start w-[100%]">
+            <RoundedFullButton
+              className="bg-transparent border border-primary w-[75%]"
+              onPress={() => router.back()}
+            >
+              <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
+                Back
+              </Text>
+            </RoundedFullButton>
+          </View>
+        )}
 
         <View className="flex-1  items-end w-[100%] ">
           <RoundedFullButton
-            className="bg-primary w-[75%] "
-            onPress={() => router.push("/new-password")}
+            className={cn(
+              "bg-primary  ",
+              from === "sign-up" ? "w-full" : "w-[75%]"
+            )}
+            onPress={() => (status === "pending" ? null : verifyFun())}
           >
-            <Text className=" text-center py-4 font-roboto-bold text-base text-secondary  ">
-              Continue
-            </Text>
+            {status === "pending" ? (
+              <View className="py-4">
+                <ActivityIndicator size={20} color={"white"} />
+              </View>
+            ) : (
+              <Text className=" text-center py-4 font-roboto-bold text-base text-secondary  ">
+                Continue
+              </Text>
+            )}
           </RoundedFullButton>
         </View>
       </View>
