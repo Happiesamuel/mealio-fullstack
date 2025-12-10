@@ -1,16 +1,66 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
+import { SignupInput, signupSchema } from "@/lib/schemas";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
+import { ZodError } from "zod";
 
 export default function SignUp() {
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof SignupInput, string>>
+  >({});
   const [form, setForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
+    firstName: "",
+    lastName: "",
   });
+  const handleChange = (field: keyof typeof form, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+
+    try {
+      signupSchema.pick({ [field]: true }).parse({ [field]: value });
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const fieldErrors = err.flatten().fieldErrors as Record<
+          keyof SignupInput,
+          string[] | undefined
+        >;
+        setErrors((prev) => ({ ...prev, [field]: fieldErrors[field]?.[0] }));
+      }
+    }
+  };
+
+  const handleSubmit = () => {
+    try {
+      const validatedData: SignupInput = signupSchema.parse(form);
+      setErrors({}); // Clear previous errors
+
+      console.log("Validated data:", validatedData);
+      // Proceed with signup, avatar, document creation
+    } catch (err) {
+      if (err instanceof ZodError) {
+        const fieldErrors = err.flatten().fieldErrors as Partial<
+          Record<keyof SignupInput, string[]>
+        >;
+
+        const formattedErrors: Partial<Record<keyof SignupInput, string>> = {};
+        (Object.keys(fieldErrors) as (keyof SignupInput)[]).forEach((key) => {
+          if (fieldErrors[key] && fieldErrors[key]?.length > 0) {
+            formattedErrors[key] = fieldErrors[key]![0];
+          }
+        });
+
+        setErrors(formattedErrors);
+      } else {
+        console.error("Unexpected error:", err);
+      }
+    }
+  };
   return (
     <View className="mt-16">
       <View className="gap-2">
@@ -22,32 +72,54 @@ export default function SignUp() {
         </Text>
       </View>
 
-      <View className="gap-6 my-10">
+      <View className="gap-3 my-10">
         <CustomInput
-          handleChange={(text) => setForm({ ...form, email: text })}
+          handleChange={(text) => handleChange("firstName", text)}
+          value={form.firstName}
+          label="First name"
+          placeholder="Your first name"
+          keyboardType="default"
+          type="normal"
+          error={errors?.firstName}
+        />
+        <CustomInput
+          handleChange={(text) => handleChange("lastName", text)}
+          value={form.lastName}
+          label="Last name"
+          placeholder="Your last name"
+          keyboardType="default"
+          type="normal"
+          error={errors?.lastName}
+        />
+
+        <CustomInput
+          handleChange={(text) => handleChange("email", text)}
           value={form.email}
           label="Email"
           placeholder="Your email"
           keyboardType="email-address"
           type="normal"
+          error={errors?.email}
         />
         <CustomInput
           label="Password"
-          handleChange={(text) => setForm({ ...form, password: text })}
+          handleChange={(text) => handleChange("password", text)}
           value={form.password}
           placeholder="Enter your password"
           type="password"
+          error={errors?.password}
         />
         <CustomInput
-          handleChange={(text) => setForm({ ...form, confirmPassword: text })}
+          handleChange={(text) => handleChange("confirmPassword", text)}
           value={form.confirmPassword}
           label="Confirm Password"
           placeholder="Enter your password"
           type="password"
+          error={errors?.confirmPassword}
         />
       </View>
 
-      <RoundedFullButton className="bg-primary" onPress={() => {}}>
+      <RoundedFullButton className="bg-primary" onPress={handleSubmit}>
         <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
           Create Account
         </Text>
