@@ -1,10 +1,15 @@
 import ProfileList from "@/components/profile/ProfileList";
 import { images } from "@/constnts";
 import { useBottomSheet } from "@/context/BottomSheetProvider";
+import { logout } from "@/lib/databse";
 import { pickImage, takePhoto } from "@/lib/helper";
+import { useUserStorage } from "@/store/useUserStore";
 import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import cn from "clsx";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -13,10 +18,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import Toast from "react-native-toast-message";
 export default function Profile() {
   const { open, close } = useBottomSheet();
+  const { user, reset } = useUserStorage();
   const [photo, setPhoto] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const list = [
     {
       name: "Take Photo",
@@ -46,7 +53,6 @@ export default function Profile() {
       </View>
     );
   };
-
   async function choosePhoto() {
     const img = await pickImage();
     if (img) setPhoto(img.uri);
@@ -55,6 +61,40 @@ export default function Profile() {
   async function handleTakePhoto() {
     const img = await takePhoto(close)();
     if (img) setPhoto(img.uri);
+  }
+  async function handlePress() {
+    setLoading(true);
+    if (user) {
+      const a = await logout();
+      if (a) {
+        reset();
+        Toast.show({
+          type: "success",
+          text1: "Logout successfully",
+          text2: "Login to get the best recipe",
+        });
+        router.push("/(tabs)");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Failed to logout",
+          text2: "No internet connection",
+        });
+      }
+    } else {
+      router.push("/login");
+    }
+    setLoading(false);
+    try {
+    } catch (error) {
+      const err = error as Error;
+      Toast.show({
+        type: "error",
+        text1: "Failed to logout",
+        text2: err?.message || "",
+      });
+      setLoading(false);
+    }
   }
   return (
     <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5">
@@ -89,6 +129,23 @@ export default function Profile() {
           </View>
         </View>
         <ProfileList />
+        <TouchableOpacity
+          onPress={async () => await handlePress()}
+          className="self-center mt-6"
+        >
+          {loading ? (
+            <ActivityIndicator color={"#14b74d"} size={20} />
+          ) : (
+            <Text
+              className={cn(
+                "text-base font-roboto-semibold",
+                user ? "text-error" : "text-primary"
+              )}
+            >
+              {user ? "Logout" : "Login"}
+            </Text>
+          )}
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

@@ -2,7 +2,9 @@ import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
 import useAuth from "@/hooks/useAuth";
+import { getCurrentUser } from "@/lib/databse";
 import { loginInput, loginSchema } from "@/lib/schemas";
+import { useUserStorage } from "@/store/useUserStore";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, Text, View } from "react-native";
@@ -11,6 +13,8 @@ import { ZodError } from "zod";
 
 export default function Login() {
   const { mutate, status, error } = useAuth("login");
+  console.log(error, "ffg");
+  const { setUser } = useUserStorage();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -36,6 +40,7 @@ export default function Login() {
   };
 
   const handleSubmit = () => {
+    // await logout()
     try {
       const validatedData: loginInput = loginSchema.parse(form);
       setErrors({});
@@ -43,12 +48,15 @@ export default function Login() {
       mutate(
         { email: validatedData.email, password: validatedData.password },
         {
-          onSuccess: (data) => {
+          onSuccess: async () => {
             Toast.show({
               type: "success",
               text1: "Login successful",
               text2: "Fresh meals are just a tap away!",
             });
+            const user = await getCurrentUser();
+            setUser(user);
+
             router.push(`/(tabs)`);
           },
           onError: () => {

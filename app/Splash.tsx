@@ -19,8 +19,8 @@ export default function Splash({ onFinish }: { onFinish: () => void }) {
     offsetY.value = withTiming(0, { duration: 800 });
     textOpacity.value = withTiming(1, { duration: 800 }, () => {
       // TEXT FINISHED → start icon animation
-      slideX.value = withTiming(0, { duration: 700 });
-      iconOpacity.value = withTiming(1, { duration: 700 }, () => {
+      slideX.value = withTiming(0, { duration: 1000 });
+      iconOpacity.value = withTiming(1, { duration: 1000 }, () => {
         // ICON FINISHED → notify parent
         runOnJS(onFinish)();
       });

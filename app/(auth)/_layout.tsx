@@ -1,4 +1,5 @@
-import { Slot } from "expo-router";
+import { useUserStorage } from "@/store/useUserStore";
+import { Redirect, Slot } from "expo-router";
 import React from "react";
 import {
   Dimensions,
@@ -10,6 +11,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AuthLayout() {
+  const { isLoggedIn } = useUserStorage();
+  if (isLoggedIn) return <Redirect href="/(tabs)" />;
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-primary ">
       <KeyboardAvoidingView

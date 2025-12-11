@@ -164,7 +164,7 @@ export async function getCurrentUser() {
 export async function logout() {
   try {
     await account.deleteSession("current"); // logs out current session
-    console.log("User logged out successfully");
+    return true;
   } catch (err: any) {
     console.error("Failed to logout:", err);
   }

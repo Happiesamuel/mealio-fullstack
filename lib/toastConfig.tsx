@@ -5,7 +5,7 @@ export const toastConfig = {
     <BaseToast
       {...props}
       style={{
-        backgroundColor: "#0d9812",
+        backgroundColor: "#f0f0f0",
         borderLeftWidth: 0,
         height: "fit-content",
         paddingVertical: 10,
@@ -13,12 +13,12 @@ export const toastConfig = {
       text1Style={{
         fontFamily: "Roboto-Bold",
         fontSize: 14,
-        color: "white",
+        color: "#191919",
         padding: 0,
       }}
       text2Style={{
         fontSize: 12,
-        color: "white",
+        color: "#959595",
         fontFamily: "Roboto-Medium",
         padding: 0,
       }}
@@ -28,7 +28,7 @@ export const toastConfig = {
     <ErrorToast
       {...props}
       style={{
-        backgroundColor: "#f05b53",
+        backgroundColor: "#f0f0f0",
         borderLeftWidth: 0,
         height: "fit-content",
         paddingVertical: 10,
@@ -36,12 +36,12 @@ export const toastConfig = {
       text1Style={{
         fontFamily: "Roboto-Bold",
         fontSize: 14,
-        color: "white",
+        color: "#191919",
         padding: 0,
       }}
       text2Style={{
         fontSize: 12,
-        color: "white",
+        color: "#959595",
         fontFamily: "Roboto-Medium",
         padding: 0,
       }}

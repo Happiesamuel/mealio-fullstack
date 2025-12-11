@@ -453,16 +453,6 @@ export const profile = [
       },
     ],
   },
-  {
-    name: "Logout",
-    subjects: [
-      {
-        name: "Logout",
-        icon: <MaterialIcons name="logout" size={16} color="black" />,
-        route: "logout",
-      },
-    ],
-  },
 ];
 
 export const notifictions = [

@@ -1,15 +1,17 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons, images } from "@/constnts";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { setSeenOnboard } from "@/constnts/onboard";
+import { useRouter } from "expo-router";
 import React from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 
 export default function OnBoardingTwo() {
-  async function finishOnboarding() {
-    await AsyncStorage.setItem("seen_onboard", "true");
-    router.replace("/login");
-  }
+  const router = useRouter();
+
+  const handleFinish = async () => {
+    await setSeenOnboard();
+    router.replace("/(tabs)");
+  };
   return (
     <ScrollView
       contentContainerClassName="pb-12 flex-1"
@@ -47,17 +49,14 @@ export default function OnBoardingTwo() {
             <View className="w-8 h-1.5 rounded-full !bg-primary" />
           </View>
           <View className="flex w-full gap-6 ">
-            <RoundedFullButton
-              onPress={finishOnboarding}
-              className="bg-primary "
-            >
+            <RoundedFullButton onPress={handleFinish} className="bg-primary ">
               <Text className=" text-center py-4 font-roboto-bold text-base text-secondary ">
                 Next
               </Text>
             </RoundedFullButton>
 
             <RoundedFullButton
-              onPress={finishOnboarding}
+              onPress={handleFinish}
               className="bg-[#A1C249]/5 "
             >
               <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
