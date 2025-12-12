@@ -14,7 +14,7 @@ export default function useGetGuest(params: FetchType) {
       }
     },
     staleTime: 1000 * 60 * 10,
-    enabled: params.value !== undefined,
+    enabled: params.value !== undefined && params.value !== "",
   });
 
   return { data, status, error };

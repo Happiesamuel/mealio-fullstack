@@ -1,5 +1,7 @@
+import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useUserStorage } from "@/store/useUserStore";
 import React from "react";
 import {
   KeyboardAvoidingView,
@@ -30,14 +32,19 @@ type CreditCardForm = {
 };
 
 export default function Payment() {
-  //   const [form, setForm] = useState({
-  //     homeAddress: "",
-  //     otherAddress: "",
-  //   });
+  const { user } = useUserStorage();
   const handleChange = (form: CreditCardForm) => {
     console.log("Card Form:", form);
   };
   function handleSubmit() {}
+  if (!user)
+    return (
+      <Headers
+        from="/profile/payment"
+        text="Payment Method"
+        subText="Edit your payment here"
+      />
+    );
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -19,7 +19,7 @@ export default function useAuth(type: AuthType) {
   };
 
   const { mutate, status, error } = useMutation<
-    Models.Document | Models.Session,
+    Models.Document | any,
     Error,
     SignupProps | LoginData
   >({

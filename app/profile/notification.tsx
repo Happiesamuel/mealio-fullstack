@@ -1,5 +1,7 @@
+import Headers from "@/components/profile/Headers";
 import Switch from "@/components/profile/notification";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import { useUserStorage } from "@/store/useUserStore";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
@@ -9,11 +11,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Notification() {
   const isOn = useSharedValue(0);
-
+  const { user } = useUserStorage();
   const handlePress = () => {
     isOn.value = isOn.value === 0 ? 1 : 0;
   };
-
+  if (!user)
+    return <Headers from="/profile/notification" text="Notification" />;
   return (
     <SafeAreaView className="bg-secondary h-full px-3">
       <ProfileHeader>Notification</ProfileHeader>

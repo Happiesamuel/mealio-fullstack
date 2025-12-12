@@ -11,7 +11,8 @@ export const appwriteConfig = {
   platform: process.env.EXPO_PUBLIC_APPWRITE_PLATFORM!,
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
   databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
-  devKey: process.env.EXPO_PUBLIC_APPWRITE_DEV_KEY!, // Add this
+  bucketId: process.env.EXPO_PUBLIC_BUCKET_ID!,
+  devKey: process.env.EXPO_PUBLIC_APPWRITE_DEV_KEY!,
   guestsCollectionId: "guests",
   otpCollectionId: "otp",
 };

@@ -6,6 +6,7 @@ export default function useGetUser() {
     data: user,
     status,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["user"],
     queryFn: () => {
@@ -14,5 +15,5 @@ export default function useGetUser() {
     staleTime: 1000 * 60 * 10,
   });
 
-  return { user, status, error };
+  return { user, status, error, refetch };
 }

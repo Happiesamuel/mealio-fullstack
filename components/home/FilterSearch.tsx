@@ -34,7 +34,7 @@ export default function FilterSearch({
   const [cusines, setCusines] = useState<string[]>(
     params.categories ? JSON.parse(params.categories) : []
   );
-  const { data: categories, status } = useCategoriesQuery();
+  const { data: categories, status, error } = useCategoriesQuery();
 
   function handleCuisine(cuis: string) {
     const exist = cusines.some((x) => x === cuis);
@@ -75,7 +75,7 @@ export default function FilterSearch({
 
     close?.();
   }
-
+  if (error) return null;
   return (
     <FilterModal visible={visible} onClose={close}>
       <View className="gap-2">
@@ -123,7 +123,7 @@ export default function FilterSearch({
                 <ActivityIndicator size={"large"} color="#14B74D" />
               </View>
             ) : (
-              categories.map((cuis: { name: string; id: string }) => {
+              categories?.map((cuis: { name: string; id: string }) => {
                 const exist = cusines.some((x) => x === cuis.name);
                 return (
                   <TouchableOpacity

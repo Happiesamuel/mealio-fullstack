@@ -2,10 +2,11 @@ import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
 import useAuth from "@/hooks/useAuth";
-import { getCurrentUser } from "@/lib/databse";
+import { getGuestByEmail } from "@/lib/databse";
 import { loginInput, loginSchema } from "@/lib/schemas";
 import { useUserStorage } from "@/store/useUserStore";
-import { Link, router } from "expo-router";
+import { Guest } from "@/types";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -13,7 +14,7 @@ import { ZodError } from "zod";
 
 export default function Login() {
   const { mutate, status, error } = useAuth("login");
-  console.log(error, "ffg");
+  const { from } = useLocalSearchParams<{ from: string }>();
   const { setUser } = useUserStorage();
   const [form, setForm] = useState({
     email: "",
@@ -38,7 +39,7 @@ export default function Login() {
       }
     }
   };
-
+  console.log(from);
   const handleSubmit = () => {
     // await logout()
     try {
@@ -48,16 +49,16 @@ export default function Login() {
       mutate(
         { email: validatedData.email, password: validatedData.password },
         {
-          onSuccess: async () => {
+          onSuccess: async (data) => {
             Toast.show({
               type: "success",
               text1: "Login successful",
               text2: "Fresh meals are just a tap away!",
             });
-            const user = await getCurrentUser();
-            setUser(user);
+            const guest = await getGuestByEmail(data.email);
+            setUser(data, guest as unknown as Guest);
 
-            router.push(`/(tabs)`);
+            router.push(from ? `${from}` : (`/(tabs)` as any));
           },
           onError: () => {
             Toast.show({

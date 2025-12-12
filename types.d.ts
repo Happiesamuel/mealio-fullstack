@@ -1,3 +1,5 @@
+import { Models } from "react-native-appwrite";
+
 export interface ItemProp {
   price: number;
   time: string;
@@ -157,4 +159,9 @@ export interface SignupProps {
   password: string;
   firstName: string;
   lastName: string;
+}
+export interface Guest extends Models.Document {
+  name: string;
+  email: string;
+  avatar: string;
 }

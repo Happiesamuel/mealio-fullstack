@@ -1,4 +1,6 @@
+import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import { useUserStorage } from "@/store/useUserStore";
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { useState } from "react";
@@ -6,11 +8,13 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Preference() {
+  const { user } = useUserStorage();
   const [active, setActive] = useState("email");
   const pref: { name: string; slug: string }[] = [
     { name: "Email", slug: "email" },
     { name: "Phone number", slug: "phone" },
   ];
+  if (!user) return <Headers from="/profile/preference" text="Preference" />;
   return (
     <SafeAreaView className="bg-secondary h-full px-3">
       <ProfileHeader>Preference</ProfileHeader>

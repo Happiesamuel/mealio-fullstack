@@ -1,10 +1,14 @@
 import ProfileList from "@/components/profile/ProfileList";
-import { images } from "@/constnts";
 import { useBottomSheet } from "@/context/BottomSheetProvider";
-import { logout } from "@/lib/databse";
+import { logout, uploadImage } from "@/lib/databse";
 import { pickImage, takePhoto } from "@/lib/helper";
 import { useUserStorage } from "@/store/useUserStore";
-import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -21,8 +25,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 export default function Profile() {
   const { open, close } = useBottomSheet();
-  const { user, reset } = useUserStorage();
-  const [photo, setPhoto] = useState<string | null>(null);
+  const { user, reset, guest } = useUserStorage();
+  const [photo, setPhoto] = useState<string | null>(guest?.avatar || null);
   const [loading, setLoading] = useState(false);
   const list = [
     {
@@ -54,13 +58,57 @@ export default function Profile() {
     );
   };
   async function choosePhoto() {
-    const img = await pickImage();
-    if (img) setPhoto(img.uri);
-    close();
+    try {
+      const img = await pickImage();
+      setLoading(true);
+      if (img) {
+        close();
+        await uploadImage(img, guest!.$id);
+        setPhoto(img.uri);
+
+        setLoading(false);
+        Toast.show({
+          type: "success",
+          text1: "Uploded",
+          text2: "Photo uploaded successfully",
+        });
+      }
+    } catch (error) {
+      const err = error as Error;
+      setLoading(false);
+      Toast.show({
+        type: "error",
+        text1: "Failed to Upload photo",
+        text2: err?.message,
+      });
+    }
   }
   async function handleTakePhoto() {
-    const img = await takePhoto(close)();
-    if (img) setPhoto(img.uri);
+    try {
+      const img = await takePhoto(() => null)();
+      setLoading(true);
+      if (img) {
+        close();
+        await uploadImage(img, guest!.$id);
+
+        setPhoto(img.uri);
+
+        setLoading(false);
+        Toast.show({
+          type: "success",
+          text1: "Uploded",
+          text2: "Photo uploaded successfully",
+        });
+      }
+    } catch (error) {
+      const err = error as Error;
+      setLoading(false);
+      Toast.show({
+        type: "error",
+        text1: "Failed to Upload photo",
+        text2: err?.message,
+      });
+    }
   }
   async function handlePress() {
     setLoading(true);
@@ -82,7 +130,7 @@ export default function Profile() {
         });
       }
     } else {
-      router.push("/login");
+      router.push(`/login?from=/profile`);
     }
     setLoading(false);
     try {
@@ -107,28 +155,53 @@ export default function Profile() {
         </Text>
         <View className="flex items-center justify-center gap-2">
           <View className="relative size-[130px] flex items-center justify-center ">
-            <Image
-              resizeMode="cover"
-              className=" size-full border-[3px] border-white rounded-full"
-              source={photo ? { uri: photo } : images.profileImg}
-            />
-            <TouchableOpacity
-              onPress={openSheet}
-              className="bg-primary size-9 flex items-center justify-center rounded-full bottom-2 right-2 absolute "
-            >
-              <MaterialIcons name="edit" size={24} color="#FFFFFF" />
-            </TouchableOpacity>
+            {loading && (
+              <View className="rounded-full absolute bg-black/30 flex items-center justify-center size-[120px] z-30 ">
+                <ActivityIndicator color={"#14b74d"} size={20} />
+              </View>
+            )}
+            {photo ? (
+              <Image
+                resizeMode="cover"
+                className=" size-full border-[3px] border-white rounded-full"
+                source={{ uri: photo }}
+              />
+            ) : (
+              <View className=" size-full border-[3px] border-white items-center justify-center rounded-full">
+                <MaterialCommunityIcons
+                  name="account"
+                  size={70}
+                  color="#14b74d"
+                />
+              </View>
+            )}
+            {user && (
+              <TouchableOpacity
+                disabled={loading}
+                onPress={openSheet}
+                className="bg-primary size-9 flex items-center z-50 justify-center rounded-full bottom-2 right-2 absolute "
+              >
+                <MaterialIcons name="edit" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
           </View>
-          <View className="flex items-center justify-center">
+          {guest ? (
+            <View className="flex items-center justify-center">
+              <Text className="font-roboto-medium text-base text-black">
+                {guest?.name}
+              </Text>
+              <Text className="font-roboto-medium text-base text-grey">
+                {guest?.email}
+              </Text>
+            </View>
+          ) : (
             <Text className="font-roboto-medium text-base text-black">
-              Adeola Damilola
+              Sign in to access your profile
             </Text>
-            <Text className="font-roboto-medium text-base text-grey">
-              Adedamilola1@gmail.com
-            </Text>
-          </View>
+          )}
         </View>
         <ProfileList />
+
         <TouchableOpacity
           onPress={async () => await handlePress()}
           className="self-center mt-6"

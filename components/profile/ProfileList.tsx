@@ -22,7 +22,7 @@ export default function ProfileList() {
                     await logout();
                     router.push("/(tabs)");
                   } else if (sub.route !== "/") {
-                    router.push(sub.route);
+                    router.push(sub.route as any);
                   }
                 }}
                 className="flex items-center flex-row justify-between py-2.5"

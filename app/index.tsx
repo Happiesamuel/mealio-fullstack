@@ -1,5 +1,7 @@
 import useGetUser from "@/hooks/useGetUser";
+import { getGuestByEmail } from "@/lib/databse";
 import { useUserStorage } from "@/store/useUserStore";
+import { Guest } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
@@ -22,10 +24,17 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    if (status === "success") {
-      if (user) setUser(user);
-      else reset();
+    async function loadUser() {
+      if (status === "success") {
+        if (user) {
+          const guest = await getGuestByEmail(user.email);
+          setUser(user, guest as unknown as Guest);
+        } else {
+          reset();
+        }
+      }
     }
+    loadUser();
   }, [status, user, setUser, reset]);
 
   if (status === "pending" || seenOnboard === null) {

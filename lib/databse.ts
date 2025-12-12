@@ -1,6 +1,12 @@
 import { SignupProps } from "@/types";
 import { ID, Query } from "react-native-appwrite";
-import { account, appwriteConfig, avatars, databases } from "./appwrite";
+import {
+  account,
+  appwriteConfig,
+  avatars,
+  databases,
+  storage,
+} from "./appwrite";
 
 export async function plunk(to: string) {
   try {
@@ -145,8 +151,8 @@ export async function getGuestByEmail(email: string) {
 
 export const login = async (email: string, password: string) => {
   try {
-    const session = await account.createEmailPasswordSession(email, password);
-    return session;
+    await account.createEmailPasswordSession(email, password);
+    return await getCurrentUser();
   } catch (error) {
     throw new Error(error as string);
   }
@@ -220,3 +226,31 @@ export const createGuest = async (
     throw error.message || "Failed to create document";
   }
 };
+
+export async function uploadImage(img: any, userId: string) {
+  try {
+    const file = {
+      uri: img.uri,
+      name: img.fileName ?? `photo-${Date.now()}.jpg`,
+      type: img.mimeType ?? "image/jpeg",
+      size: img.fileSize ?? 0,
+    };
+    const uploaded = await storage.createFile(
+      appwriteConfig.bucketId,
+      ID.unique(),
+      file
+    );
+    const data = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.guestsCollectionId,
+      userId,
+      {
+        avatar: `${appwriteConfig.endpoint}/storage/buckets/${appwriteConfig.bucketId}/files/${uploaded.$id}/view?project=${appwriteConfig.projectId}&mode=admin`,
+      }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
