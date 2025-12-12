@@ -11,7 +11,6 @@ import Toast from "react-native-toast-message";
 import "react-native-url-polyfill/auto";
 import "./globals.css";
 import Splash from "./Splash";
-// Keep splash on screen until we manually hide it
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -26,7 +25,6 @@ export default function RootLayout() {
 
   const [showAnimatedSplash, setShowAnimatedSplash] = useState(true);
 
-  // After fonts are loaded → hide native splash → show our animation
   useEffect(() => {
     if (error) throw error;
 
