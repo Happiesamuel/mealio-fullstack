@@ -9,9 +9,15 @@ export default function useGetUser() {
     refetch,
   } = useQuery({
     queryKey: ["user"],
-    queryFn: () => {
-      return getCurrentUser();
+    queryFn: async () => {
+      try {
+        return await getCurrentUser();
+      } catch (error) {
+        throw error;
+      }
     },
+    retry: false,
+    enabled: true,
     staleTime: 1000 * 60 * 10,
   });
 

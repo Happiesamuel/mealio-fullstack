@@ -22,7 +22,7 @@ export async function plunk(to: string) {
     const data = await response.json();
     return data;
   } catch (err) {
-    throw Error("Error sending OTP:", err as Error);
+    throw Error(err as string);
   }
 }
 export async function createOtp(code: string, guestId: string) {
@@ -162,8 +162,7 @@ export async function getCurrentUser() {
     const user = await account.get();
     return user;
   } catch (err: any) {
-    console.error("No logged in user:", err);
-    return null; // not logged in
+    throw err;
   }
 }
 

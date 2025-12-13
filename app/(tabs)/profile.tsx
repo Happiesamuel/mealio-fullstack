@@ -1,7 +1,7 @@
 import ProfileList from "@/components/profile/ProfileList";
 import { useBottomSheet } from "@/context/BottomSheetProvider";
 import { logout, uploadImage } from "@/lib/databse";
-import { pickImage, takePhoto } from "@/lib/helper";
+import { pickImage } from "@/lib/helper";
 import { useUserStorage } from "@/store/useUserStore";
 import {
   Feather,
@@ -10,24 +10,33 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import cn from "clsx";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
+  Modal,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+
 export default function Profile() {
   const { open, close } = useBottomSheet();
   const { user, reset, guest } = useUserStorage();
   const [photo, setPhoto] = useState<string | null>(guest?.avatar || null);
   const [loading, setLoading] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [facing, setFacing] = useState<CameraType>("back");
+  const [permission, requestPermission] = useCameraPermissions();
+  const cameraRef = useRef<CameraView>(null);
+
   const list = [
     {
       name: "Take Photo",
@@ -57,6 +66,7 @@ export default function Profile() {
       </View>
     );
   };
+
   async function choosePhoto() {
     try {
       const img = await pickImage();
@@ -69,10 +79,11 @@ export default function Profile() {
         setLoading(false);
         Toast.show({
           type: "success",
-          text1: "Uploded",
+          text1: "Uploaded",
           text2: "Photo uploaded successfully",
         });
       }
+      if (!img) setLoading(false);
     } catch (error) {
       const err = error as Error;
       setLoading(false);
@@ -83,33 +94,72 @@ export default function Profile() {
       });
     }
   }
+
   async function handleTakePhoto() {
-    try {
-      const img = await takePhoto()();
-      setLoading(true);
-      if (img) {
-        close();
-        // await uploadImage(img, guest!.$id);
+    if (!permission) {
+      return;
+    }
 
-        setPhoto(img.uri);
-
-        setLoading(false);
+    if (!permission.granted) {
+      const result = await requestPermission();
+      if (!result.granted) {
         Toast.show({
-          type: "success",
-          text1: "Uploded",
-          text2: "Photo uploaded successfully",
+          type: "error",
+          text1: "Permission denied",
+          text2: "Camera permission is required",
         });
+        return;
       }
+    }
+
+    close();
+    setShowCamera(true);
+  }
+
+  async function takePicture() {
+    if (!cameraRef.current) return;
+
+    setLoading(true);
+
+    try {
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 0.2,
+        exif: false,
+      });
+
+      if (!photo?.uri) {
+        throw new Error("Failed to capture photo");
+      }
+
+      console.log("✅ Photo captured:", photo.uri);
+
+      setShowCamera(false);
+      await uploadImage(photo, guest!.$id);
+
+      setPhoto(photo.uri);
+
+      Toast.show({
+        type: "success",
+        text1: "Uploaded",
+        text2: "Photo uploaded successfully",
+      });
     } catch (error) {
       const err = error as Error;
-      setLoading(false);
+
       Toast.show({
         type: "error",
-        text1: "Failed to Upload photo",
-        text2: err?.message,
+        text1: "Failed to upload photo",
+        text2: err?.message ?? "Camera error",
       });
+    } finally {
+      setLoading(false);
     }
   }
+
+  function toggleCameraFacing() {
+    setFacing((current) => (current === "back" ? "front" : "back"));
+  }
+
   async function handlePress() {
     setLoading(true);
     if (user) {
@@ -145,6 +195,7 @@ export default function Profile() {
       setLoading(false);
     }
   }
+
   return (
     <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5">
       <ScrollView
@@ -221,6 +272,93 @@ export default function Profile() {
           )}
         </TouchableOpacity>
       </ScrollView>
+
+      <Modal
+        visible={showCamera}
+        animationType="slide"
+        onRequestClose={() => setShowCamera(false)}
+      >
+        <View style={styles.cameraContainer}>
+          <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.flipButton}
+                onPress={toggleCameraFacing}
+              >
+                <MaterialIcons name="flip-camera-ios" size={28} color="white" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.captureButton}
+                onPress={takePicture}
+                disabled={loading}
+              >
+                <View style={styles.captureButtonInner} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => setShowCamera(false)}
+              >
+                <MaterialIcons name="close" size={28} color="white" />
+              </TouchableOpacity>
+            </View>
+          </CameraView>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  cameraContainer: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    marginHorizontal: 20,
+    marginBottom: 40,
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+  },
+  flipButton: {
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  captureButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 4,
+    borderColor: "white",
+  },
+  captureButtonInner: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "white",
+  },
+  cancelButton: {
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+});

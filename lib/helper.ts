@@ -20,30 +20,33 @@ export async function pickImage() {
   return result.assets[0]; // contains uri, width, height, etc.
 }
 
-export function takePhoto() {
-  return () =>
-    new Promise<ImagePicker.ImagePickerAsset | null>(async (resolve) => {
-      // Request permission
-      const perm = await ImagePicker.requestCameraPermissionsAsync();
-      if (!perm.granted) {
-        alert("Camera permission is required!");
-        close();
-        resolve(null);
-        return;
-      }
+export async function takePhoto() {
+  try {
+    const perm = await ImagePicker.requestCameraPermissionsAsync();
+    if (!perm.granted) return null;
 
-      // Launch camera
-      const res = await ImagePicker.launchCameraAsync({
-        quality: 1,
-      });
+    const res = await ImagePicker.launchCameraAsync();
 
-      if (res.canceled) {
-        resolve(null);
-      } else {
-        resolve(res.assets[0]); // fully typed { uri, width, height, ... }
-      }
-    });
+    if (res.canceled) return null;
+
+    // ✅ SAFETY CHECK
+    if ("assets" in res && res.assets?.length) {
+      return res.assets[0];
+    }
+
+    // ✅ fallback for older return shape
+    if ("uri" in res) {
+      return res;
+    }
+
+    return null;
+  } catch (err) {
+    console.error("Camera error:", err);
+    alert("Failed to open camera");
+    return null;
+  }
 }
+
 export async function getCountries() {
   try {
     const res = await fetch(
