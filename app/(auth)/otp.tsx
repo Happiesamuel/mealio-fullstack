@@ -1,5 +1,5 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
-import useAuth from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/useAuth";
 import useOtpVerification from "@/hooks/useOtpVerification";
 import useResendOtp from "@/hooks/useResendOtp";
 import { getGuestById } from "@/lib/databse";
@@ -25,7 +25,7 @@ export default function OTP() {
   const { verify, status, error: verifyErr } = useOtpVerification();
   const { resend, error: resendErr } = useResendOtp();
   const inputs = useRef<(TextInput | null)[]>([]);
-  const { mutate } = useAuth("login");
+  const { mutate } = useLogin();
   const [timer, setTimer] = useState(60); // 60 seconds
   const [disabled, setDisabled] = useState(true);
 

@@ -20,7 +20,7 @@ export async function pickImage() {
   return result.assets[0]; // contains uri, width, height, etc.
 }
 
-export function takePhoto(close: () => void) {
+export function takePhoto() {
   return () =>
     new Promise<ImagePicker.ImagePickerAsset | null>(async (resolve) => {
       // Request permission
@@ -36,8 +36,6 @@ export function takePhoto(close: () => void) {
       const res = await ImagePicker.launchCameraAsync({
         quality: 1,
       });
-
-      close();
 
       if (res.canceled) {
         resolve(null);

@@ -5,7 +5,7 @@ import { Guest } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 const ONBOARD_KEY = "seenOnboard";
@@ -39,8 +39,28 @@ export default function Index() {
 
   if (status === "pending" || seenOnboard === null) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator color="#14b74d" size="large" />
+      <View className="flex-1 justify-center items-center bg-white">
+        <Image
+          source={require("../assets/images/bg.png")}
+          className="absolute w-full h-full opacity-[15%]"
+          resizeMode="repeat"
+        />
+
+        <View className="flex-row items-center">
+          <View>
+            <Image
+              source={require("../assets/icons/mealio-icon.png")}
+              className="w-[40px] h-[40px]"
+              resizeMode="contain"
+            />
+          </View>
+
+          <View>
+            <Text className="font-roboto-semibold text-5xl text-black ml-3">
+              mealio
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }

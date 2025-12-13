@@ -85,11 +85,11 @@ export default function Profile() {
   }
   async function handleTakePhoto() {
     try {
-      const img = await takePhoto(() => null)();
+      const img = await takePhoto()();
       setLoading(true);
       if (img) {
         close();
-        await uploadImage(img, guest!.$id);
+        // await uploadImage(img, guest!.$id);
 
         setPhoto(img.uri);
 
@@ -115,6 +115,7 @@ export default function Profile() {
     if (user) {
       const a = await logout();
       if (a) {
+        setPhoto(null);
         reset();
         Toast.show({
           type: "success",

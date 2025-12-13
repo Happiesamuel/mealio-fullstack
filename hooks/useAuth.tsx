@@ -1,30 +1,48 @@
-import { login, signup } from "@/lib/databse";
-import { SignupProps } from "@/types";
+import { getGuestByEmail, login, signup } from "@/lib/databse";
+import { useUserStorage } from "@/store/useUserStore";
+import { Guest, SignupProps } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { Models } from "react-native-appwrite";
-
-type AuthType = "sign-up" | "login";
+import { router, useLocalSearchParams } from "expo-router";
+import Toast from "react-native-toast-message";
 export type LoginData = {
   email: string;
   password: string;
 };
-export default function useAuth(type: AuthType) {
-  const mutationFn = (data: SignupProps | LoginData) => {
-    if (type === "sign-up") {
-      return signup(data as SignupProps);
-    } else {
-      const loginData = data as LoginData;
-      return login(loginData.email, loginData.password);
-    }
-  };
 
-  const { mutate, status, error } = useMutation<
-    Models.Document | any,
-    Error,
-    SignupProps | LoginData
-  >({
-    mutationFn,
+export function useSignup() {
+  const { mutate, status, error } = useMutation({
+    mutationFn: (data: SignupProps) => signup(data),
   });
+  return { mutate, status, error };
+}
 
+export function useLogin() {
+  const { from } = useLocalSearchParams<{ from: string }>();
+  const { setUser } = useUserStorage();
+
+  const { mutate, status, error } = useMutation({
+    mutationFn: (data: LoginData) => login(data.email, data.password),
+
+    onSuccess: async (data) => {
+      Toast.show({
+        type: "success",
+        text1: "Login successful",
+        text2: "Fresh meals are just a tap away!",
+      });
+
+      const guest = await getGuestByEmail(data!.email);
+      setUser(data, guest as unknown as Guest);
+
+      router.push(from ? (from as any) : "/(tabs)");
+    },
+
+    onError: (error: Error) => {
+      Toast.show({
+        type: "error",
+        text1: "Failed to login",
+        text2: error.message,
+      });
+    },
+  });
   return { mutate, status, error };
 }

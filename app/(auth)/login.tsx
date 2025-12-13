@@ -1,21 +1,16 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
-import useAuth from "@/hooks/useAuth";
-import { getGuestByEmail } from "@/lib/databse";
+import { useLogin } from "@/hooks/useAuth";
 import { loginInput, loginSchema } from "@/lib/schemas";
-import { useUserStorage } from "@/store/useUserStore";
-import { Guest } from "@/types";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, Text, View } from "react-native";
-import Toast from "react-native-toast-message";
 import { ZodError } from "zod";
 
 export default function Login() {
-  const { mutate, status, error } = useAuth("login");
-  const { from } = useLocalSearchParams<{ from: string }>();
-  const { setUser } = useUserStorage();
+  const { mutate, status } = useLogin();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -39,36 +34,13 @@ export default function Login() {
       }
     }
   };
-  console.log(from);
   const handleSubmit = () => {
     // await logout()
     try {
       const validatedData: loginInput = loginSchema.parse(form);
       setErrors({});
 
-      mutate(
-        { email: validatedData.email, password: validatedData.password },
-        {
-          onSuccess: async (data) => {
-            Toast.show({
-              type: "success",
-              text1: "Login successful",
-              text2: "Fresh meals are just a tap away!",
-            });
-            const guest = await getGuestByEmail(data.email);
-            setUser(data, guest as unknown as Guest);
-
-            router.push(from ? `${from}` : (`/(tabs)` as any));
-          },
-          onError: () => {
-            Toast.show({
-              type: "error",
-              text1: "Failed to login",
-              text2: error?.message,
-            });
-          },
-        }
-      );
+      mutate({ email: validatedData.email, password: validatedData.password });
     } catch (err) {
       if (err instanceof ZodError) {
         const fieldErrors = err.flatten().fieldErrors as Partial<

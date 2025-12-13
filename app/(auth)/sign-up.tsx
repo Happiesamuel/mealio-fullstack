@@ -1,7 +1,7 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
-import useAuth from "@/hooks/useAuth";
+import { useSignup } from "@/hooks/useAuth";
 import { SignupInput, signupSchema } from "@/lib/schemas";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
@@ -10,7 +10,7 @@ import Toast from "react-native-toast-message";
 import { ZodError } from "zod";
 
 export default function SignUp() {
-  const { mutate, status, error } = useAuth("sign-up");
+  const { mutate, status, error } = useSignup();
   const [errors, setErrors] = useState<
     Partial<Record<keyof SignupInput, string>>
   >({});
