@@ -253,3 +253,18 @@ export async function uploadImage(img: any, userId: string) {
     throw error;
   }
 }
+export async function updateDoc(obj) {
+  console.log(obj);
+  // try {
+  //   const data = await databases.updateDocument(
+  //     appwriteConfig.databaseId,
+  //     appwriteConfig.guestsCollectionId,
+  //     obj.userId,
+  //     obj
+  //   );
+  //   return data;
+  // } catch (error) {
+  //   console.log(error);
+  //   throw error;
+  // }
+}
