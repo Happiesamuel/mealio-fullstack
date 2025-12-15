@@ -269,3 +269,49 @@ export async function updateDoc(obj: {
     throw error;
   }
 }
+export async function emailOTP(
+  userId: string,
+  otp: string,
+  email: string,
+  password: string
+) {
+  const result = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.otpCollectionId,
+    [
+      Query.equal("guests.$id", userId),
+      Query.equal("otpCode", otp),
+      Query.equal("isUsed", false),
+    ]
+  );
+
+  if (result.documents.length === 0) {
+    throw new Error("OTP may be invalid or expired");
+  }
+
+  const otpDoc = result.documents[0];
+
+  if (new Date(otpDoc.expirationTime) < new Date()) {
+    throw new Error("OTP expired");
+  }
+  account.updateEmail(email, password);
+
+  await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.otpCollectionId,
+    otpDoc.$id,
+    {
+      isUsed: true,
+    }
+  );
+  await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.guestsCollectionId,
+    userId,
+    {
+      email: email,
+    }
+  );
+
+  return { success: true, message: "OTP verified" };
+}

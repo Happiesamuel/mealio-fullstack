@@ -28,7 +28,7 @@ export default function Security() {
             <FontAwesome name="angle-right" size={20} color="black" />
           </View>
         </Link>
-        <Link href={"/profile/security/password"}>
+        <Link href={"/profile/security/email" as any}>
           <View className="flex items-center w-full justify-between gap-2 flex-row">
             <Text className="text-base font-roboto text-black">
               Change Email
