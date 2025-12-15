@@ -9,9 +9,11 @@ export default function useUpdate() {
     status,
     error,
   } = useMutation({
-    mutationFn: (obj) => updateDoc(obj),
-    onSuccess: () => {
+    mutationFn: (obj: { userId: string; update: { [keys: string]: string } }) =>
+      updateDoc(obj),
+    onSuccess: (data) => {
       queries.invalidateQueries({ queryKey: ["guest"] });
+
       Toast.show({
         type: "success",
         text1: "Updated successful",

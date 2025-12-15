@@ -28,6 +28,14 @@ export default function Security() {
             <FontAwesome name="angle-right" size={20} color="black" />
           </View>
         </Link>
+        <Link href={"/profile/security/password"}>
+          <View className="flex items-center w-full justify-between gap-2 flex-row">
+            <Text className="text-base font-roboto text-black">
+              Change Email
+            </Text>
+            <FontAwesome name="angle-right" size={20} color="black" />
+          </View>
+        </Link>
         <View className="flex flex-row items-center justify-between">
           <Text className="font-roboto text-base text-black">Biometrics</Text>
           <Switch value={isOn} onPress={handlePress} style={styles.switch} />

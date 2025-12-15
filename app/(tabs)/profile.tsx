@@ -3,6 +3,7 @@ import { useBottomSheet } from "@/context/BottomSheetProvider";
 import { logout, uploadImage } from "@/lib/databse";
 import { pickImage } from "@/lib/helper";
 import { useUserStorage } from "@/store/useUserStore";
+import { Guest } from "@/types";
 import {
   Feather,
   FontAwesome,
@@ -29,7 +30,7 @@ import Toast from "react-native-toast-message";
 
 export default function Profile() {
   const { open, close } = useBottomSheet();
-  const { user, reset, guest } = useUserStorage();
+  const { user, reset, guest, setUser } = useUserStorage();
   const [photo, setPhoto] = useState<string | null>(guest?.avatar || null);
   const [loading, setLoading] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
@@ -73,9 +74,9 @@ export default function Profile() {
       setLoading(true);
       if (img) {
         close();
-        await uploadImage(img, guest!.$id);
+        const data = await uploadImage(img, guest!.$id);
         setPhoto(img.uri);
-
+        setUser(user, { ...guest, avatar: data.avatar } as unknown as Guest);
         setLoading(false);
         Toast.show({
           type: "success",
@@ -134,10 +135,9 @@ export default function Profile() {
       console.log("✅ Photo captured:", photo.uri);
 
       setShowCamera(false);
-      await uploadImage(photo, guest!.$id);
-
+      const data = await uploadImage(photo, guest!.$id);
       setPhoto(photo.uri);
-
+      setUser(user, { ...guest, avatar: data.avatar } as unknown as Guest);
       Toast.show({
         type: "success",
         text1: "Uploaded",

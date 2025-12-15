@@ -163,5 +163,6 @@ export interface SignupProps {
 export interface Guest extends Models.Document {
   name: string;
   email: string;
+  password: string;
   avatar: string;
 }

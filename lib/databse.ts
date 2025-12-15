@@ -180,7 +180,6 @@ export async function changePassword(
   userId: string
 ) {
   try {
-    console.log(newPassword, oldPassword, userId);
     await account.updatePassword(newPassword, oldPassword);
     await databases.updateDocument(
       appwriteConfig.databaseId,
@@ -253,18 +252,20 @@ export async function uploadImage(img: any, userId: string) {
     throw error;
   }
 }
-export async function updateDoc(obj) {
-  console.log(obj);
-  // try {
-  //   const data = await databases.updateDocument(
-  //     appwriteConfig.databaseId,
-  //     appwriteConfig.guestsCollectionId,
-  //     obj.userId,
-  //     obj
-  //   );
-  //   return data;
-  // } catch (error) {
-  //   console.log(error);
-  //   throw error;
-  // }
+export async function updateDoc(obj: {
+  userId: string;
+  update: { [keys: string]: string };
+}) {
+  try {
+    const data = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.guestsCollectionId,
+      obj.userId,
+      obj.update
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
