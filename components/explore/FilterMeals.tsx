@@ -66,7 +66,7 @@ export default function FilterMeals({
   }
 
   return (
-    <View className="gap-5">
+    <View className="gap-5 pb-8">
       <View className="gap-2">
         <Text className="font-roboto-bold text-xl text-center text-black">
           Filter By

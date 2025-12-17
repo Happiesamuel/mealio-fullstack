@@ -1,18 +1,28 @@
-// }
 import BottomSheetProvider from "@/context/BottomSheetProvider";
+import { setupNotificationCategories } from "@/lib/notification";
 import { toastConfig } from "@/lib/toastConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
+import * as Notifications from "expo-notifications";
+import { router, SplashScreen, Stack } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import { Platform, StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import "react-native-url-polyfill/auto";
 import "./globals.css";
 import Splash from "./Splash";
-SplashScreen.preventAutoHideAsync();
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
+SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
@@ -22,9 +32,43 @@ export default function RootLayout() {
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Light": require("../assets/fonts/Roboto-Light.ttf"),
   });
-
+  const responseListener = useRef<Notifications.Subscription | null>(null);
   const [showAnimatedSplash, setShowAnimatedSplash] = useState(true);
 
+  useEffect(() => {
+    setupNotifications();
+
+    // Listen for notification actions (taps and button clicks)
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        const data = response.notification.request.content.data;
+        const actionIdentifier = response.actionIdentifier;
+
+        // Handle "View Order" button or notification tap
+        if (
+          actionIdentifier === "view_order" ||
+          actionIdentifier === Notifications.DEFAULT_ACTION_IDENTIFIER
+        ) {
+          if (data.orderId) {
+            console.log(data.orderId);
+            router.replace(`/order/${data.orderId}`);
+          }
+        }
+      });
+
+    return () => {
+      if (responseListener.current) {
+        responseListener.current.remove();
+      }
+      if (responseListener.current) {
+        responseListener.current.remove();
+      }
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   setupNotifications();
+  // }, []);
   useEffect(() => {
     if (error) throw error;
 
@@ -32,6 +76,41 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, error]);
+
+  async function setupNotifications() {
+    // Request permission
+    const { status } = await Notifications.getPermissionsAsync();
+    if (status !== "granted") {
+      await Notifications.requestPermissionsAsync();
+    }
+
+    // Setup categories with buttons
+    await setupNotificationCategories();
+
+    // Setup Android channel
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("orders", {
+        name: "Order Updates",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#ff231f7c",
+      });
+    }
+  }
+  // async function setupNotifications() {
+  //   const { status } = await Notifications.getPermissionsAsync();
+  //   if (status !== "granted") {
+  //     await Notifications.requestPermissionsAsync();
+  //   }
+  //   if (Platform.OS === "android") {
+  //     await Notifications.setNotificationChannelAsync("orders", {
+  //       name: "Order Updates",
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: "#ff231f7c",
+  //     });
+  //   }
+  // }
 
   if (!fontsLoaded) return null;
 

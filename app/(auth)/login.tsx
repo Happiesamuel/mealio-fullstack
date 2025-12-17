@@ -34,8 +34,8 @@ export default function Login() {
       }
     }
   };
-  const handleSubmit = () => {
-    // await logout()
+  const handleSubmit = async () => {
+    // await logout();
     try {
       const validatedData: loginInput = loginSchema.parse(form);
       setErrors({});

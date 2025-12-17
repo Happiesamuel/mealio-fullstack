@@ -13,7 +13,9 @@ export default function NotificationHeader() {
     <View className="flex flex-row items-center justify-between my-1 pt-4">
       <RoundedFullButton
         className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
-        onPress={() => router.back()}
+        onPress={() =>
+          router.canGoBack() ? router.back() : router.replace("/(tabs)")
+        }
       >
         <FontAwesome name="angle-left" size={18} color="black" />
       </RoundedFullButton>

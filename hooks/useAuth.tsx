@@ -1,4 +1,11 @@
-import { getGuestByEmail, login, signup } from "@/lib/databse";
+import {
+  createOtp,
+  getGuestByEmail,
+  login,
+  logout,
+  plunk,
+  signup,
+} from "@/lib/databse";
 import { useUserStorage } from "@/store/useUserStore";
 import { Guest, SignupProps } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -24,16 +31,22 @@ export function useLogin() {
     mutationFn: (data: LoginData) => login(data.email, data.password),
 
     onSuccess: async (data) => {
-      Toast.show({
-        type: "success",
-        text1: "Login successful",
-        text2: "Fresh meals are just a tap away!",
-      });
-
       const guest = await getGuestByEmail(data!.email);
-      setUser(data, guest as unknown as Guest);
 
-      router.push(from ? (from as any) : "/(tabs)");
+      if (!guest.isVerified) {
+        await logout();
+        const otp = await plunk(guest!.email);
+        await createOtp(otp.otp, guest!.$id);
+        router.push(`/otp?from=sign-up&userId=${guest.$id}`);
+      } else {
+        Toast.show({
+          type: "success",
+          text1: "Login successful",
+          text2: "Fresh meals are just a tap away!",
+        });
+        setUser(data, guest as unknown as Guest);
+        router.push(from ? (from as any) : "/(tabs)");
+      }
     },
 
     onError: (error: Error) => {

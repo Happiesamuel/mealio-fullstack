@@ -171,4 +171,5 @@ export interface Guest extends Models.Document {
   email: string;
   password: string;
   avatar: string;
+  isVerified: boolean;
 }

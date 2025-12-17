@@ -239,9 +239,14 @@ export default function Profile() {
           </View>
           {guest ? (
             <View className="flex items-center justify-center">
-              <Text className="font-roboto-medium text-base text-black">
-                {guest?.name}
-              </Text>
+              <View className="flex items-center flex-row gap-0.5">
+                <Text className="font-roboto-medium text-base text-black">
+                  {guest?.name}
+                </Text>
+                {guest?.isVerified && (
+                  <MaterialIcons name="verified" size={18} color="#14B74D" />
+                )}
+              </View>
               <Text className="font-roboto-medium text-base text-grey">
                 {guest?.email}
               </Text>
