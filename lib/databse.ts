@@ -341,3 +341,29 @@ export const getUserAddress = async (userId: string) => {
     throw error.message || "Failed to create document";
   }
 };
+export async function deleteAddress(addressId: string) {
+  try {
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.addressCollectionId,
+      addressId
+    );
+  } catch (error: any) {
+    throw error.message || "Failed to delete document";
+  }
+}
+export async function updateAddress(
+  addressId: string,
+  data: Record<string, any>
+) {
+  try {
+    await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.addressCollectionId,
+      addressId,
+      data
+    );
+  } catch (error: any) {
+    throw error.message || "Failed to delete document";
+  }
+}

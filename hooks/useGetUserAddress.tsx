@@ -4,14 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function useGetUserAddress() {
   const { guest } = useUserStorage();
+
   const {
     data: address,
     status,
     error,
+    refetch,
   } = useQuery({
-    queryFn: async () => await getUserAddress(guest!.$id),
-    queryKey: ["address"],
+    queryKey: ["address", guest?.$id],
+    queryFn: () => getUserAddress(guest!.$id),
     enabled: !!guest,
   });
-  return { address, status, error };
+
+  return { address, status, error, refetch };
 }

@@ -1,29 +1,32 @@
 import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import Error from "@/components/ui/Error";
+import useDeleteAddress from "@/hooks/useDeleteAddress";
 import useGetUserAddress from "@/hooks/useGetUserAddress";
+import AddressSkeleton from "@/skeleton/AddressSkeleton";
 import { useUserStorage } from "@/store/useUserStore";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import {
+  FontAwesome,
+  FontAwesome6,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { Link, router } from "expo-router";
 import React from "react";
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  ActivityIndicator,
+  FlatList,
+  Pressable,
   Text,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const { address, status } = useGetUserAddress();
+  const { address, status, error, refetch } = useGetUserAddress();
+  const { deleteAdd, status: deleteStat } = useDeleteAddress();
   const { user, guest } = useUserStorage();
   if (!user) return <Headers from="/profile/address" text="Address" />;
-  if (status === "pending")
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+
   const newAddress =
     address?.map((add) => {
       return {
@@ -34,19 +37,67 @@ export default function Index() {
       };
     }) ?? [];
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <SafeAreaView>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
-        >
-          <ProfileHeader>Address</ProfileHeader>
-          <Text className="mt-5 font-roboto-medium text-grey text-base">
-            View all address
-          </Text>
-          {!newAddress.length ? (
+    <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full">
+      <ProfileHeader>Address</ProfileHeader>
+      {newAddress.length && (
+        <Text className="mt-3.5 pb-3 font-roboto-medium text-black text-base">
+          Address book ({newAddress.length})
+        </Text>
+      )}
+      {error && <Error error={error.message} onPress={refetch} />}
+      <FlatList
+        data={newAddress}
+        renderItem={({ item }) => (
+          <View
+            key={item.id}
+            className="gap-1.5 bg-white rounded-xl shadow-sm shadow-black p-4"
+          >
+            <View className="gap-1">
+              <Text className="font-roboto-semibold text-base text-black">
+                {item.type} Address
+              </Text>
+              <Text className="font-roboto text-sm text-grey">
+                {item.street}
+              </Text>
+              <View className="flex flex-row items-center justify-between">
+                <Text className="font-roboto text-sm text-grey">
+                  {item.city}
+                </Text>
+                <View className="flex items-center flex-row gap-4">
+                  <Pressable
+                    onPress={() =>
+                      router.push(`/profile/address/edit?addressId=${item.id}`)
+                    }
+                  >
+                    <FontAwesome name="edit" size={24} color="#14b74d" />
+                  </Pressable>
+                  {deleteStat === "pending" ? (
+                    <ActivityIndicator size={20} color={"#14b74d"} />
+                  ) : (
+                    <Pressable onPress={() => deleteAdd(item.id)}>
+                      <MaterialCommunityIcons
+                        name="trash-can-outline"
+                        size={24}
+                        color="#14b74d"
+                      />
+                    </Pressable>
+                  )}
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerClassName="pb-8 mt-1 gap-2.5"
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => {
+          return status === "pending" ? (
+            <View className="pb-8 mt-1 gap-2.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <AddressSkeleton key={i} />
+              ))}
+            </View>
+          ) : (
             <View className="items-center gap-4 w-[80%] self-center mt-24 justify-center">
               <View className="flex bg-primary rounded-full  items-center justify-center size-16">
                 <FontAwesome6 name="address-card" size={24} color="white" />
@@ -68,22 +119,21 @@ export default function Index() {
                 </Text>
               </Link>
             </View>
-          ) : (
-            <View>
-              {newAddress.map((add) => (
-                <View key={add.id} className="">
-                  <Text className="font-roboto-bold">{guest?.name}</Text>
-                  <View>
-                    <Text>{add.type}</Text>
-                    <Text>{add.street}</Text>
-                    <Text>{add.city}</Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-          )}
-        </ScrollView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+          );
+        }}
+      />
+      {newAddress.length && (
+        <View className="flex items-center justify-between flex-row py-3">
+          <Link
+            href={`/profile/address/address`}
+            className="bg-primary rounded py-4 w-full"
+          >
+            <Text className="text-white font-roboto-medium text-center text-sm">
+              Add new address
+            </Text>
+          </Link>
+        </View>
+      )}
+    </SafeAreaView>
   );
 }
