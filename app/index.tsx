@@ -64,8 +64,10 @@ export default function Index() {
       </View>
     );
   }
-
-  if (error) {
+  if (error && !seenOnboard) {
+    return <Redirect href="/onboard" />;
+  }
+  if (error && seenOnboard) {
     Toast.show({
       type: "error",
       text1: "Welcome to Mealio",

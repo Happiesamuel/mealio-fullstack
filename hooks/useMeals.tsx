@@ -5,6 +5,7 @@ export function useMealsQuery() {
   const { data, status, error, refetch } = useQuery({
     queryKey: ["meals"],
     queryFn: fetchMealsApi,
+    staleTime: 1000 * 60 * 10,
   });
 
   const meals = data ?? [];
