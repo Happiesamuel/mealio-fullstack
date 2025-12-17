@@ -160,6 +160,12 @@ export interface SignupProps {
   firstName: string;
   lastName: string;
 }
+export interface AddressProps {
+  type: string;
+  street: string;
+  city: string;
+  guests: string;
+}
 export interface Guest extends Models.Document {
   name: string;
   email: string;

@@ -1,4 +1,4 @@
-import { SignupProps } from "@/types";
+import { AddressProps, SignupProps } from "@/types";
 import { ID, Query } from "react-native-appwrite";
 import {
   account,
@@ -315,3 +315,29 @@ export async function emailOTP(
 
   return { success: true, message: "OTP verified" };
 }
+
+export const createAdress = async (obj: AddressProps) => {
+  try {
+    const document = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.addressCollectionId,
+      ID.unique(),
+      obj
+    );
+    return document;
+  } catch (error: any) {
+    throw error.message || "Failed to create document";
+  }
+};
+export const getUserAddress = async (userId: string) => {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.addressCollectionId,
+      [Query.equal("guests.$id", userId)]
+    );
+    return result.documents;
+  } catch (error: any) {
+    throw error.message || "Failed to create document";
+  }
+};

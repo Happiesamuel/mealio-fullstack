@@ -15,6 +15,7 @@ export const appwriteConfig = {
   devKey: process.env.EXPO_PUBLIC_APPWRITE_DEV_KEY!,
   guestsCollectionId: "guests",
   otpCollectionId: "otp",
+  addressCollectionId: "address",
 };
 
 export const client = new Client();
