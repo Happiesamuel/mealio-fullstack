@@ -24,10 +24,13 @@ export default function BottomSheet({ children, onClose }: Props) {
 
   return (
     <>
-      <Pressable className="absolute inset-0 bg-black/40" onPress={onClose} />
+      <Pressable
+        className="absolute inset-0 bg-black/40 pb-safe"
+        onPress={onClose}
+      />
 
       <Animated.View
-        className="absolute bottom-0 w-full bg-[#D4D4D4] p-4 py-6  rounded-t-2xl"
+        className="absolute bottom-0 w-full bg-[#D4D4D4] p-4 py-6 pb-safe  rounded-t-2xl"
         style={style}
       >
         {children}

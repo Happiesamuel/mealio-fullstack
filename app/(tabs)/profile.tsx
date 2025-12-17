@@ -53,7 +53,7 @@ export default function Profile() {
 
   const openSheet = () => {
     open(
-      <View className=" gap-5">
+      <View className=" gap-5 ">
         {list.map((lis) => (
           <Pressable
             onPress={() => lis.fun()}

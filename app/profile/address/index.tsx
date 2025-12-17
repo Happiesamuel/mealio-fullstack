@@ -24,7 +24,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const { address, status, error, refetch } = useGetUserAddress();
   const { deleteAdd, status: deleteStat } = useDeleteAddress();
-  const { user, guest } = useUserStorage();
+  const { user } = useUserStorage();
   if (!user) return <Headers from="/profile/address" text="Address" />;
 
   const newAddress =
@@ -37,7 +37,7 @@ export default function Index() {
       };
     }) ?? [];
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full">
+    <SafeAreaView edges={["top"]} className="bg-secondary pb-safe px-3 h-full">
       <ProfileHeader>Address</ProfileHeader>
       {newAddress.length && (
         <Text className="mt-3.5 pb-3 font-roboto-medium text-black text-base">
