@@ -16,9 +16,7 @@ export default function useGetUser() {
         throw error;
       }
     },
-    retry: false,
     enabled: true,
-    staleTime: 1000 * 60 * 10,
   });
 
   return { user, status, error, refetch };
