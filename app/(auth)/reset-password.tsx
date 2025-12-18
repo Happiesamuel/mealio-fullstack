@@ -51,17 +51,25 @@ export default function ResetPassword() {
       setLoading(true);
       const validatedData: emailInput = emailSchema.parse(form);
       const user = await getGuestByEmail(validatedData.email);
-      const otp = await plunk(user.email);
-      await createOtp(otp.otp, user.$id);
-      Toast.show({
-        type: "success",
-        text1: "Email OTP",
-        text2: "We've sent you an OTP...Check your email",
-      });
-      setTimeout(() => {
-        router.push(`/otp?from=reset-password&userId=${user.$id}`);
-      }, 1500);
-      setErrors({});
+      if (user) {
+        const otp = await plunk(user?.email);
+        await createOtp(otp.otp, user!.$id);
+        Toast.show({
+          type: "success",
+          text1: "Email OTP",
+          text2: "We've sent you an OTP...Check your email",
+        });
+        setTimeout(() => {
+          router.push(`/otp?from=reset-password&userId=${user!.$id}`);
+        }, 1500);
+        setErrors({});
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Failed",
+          text2: "User not found",
+        });
+      }
     } catch (err) {
       if (err instanceof ZodError) {
         const fieldErrors = err.flatten().fieldErrors as Partial<

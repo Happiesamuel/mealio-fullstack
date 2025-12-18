@@ -1,7 +1,7 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
-import { useLogin } from "@/hooks/useAuth";
+import { useLogin, useLoginProvider } from "@/hooks/useAuth";
 import { loginInput, loginSchema } from "@/lib/schemas";
 import { Link } from "expo-router";
 import React, { useState } from "react";
@@ -10,6 +10,7 @@ import { ZodError } from "zod";
 
 export default function Login() {
   const { mutate, status } = useLogin();
+  const { mutate: provider } = useLoginProvider();
 
   const [form, setForm] = useState({
     email: "",
@@ -122,7 +123,7 @@ export default function Login() {
       </View>
 
       <View className="flex w-full gap-6 items-center">
-        <RoundedFullButton onPress={() => {}} className="bg-[#F2F4ED]">
+        <RoundedFullButton onPress={provider} className="bg-[#F2F4ED]">
           <View className="flex items-center py-4 justify-center gap-2 flex-row">
             <Image
               source={icons.google}
@@ -134,18 +135,7 @@ export default function Login() {
             </Text>
           </View>
         </RoundedFullButton>
-        <RoundedFullButton onPress={() => {}} className="bg-[#F2F4ED]">
-          <View className="flex items-center py-4 justify-center gap-2 flex-row">
-            <Image
-              source={icons.apple}
-              resizeMode="contain"
-              className="size-4"
-            />
-            <Text className="text-primary font-roboto-bold text-base">
-              Continue with Apple
-            </Text>
-          </View>
-        </RoundedFullButton>
+
         <Text className="text-base font-roboto-bold text-black">
           Don&apos;t have an account?{" "}
           <Link className="text-primary" href="/sign-up">

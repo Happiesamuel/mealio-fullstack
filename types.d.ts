@@ -173,3 +173,7 @@ export interface Guest extends Models.Document {
   avatar: string;
   isVerified: boolean;
 }
+export interface Auth {
+  user: Models.User;
+  guest: Guest;
+}

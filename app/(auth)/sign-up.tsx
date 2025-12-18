@@ -1,7 +1,7 @@
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons } from "@/constnts";
-import { useSignup } from "@/hooks/useAuth";
+import { useLoginProvider, useSignup } from "@/hooks/useAuth";
 import { SignupInput, signupSchema } from "@/lib/schemas";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
@@ -11,6 +11,7 @@ import { ZodError } from "zod";
 
 export default function SignUp() {
   const { mutate, status, error } = useSignup();
+  const { mutate: provider } = useLoginProvider();
   const [errors, setErrors] = useState<
     Partial<Record<keyof SignupInput, string>>
   >({});
@@ -161,7 +162,7 @@ export default function SignUp() {
       </View>
 
       <View className="flex w-full gap-6 items-center">
-        <RoundedFullButton onPress={() => {}} className="bg-[#F2F4ED]">
+        <RoundedFullButton onPress={provider} className="bg-[#F2F4ED]">
           <View className="flex items-center py-4 justify-center gap-2 flex-row">
             <Image
               source={icons.google}
@@ -170,18 +171,6 @@ export default function SignUp() {
             />
             <Text className="text-primary font-roboto-bold text-base">
               Continue with Google
-            </Text>
-          </View>
-        </RoundedFullButton>
-        <RoundedFullButton onPress={() => {}} className="bg-[#F2F4ED]">
-          <View className="flex items-center py-4 justify-center gap-2 flex-row">
-            <Image
-              source={icons.apple}
-              resizeMode="contain"
-              className="size-4"
-            />
-            <Text className="text-primary font-roboto-bold text-base">
-              Continue with Apple
             </Text>
           </View>
         </RoundedFullButton>

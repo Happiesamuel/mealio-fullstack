@@ -1,5 +1,7 @@
-import { AddressProps, SignupProps } from "@/types";
-import { ID, Query } from "react-native-appwrite";
+import { AddressProps, Auth, SignupProps } from "@/types";
+import * as Linking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
+import { ID, OAuthProvider, Query } from "react-native-appwrite";
 import {
   account,
   appwriteConfig,
@@ -7,7 +9,6 @@ import {
   databases,
   storage,
 } from "./appwrite";
-
 export async function plunk(to: string) {
   try {
     const response = await fetch(
@@ -139,7 +140,7 @@ export async function getGuestByEmail(email: string) {
     );
 
     if (result.documents.length === 0) {
-      throw new Error("User not found");
+      return null;
     }
 
     return result.documents[0];
@@ -254,7 +255,7 @@ export async function uploadImage(img: any, userId: string) {
 }
 export async function updateDoc(obj: {
   userId: string;
-  update: { [keys: string]: string };
+  update: { [keys: string]: string | boolean };
 }) {
   try {
     const data = await databases.updateDocument(
@@ -365,5 +366,60 @@ export async function updateAddress(
     );
   } catch (error: any) {
     throw error.message || "Failed to delete document";
+  }
+}
+export async function loginWithGoogle(): Promise<Auth | boolean> {
+  try {
+    const redirectUri = Linking.createURL("/profile");
+
+    const res = await account.createOAuth2Token(
+      OAuthProvider.Google,
+      redirectUri
+    );
+    if (!res) throw new Error("Failed to login,first");
+
+    const browserRes = await WebBrowser.openAuthSessionAsync(
+      res.toString(),
+      redirectUri
+    );
+    if (browserRes.type !== "success")
+      throw new Error("Failed to login!,second");
+
+    const url = new URL(browserRes.url);
+    const secret = url.searchParams.get("secret")?.toString();
+    const userId = url.searchParams.get("userId")?.toString();
+    if (!secret || !userId) throw new Error("Failed to login,third");
+
+    const session = await account.createSession(userId!, secret!);
+
+    if (!session) throw new Error("Failed to create a session");
+    const user = await getCurrentUser();
+
+    if (!user) throw new Error("Failed to create a session");
+
+    const guest = await getGuestByEmail(user.email);
+    if (!guest) {
+      await account.updatePassword("22222222");
+      const avatarUrl = avatars.getInitialsURL(user.name);
+      const [firstName, ...lastName] = user.name.split(" ");
+      const data = await createGuest(
+        user.$id,
+        firstName,
+        lastName.join(" "),
+        user.email,
+        avatarUrl,
+        "22222222"
+      );
+      const guest = await updateDoc({
+        userId: data.$id,
+        update: { isVerified: true },
+      });
+      return { user, guest } as unknown as Auth;
+    } else {
+      return { user, guest } as unknown as Auth;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }
