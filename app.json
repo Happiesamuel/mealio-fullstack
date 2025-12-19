@@ -27,7 +27,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.happiesamuel.Mealio"
+      "package": "com.happiesamuel.mealio"
     },
     "web": {
       "output": "static",

@@ -22,7 +22,7 @@ export const client = new Client();
 client
   .setEndpoint(appwriteConfig.endpoint)
   .setProject(appwriteConfig.projectId)
-  .setDevKey(appwriteConfig.devKey) // Use from env
+  .setDevKey(appwriteConfig.devKey)
   .setPlatform(appwriteConfig.platform);
 
 export const account = new Account(client);

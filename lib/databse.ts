@@ -424,6 +424,7 @@ export async function updateAddress(
 //   }
 // }
 export async function loginWithGoogle(): Promise<Auth | boolean> {
+  console.log(appwriteConfig.platform);
   try {
     const redirectUri = Linking.createURL("");
     const res = await account.createOAuth2Token(
