@@ -38,6 +38,7 @@ export function useLoginProvider() {
         text1: "Login successful",
         text2: "Fresh meals are just a tap away!",
       });
+      router.push("/profile");
     },
 
     onError: (error: Error) => {
