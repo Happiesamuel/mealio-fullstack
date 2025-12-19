@@ -5,7 +5,7 @@
     "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mealio",
+    "scheme": "appwrite-callback-6938ce360021c4f37829",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

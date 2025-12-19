@@ -1,15 +1,15 @@
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { icons, images } from "@/constnts";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setSeenOnboard } from "@/constnts/onboard";
 import { router } from "expo-router";
 import React from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 
 export default function OnBoard() {
-  async function finishOnboarding() {
-    await AsyncStorage.setItem("seen_onboard", "true");
-    router.replace("/login");
-  }
+  const handleFinish = async () => {
+    await setSeenOnboard();
+    router.replace("/(tabs)");
+  };
   return (
     <View className=" h-full">
       <ScrollView
@@ -59,7 +59,7 @@ export default function OnBoard() {
               </RoundedFullButton>
 
               <RoundedFullButton
-                onPress={finishOnboarding}
+                onPress={handleFinish}
                 className="bg-[#A1C249]/5 "
               >
                 <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
