@@ -8,9 +8,10 @@ import Error from "@/components/ui/Error";
 import { useMealsQuery } from "@/hooks/useMeals";
 import { useMealSearch } from "@/hooks/useSearch";
 import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
+import { useSearchStorage } from "@/store/useSearchStore";
 import { Meal } from "@/types";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,11 +24,18 @@ export default function Search() {
     categories: string;
   }>();
   const { data: meals, status, error, refetch } = useMealSearch(query);
+  const { addItem, search } = useSearchStorage();
   const { error: mealErr } = useMealsQuery();
   function handleSearch(test: string) {
     if (test) router.setParams({ query: test });
   }
-
+  useEffect(
+    function () {
+      if (meals.length && !search.some((x) => x.title === query))
+        addItem({ title: query, date: new Date() });
+    },
+    [meals, query]
+  );
   const filteredMeals = useMemo(() => {
     if (!meals || meals.length === 0) return [];
 

@@ -36,7 +36,9 @@ export default function SearchFavourite() {
           >
             <View className="flex items-center flex-row gap-2">
               <AntDesign name="clock-circle" size={12} color="#A1A1A1" />
-              <Text className="font-roboto text-sm text-grey">{favor}</Text>
+              <Text className="font-roboto text-sm text-grey w-[80%]">
+                {favor}
+              </Text>
             </View>
             <Ionicons name="heart" size={20} color="#14B74D" />
           </View>
