@@ -103,6 +103,7 @@ export interface Restaurant {
   rating: number;
   description: string;
   reviews: RestaurantReview[];
+  date: Date;
 }
 export interface RestaurantReview {
   id: string;
@@ -145,6 +146,7 @@ export interface FavouriteMeal {
   restaurantId: string | undefined;
   image: string;
   time?: number | string;
+  date: Date;
 }
 export interface CartProp {
   id: string;

@@ -28,7 +28,7 @@ export const useFavouriteStore = create<FavouriteState>()(
         set({
           items: {
             ...get().items,
-            [type]: [...get().items[type], item],
+            [type]: [...get().items[type], { ...item, date: new Date() }],
           },
         }),
 
