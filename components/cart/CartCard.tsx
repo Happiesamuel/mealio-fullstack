@@ -1,14 +1,25 @@
 import useAllCart from "@/hooks/useAllCart";
+import { useDeleteCart } from "@/hooks/useCart";
+import { useUserStorage } from "@/store/useUserStore";
 import { CartDoc, CartProp } from "@/types";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import QuantityChange from "../ui/QuantityChange";
 import CartModal from "./CartModal";
 
 export default function CartCard({ item }: { item: CartDoc }) {
   const [showModal, setShowModal] = useState(false);
+  const { deleteItem, status } = useDeleteCart();
+  const { guest } = useUserStorage();
   const { handleQuantity, quan, removeItem, quanStat } = useAllCart(
     item as unknown as CartProp
   );
@@ -29,9 +40,13 @@ export default function CartCard({ item }: { item: CartDoc }) {
       <View className="flex-1 gap-2.5">
         <View className="flex items-center flex-row justify-between">
           <Text className="font-roboto text-sm text-black">{item.title}</Text>
-          <Pressable onPress={() => setShowModal(!showModal)}>
-            <FontAwesome name="trash" size={18} color="#FD3F3F" />
-          </Pressable>
+          {status === "pending" ? (
+            <ActivityIndicator size={15} color="#14b74d" />
+          ) : (
+            <Pressable onPress={() => setShowModal(!showModal)}>
+              <FontAwesome name="trash" size={18} color="#FD3F3F" />
+            </Pressable>
+          )}
         </View>
         <View className="flex items-center flex-row justify-between">
           <View className="flex items-center flex-row gap-2">
@@ -55,7 +70,7 @@ export default function CartCard({ item }: { item: CartDoc }) {
           onCancel={() => setShowModal(false)}
           onConfirm={() => {
             setShowModal(false);
-            removeItem(item.id);
+            return guest ? deleteItem(item.$id) : removeItem(item.id);
           }}
         >
           <Text className=" font-roboto-medium text-2xl mt-4 mb-6">

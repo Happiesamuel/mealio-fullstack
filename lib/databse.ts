@@ -473,3 +473,34 @@ export async function updateCart(id: string, quantity: number) {
     throw error;
   }
 }
+export async function deleteCart(id: string) {
+  try {
+    return await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.cartCollectionId,
+      id
+    );
+  } catch (error) {
+    console.error("Failed to update cart quantity:", error);
+    throw error;
+  }
+}
+
+export async function clearUserCart(userId: string) {
+  try {
+    const cart = await getCart(userId);
+
+    await Promise.all(
+      cart.map((item) =>
+        databases.deleteDocument(
+          appwriteConfig.databaseId,
+          appwriteConfig.cartCollectionId,
+          item.$id
+        )
+      )
+    );
+  } catch (error) {
+    console.error("Failed to clear cart:", error);
+    throw error;
+  }
+}

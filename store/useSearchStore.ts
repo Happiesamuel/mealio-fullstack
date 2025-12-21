@@ -18,7 +18,8 @@ export const useSearchStore = create<SearchState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (item) => set({ items: [...get().items, item] }),
+      addItem: (item) =>
+        set({ items: [...get().items, { ...item, date: new Date() }] }),
 
       removeItem: (title) =>
         set({ items: get().items.filter((i) => i.title !== title) }),
