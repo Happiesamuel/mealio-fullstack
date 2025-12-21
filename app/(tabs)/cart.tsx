@@ -8,7 +8,13 @@ import { useCartStorage } from "@/store/useCartStore";
 import { useUserStorage } from "@/store/useUserStore";
 import { CartDoc } from "@/types";
 import React, { useState } from "react";
-import { ActivityIndicator, FlatList, Pressable, Text } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Cart() {
   const { cart, clearCart } = useCartStorage();
@@ -25,7 +31,7 @@ export default function Cart() {
         data={cartItems}
         renderItem={({ item }) => <CartCard item={item} />}
         keyExtractor={(item) => item.id}
-        contentContainerClassName="pb-8 mt-6 gap-2.5"
+        contentContainerClassName="pb-8 mt-4 gap-2.5"
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => {
           return (
@@ -38,7 +44,9 @@ export default function Cart() {
           if (!cart || cart.length === 0) return null;
 
           return status === "pending" ? (
-            <ActivityIndicator size={15} color="#14b74d" />
+            <View className="self-end">
+              <ActivityIndicator size={15} color="#14b74d" />
+            </View>
           ) : (
             <Pressable
               onPress={() => setShowModal((prev) => !prev)}

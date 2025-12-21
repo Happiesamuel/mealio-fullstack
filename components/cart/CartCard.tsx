@@ -39,7 +39,9 @@ export default function CartCard({ item }: { item: CartDoc }) {
       </TouchableOpacity>
       <View className="flex-1 gap-2.5">
         <View className="flex items-center flex-row justify-between">
-          <Text className="font-roboto text-sm text-black">{item.title}</Text>
+          <Text className="font-roboto text-sm text-black w-[80%]">
+            {item.title}
+          </Text>
           {status === "pending" ? (
             <ActivityIndicator size={15} color="#14b74d" />
           ) : (
