@@ -1,12 +1,14 @@
 import { AntDesign } from "@expo/vector-icons";
 import cn from "clsx";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 export default function QuantityChange({
   quan,
   handleQuantity,
+  quanStat,
 }: {
   quan: number;
+  quanStat: string;
   handleQuantity(type: string): void;
 }) {
   return (
@@ -26,7 +28,11 @@ export default function QuantityChange({
           color={quan <= 1 ? "#A1A1A1" : "#14B74D"}
         />
       </TouchableOpacity>
-      <Text className="text-sm font-roboto-semibold text-black">{quan}</Text>
+      {quanStat === "pending" ? (
+        <ActivityIndicator size={15} color={"#14b74d"} />
+      ) : (
+        <Text className="text-sm font-roboto-semibold text-black">{quan}</Text>
+      )}
       <TouchableOpacity
         className="border border-primary bg-primary/10 size-[22px] rounded-lg flex items-center justify-center"
         onPress={() => handleQuantity("increase")}

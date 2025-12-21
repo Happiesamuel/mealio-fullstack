@@ -452,20 +452,20 @@ export async function getCart(userId: string) {
   }
 }
 
-export async function updateCart(cartItemId: string, quantity: number) {
+export async function updateCart(id: string, quantity: number) {
   try {
     if (quantity <= 0) {
       return await databases.deleteDocument(
         appwriteConfig.databaseId,
         appwriteConfig.cartCollectionId,
-        cartItemId
+        id
       );
     }
 
     return await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.cartCollectionId,
-      cartItemId,
+      id,
       { quantity }
     );
   } catch (error) {

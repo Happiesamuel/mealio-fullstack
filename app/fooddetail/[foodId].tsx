@@ -36,9 +36,8 @@ export default function FoodDetail() {
     error,
     refetch,
   } = useMealDetailQuery(foodId);
-  const { isInCart, handleQuantity, handleCart, quan, status } = useAllCart(
-    mealDetail as MealDetail
-  );
+  const { isInCart, handleQuantity, handleCart, quan, status, quanStat } =
+    useAllCart(mealDetail as MealDetail);
   const { data: ingredients, status: ingStatus } = useIngredientsQuery();
   const [active, setActive] = useState<string | null>(null);
 
@@ -77,6 +76,7 @@ export default function FoodDetail() {
                 <View className="pb-8">
                   <DetailsBio
                     quan={quan}
+                    quanStat={quanStat}
                     res={res}
                     handleQuantity={handleQuantity}
                     data={mealDetail as MealDetail}
@@ -130,9 +130,13 @@ export default function FoodDetail() {
                     color={quan <= 1 ? "white" : "white"}
                   />
                 </TouchableOpacity>
-                <Text className="text-2xl font-roboto-semibold text-black">
-                  {quan}
-                </Text>
+                {quanStat === "pending" ? (
+                  <ActivityIndicator size={25} color={"#14b74d"} />
+                ) : (
+                  <Text className="text-2xl font-roboto-semibold text-black">
+                    {quan}
+                  </Text>
+                )}
                 <TouchableOpacity
                   className="bg-primary  size-12 rounded-full flex items-center justify-center"
                   onPress={() => handleQuantity("increase")}

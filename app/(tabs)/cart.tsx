@@ -4,7 +4,7 @@ import CartHeader from "@/components/cart/CartHeader";
 import CartModal from "@/components/cart/CartModal";
 import NoCart from "@/components/cart/NoCart";
 import { useCartStorage } from "@/store/useCartStore";
-import { CartApp, CartItem } from "@/types";
+import { CartDoc } from "@/types";
 import React, { useState } from "react";
 import { FlatList, Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,21 +12,15 @@ export default function Cart() {
   const { cart, clearCart } = useCartStorage();
 
   const [showModal, setShowModal] = useState(false);
-  // if (cartAppStatus === "pending")
-  //   return (
-  //     <View>
-  //       <Text>Loading</Text>
-  //     </View>
-  //   );
-  // console.log(cartAppStatus, "sldl", error);
+
+  const cartItems: CartDoc[] =
+    (cart as unknown as CartDoc[]) ?? ([] as unknown as CartDoc[]);
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full">
       <CartHeader />
       <FlatList
-        data={cart}
-        renderItem={({ item }) => (
-          <CartCard item={item as CartApp | CartItem} />
-        )}
+        data={cartItems}
+        renderItem={({ item }) => <CartCard item={item} />}
         keyExtractor={(item) => item.id}
         contentContainerClassName="pb-8 mt-6 gap-2.5"
         showsVerticalScrollIndicator={false}

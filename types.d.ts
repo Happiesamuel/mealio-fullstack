@@ -181,5 +181,16 @@ export interface Auth {
 }
 
 export interface CartApp extends CartItem {
-  guests: Guest;
+  guests: string;
+}
+
+export interface CartDoc extends Models.Document {
+  price: number;
+  rating: number | undefined;
+  title: string;
+  id: string;
+  restaurantId: string | undefined;
+  image: string;
+  guest: string;
+  quantity: number;
 }

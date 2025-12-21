@@ -1,5 +1,5 @@
 import { useGetCart } from "@/hooks/useCart";
-import { CartItem } from "@/types";
+import { CartDoc, CartItem } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -49,7 +49,7 @@ export function useCartStorage() {
   const setCart = useCartStore((s) => s.setCart);
   const cartStore = useCartStore((s) => s.items);
   const setQuantity = useCartStore((s) => s.setQuantity);
-  const cart = guest ? cartApp : cartStore;
+  const cart = guest ? (cartApp as unknown as CartDoc[]) : cartStore;
   const totalCartQuantity = () =>
     cart?.length ? cart.map((x) => x.quantity).reduce((a, b) => a + b) : 0;
   const totalCartPrice = () =>

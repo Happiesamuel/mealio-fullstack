@@ -1,7 +1,7 @@
-import { addToCart, getCart } from "@/lib/databse";
+import { addToCart, getCart, updateCart } from "@/lib/databse";
 import { useCartStorage } from "@/store/useCartStore";
 import { useUserStorage } from "@/store/useUserStore";
-import { CartApp, Guest } from "@/types";
+import { CartApp } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
@@ -19,6 +19,22 @@ export function useAddToCart() {
     },
   });
   return { addAppCart, status, error };
+}
+export function useUpdateCart() {
+  const queries = useQueryClient();
+  const { guest } = useUserStorage();
+  const {
+    mutate: updateQuan,
+    status,
+    error,
+  } = useMutation({
+    mutationFn: (obj: { id: string; quantity: number }) =>
+      updateCart(obj.id, obj.quantity),
+    onSuccess: () => {
+      queries.invalidateQueries({ queryKey: ["cart", guest?.$id] });
+    },
+  });
+  return { updateQuan, status, error };
 }
 export function useGetCart() {
   const { guest } = useUserStorage();
@@ -60,7 +76,7 @@ export default function useSyncCart() {
 
           if (exists) continue;
 
-          addAppCart({ ...item, guests: guest.$id as unknown as Guest });
+          addAppCart({ ...item, guests: guest.$id as string });
         }
 
         clearCart();

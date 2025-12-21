@@ -1,24 +1,36 @@
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { MealDetail, Restaurant } from "@/types";
+import { FavouriteMeal, MealDetail, Restaurant } from "@/types";
 import { AntDesign, EvilIcons, MaterialIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { useState } from "react";
-import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FavouriteIcon from "../ui/FavouriteIcon";
 export default function DetailsBio({
   data,
   res,
   handleQuantity,
   quan,
+  quanStat,
 }: {
   data: MealDetail;
   res: Restaurant | undefined;
   handleQuantity(type: string): void;
   quan: number;
+  quanStat: string;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const { handlePress, isInFavourite } = useAllFavourite(data, "meals");
+  const { handlePress, isInFavourite } = useAllFavourite(
+    data as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <View>
       <View className="gap-2.5 mt-4">
@@ -91,9 +103,13 @@ export default function DetailsBio({
                 color={quan <= 1 ? "#A1A1A1" : "#14B74D"}
               />
             </TouchableOpacity>
-            <Text className="text-2xl font-roboto-semibold text-black">
-              {quan}
-            </Text>
+            {quanStat === "pending" ? (
+              <ActivityIndicator size={25} color={"#14b74d"} />
+            ) : (
+              <Text className="text-2xl font-roboto-semibold text-black">
+                {quan}
+              </Text>
+            )}
             <TouchableOpacity
               className="border border-primary bg-primary/10 size-9 rounded-lg flex items-center justify-center"
               onPress={() => handleQuantity("increase")}

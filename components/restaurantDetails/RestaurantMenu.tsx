@@ -1,6 +1,6 @@
 import useAllCart from "@/hooks/useAllCart";
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
@@ -11,8 +11,12 @@ import QuantityChange from "../ui/QuantityChange";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function RestaurantMenu({ item }: { item: Meal }) {
-  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { isInCart, handleQuantity, handleCart, quan, quanStat } =
+    useAllCart(item);
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -52,7 +56,11 @@ export default function RestaurantMenu({ item }: { item: Meal }) {
           ${item.price.toFixed(2)}
         </Text>
         {isInCart ? (
-          <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+          <QuantityChange
+            quanStat={quanStat}
+            quan={quan}
+            handleQuantity={handleQuantity}
+          />
         ) : (
           <RoundedFullButton
             onPress={handleCart}

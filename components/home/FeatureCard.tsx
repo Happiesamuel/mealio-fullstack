@@ -15,7 +15,7 @@ import {
 import FavouriteIcon from "../ui/FavouriteIcon";
 import QuantityChange from "../ui/QuantityChange";
 export default function FeatureCard({ item }: { item: Meal }) {
-  const { isInCart, handleQuantity, handleCart, quan, status } =
+  const { isInCart, handleQuantity, handleCart, quan, status, quanStat } =
     useAllCart(item);
   const { handlePress, isInFavourite } = useAllFavourite(
     item as unknown as FavouriteMeal,
@@ -65,7 +65,11 @@ export default function FeatureCard({ item }: { item: Meal }) {
           ${item.price.toFixed(2)}
         </Text>
         {isInCart ? (
-          <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+          <QuantityChange
+            quanStat={quanStat}
+            quan={quan}
+            handleQuantity={handleQuantity}
+          />
         ) : status === "pending" ? (
           <ActivityIndicator size={15} color={"#14b74d"} />
         ) : (

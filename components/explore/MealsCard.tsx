@@ -1,6 +1,6 @@
 import useAllCart from "@/hooks/useAllCart";
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import {
   AntDesign,
   Ionicons,
@@ -13,15 +13,19 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import QuantityChange from "../ui/QuantityChange";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function MealsCard({ item }: { item: Meal }) {
-  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { isInCart, handleQuantity, handleCart, quan, quanStat } =
+    useAllCart(item);
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
         onPress={() =>
           router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
         }
-        className="w-[166px] h-[129px]"
+        className="max-w-[166px] w-[50%] h-[129px]"
       >
         <Image
           resizeMode="cover"
@@ -55,7 +59,11 @@ export default function MealsCard({ item }: { item: Meal }) {
         </View>
         <View className="flex flex-row items-center justify-between">
           {isInCart ? (
-            <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+            <QuantityChange
+              quanStat={quanStat}
+              quan={quan}
+              handleQuantity={handleQuantity}
+            />
           ) : (
             <RoundedFullButton
               onPress={handleCart}
