@@ -118,21 +118,28 @@ export default function useSyncCart() {
     if (status !== "success") return;
     if (hasSynced.current) return;
 
+    hasSynced.current = true;
+
     const syncCart = async () => {
       try {
+        const serverItems = cartApp ?? [];
+
         for (const item of cartStore) {
-          const exists = cartApp?.some(
+          const exists = serverItems?.some(
             (serverItem) => serverItem.id === item.id
           );
 
           if (exists) continue;
 
-          addAppCart({ ...item, guests: guest.$id as string });
+          addAppCart({
+            ...item,
+            guests: guest.$id,
+          });
         }
 
         clearCart();
-        hasSynced.current = true;
       } catch (error) {
+        hasSynced.current = false;
         console.error("Cart sync failed:", error);
       }
     };
