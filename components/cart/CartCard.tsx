@@ -1,5 +1,5 @@
 import useAllCart from "@/hooks/useAllCart";
-import { CartItem, CartProp } from "@/types";
+import { CartApp, CartItem, CartProp } from "@/types";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -7,7 +7,7 @@ import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import QuantityChange from "../ui/QuantityChange";
 import CartModal from "./CartModal";
 
-export default function CartCard({ item }: { item: CartItem }) {
+export default function CartCard({ item }: { item: CartItem | CartApp }) {
   const [showModal, setShowModal] = useState(false);
   const { handleQuantity, quan, removeItem } = useAllCart(item as CartProp);
   return (

@@ -36,7 +36,7 @@ export default function FoodDetail() {
     error,
     refetch,
   } = useMealDetailQuery(foodId);
-  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(
+  const { isInCart, handleQuantity, handleCart, quan, status } = useAllCart(
     mealDetail as MealDetail
   );
   const { data: ingredients, status: ingStatus } = useIngredientsQuery();
@@ -145,16 +145,22 @@ export default function FoodDetail() {
                 onPress={handleCart}
                 className="bg-primary w-[70%] self-end"
               >
-                <View className="py-4 flex items-center justify-center flex-row gap-2">
-                  <MaterialCommunityIcons
-                    name="cart-outline"
-                    size={24}
-                    color={"white"}
-                  />
-                  <Text className="font-roboto-bold text-base text-white">
-                    Add to Cart
-                  </Text>
-                </View>
+                {status === "pending" ? (
+                  <View className="py-4">
+                    <ActivityIndicator size={20} color={"white"} />
+                  </View>
+                ) : (
+                  <View className="py-4 flex items-center justify-center flex-row gap-2">
+                    <MaterialCommunityIcons
+                      name="cart-outline"
+                      size={24}
+                      color={"white"}
+                    />
+                    <Text className="font-roboto-bold text-base text-white">
+                      Add to Cart
+                    </Text>
+                  </View>
+                )}
               </RoundedFullButton>
             )}
           </View>

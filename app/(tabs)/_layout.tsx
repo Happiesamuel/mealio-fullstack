@@ -1,3 +1,4 @@
+import useSyncCart from "@/hooks/useCart";
 import { useCartStorage } from "@/store/useCartStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
@@ -7,6 +8,7 @@ import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
+  useSyncCart();
   return (
     <Tabs
       screenOptions={{

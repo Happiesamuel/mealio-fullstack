@@ -46,8 +46,8 @@ export default function CartFooter() {
         </View>
       </View>
       <RoundedFullButton
-        onPress={cart.length ? handleCheckout : () => null}
-        className={cn(" mt-8", !cart.length ? "bg-[#95A199]" : "bg-primary")}
+        onPress={cart?.length ? handleCheckout : () => null}
+        className={cn(" mt-8", !cart?.length ? "bg-[#95A199]" : "bg-primary")}
       >
         <Text className="text-base font-roboto-bold text-white py-4 text-center">
           Checkout Now

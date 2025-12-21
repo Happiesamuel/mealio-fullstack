@@ -1,4 +1,4 @@
-import { AddressProps, Auth, SignupProps } from "@/types";
+import { AddressProps, Auth, CartApp, SignupProps } from "@/types";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { ID, OAuthProvider, Query } from "react-native-appwrite";
@@ -421,5 +421,55 @@ export async function loginWithGoogle(): Promise<Auth | boolean> {
   } catch (error) {
     console.log(error);
     return false;
+  }
+}
+
+export async function addToCart(obj: CartApp) {
+  try {
+    return await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.cartCollectionId,
+      ID.unique(),
+      obj
+    );
+  } catch (error) {
+    console.error("Add to cart failed:", error);
+    throw error;
+  }
+}
+
+export async function getCart(userId: string) {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.cartCollectionId,
+      [Query.equal("guests.$id", userId), Query.orderDesc("$createdAt")]
+    );
+    return result.documents;
+  } catch (error) {
+    console.error("Failed to fetch cart:", error);
+    throw error;
+  }
+}
+
+export async function updateCart(cartItemId: string, quantity: number) {
+  try {
+    if (quantity <= 0) {
+      return await databases.deleteDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.cartCollectionId,
+        cartItemId
+      );
+    }
+
+    return await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.cartCollectionId,
+      cartItemId,
+      { quantity }
+    );
+  } catch (error) {
+    console.error("Failed to update cart quantity:", error);
+    throw error;
   }
 }

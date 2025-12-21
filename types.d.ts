@@ -179,3 +179,7 @@ export interface Auth {
   user: Models.User;
   guest: Guest;
 }
+
+export interface CartApp extends CartItem {
+  guests: Guest;
+}

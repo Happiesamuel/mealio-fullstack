@@ -14,6 +14,7 @@ export default function Index() {
   const [seenOnboard, setSeenOnboard] = useState<boolean | null>(null);
   const { user, status, error } = useGetUser();
   const { setUser, reset } = useUserStorage();
+  // useSyncCart();
   console.log(status);
   useEffect(() => {
     async function loadOnboard() {

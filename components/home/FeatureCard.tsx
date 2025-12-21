@@ -1,16 +1,26 @@
 import useAllCart from "@/hooks/useAllCart";
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FavouriteIcon from "../ui/FavouriteIcon";
 import QuantityChange from "../ui/QuantityChange";
 export default function FeatureCard({ item }: { item: Meal }) {
-  const { isInCart, handleQuantity, handleCart, quan } = useAllCart(item);
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { isInCart, handleQuantity, handleCart, quan, status } =
+    useAllCart(item);
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -56,6 +66,8 @@ export default function FeatureCard({ item }: { item: Meal }) {
         </Text>
         {isInCart ? (
           <QuantityChange quan={quan} handleQuantity={handleQuantity} />
+        ) : status === "pending" ? (
+          <ActivityIndicator size={15} color={"#14b74d"} />
         ) : (
           <TouchableOpacity
             onPress={handleCart}

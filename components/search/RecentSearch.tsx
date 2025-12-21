@@ -17,7 +17,7 @@ export default function RecentSearch() {
       </View>
       <View className="gap-5">
         {search
-          .sort((a, b) => b.date.getTime() - a.date.getTime())
+          // .sort((a, b) => b?.date?.getTime() - a?.date?.getTime())
           .slice(0, 5)
           .map((favor) => (
             <View
