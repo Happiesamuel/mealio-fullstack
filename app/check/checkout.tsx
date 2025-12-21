@@ -2,6 +2,7 @@ import CheckoutHeader from "@/components/checkout/CheckoutHeader";
 import Location from "@/components/checkout/Location";
 import PaymentMethod from "@/components/checkout/PaymentMethod";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useCartStorage } from "@/store/useCartStore";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
@@ -9,10 +10,12 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Checkout() {
+  const { total } = useCartStorage();
   const select = true;
   function handleCheckout() {
     router.push("/successOrder/1");
   }
+  const totalPrice = Math.floor(total() - 15 + 20);
   return (
     <SafeAreaView
       edges={["top"]}
@@ -29,7 +32,7 @@ export default function Checkout() {
               Payment amount
             </Text>
             <Text className="font-roboto-semibold text-base text-black">
-              $100.00
+              ${totalPrice.toFixed(2)}
             </Text>
           </View>
           <View className="gap-6 mt-4">

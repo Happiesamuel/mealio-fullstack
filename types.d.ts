@@ -194,3 +194,4 @@ export interface CartDoc extends Models.Document {
   guest: string;
   quantity: number;
 }
+export interface Address extends AddressProps, Models.Document {}

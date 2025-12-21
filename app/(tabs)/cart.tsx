@@ -24,6 +24,7 @@ export default function Cart() {
 
   const cartItems: CartDoc[] =
     (cart as unknown as CartDoc[]) ?? ([] as unknown as CartDoc[]);
+
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full">
       <CartHeader />

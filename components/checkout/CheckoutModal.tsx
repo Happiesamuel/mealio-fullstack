@@ -1,8 +1,11 @@
-import { address } from "@/constnts/constant";
-import { LocationProp } from "@/types";
+import useCreateAddress from "@/hooks/useCreateAddress";
+import useEditAddress from "@/hooks/useEditAddress";
+import { useUserStorage } from "@/store/useUserStore";
+import { Address } from "@/types";
 import { EvilIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Modal, Pressable, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import CustomInput from "../ui/CustomInput";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
@@ -15,29 +18,46 @@ export default function CheckoutModal({
   visible: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  data?: LocationProp | null;
+  data?: Address | null;
 }) {
+  const { guest } = useUserStorage();
+  const { updteAdd, status: upStat } = useEditAddress();
+  const { create, status, error } = useCreateAddress();
   const [form, setForm] = useState({
-    street: data?.street || "",
-    addressType: data?.name || "",
-    landmark: "",
+    type: data?.type ?? "",
+    street: data?.street ?? "",
+    city: data?.city ?? "",
   });
+
   function handleSubmit() {
+    if (!form.type || !form.street || !form.city) return;
     if (data) {
-      const o = address.map((add) => {
-        return add.id === data.id
-          ? { id: data.id, street: form.street, name: form.addressType }
-          : { ...add };
-      });
+      updteAdd(
+        { addressId: data.$id, data: form },
+        { onSuccess: () => onConfirm?.() }
+      );
     } else {
-      address.push({
-        id: new Date().toString(),
-        street: form.street,
-        name: form.addressType,
-      });
+      create(
+        { ...form, guests: guest!.$id },
+        {
+          onSuccess: () => {
+            Toast.show({
+              type: "success",
+              text1: "Sucess",
+              text2: "Address created successfully",
+            });
+            onConfirm?.();
+          },
+          onError: () => {
+            Toast.show({
+              type: "error",
+              text1: "Failed to create address",
+              text2: error?.message.toString(),
+            });
+          },
+        }
+      );
     }
-    // console.log(address);
-    onConfirm?.();
   }
   return (
     <Modal visible={visible} transparent animationType="fade">
@@ -56,39 +76,45 @@ export default function CheckoutModal({
           </View>
           <View className="gap-3 px-4 mt-2">
             <CustomInput
+              handleChange={(text) => setForm({ ...form, type: text })}
+              value={form.type}
+              label="Address Type"
+              placeholder="e.g Home "
+              keyboardType="default"
+              type="normal"
+            />
+            <CustomInput
               handleChange={(text) => setForm({ ...form, street: text })}
               value={form.street}
               label="Street Name"
-              placeholder="Your street name"
+              placeholder="e.g 12 ABCD street"
               keyboardType="default"
               type="normal"
             />
             <CustomInput
-              handleChange={(text) => setForm({ ...form, addressType: text })}
-              value={form.addressType}
-              label="Address Type"
-              placeholder="e.g Office address"
-              keyboardType="default"
-              type="normal"
-            />
-            <CustomInput
-              handleChange={(text) => setForm({ ...form, landmark: text })}
-              value={form.landmark}
-              label="Landmark"
-              placeholder="Enter landmark area"
+              handleChange={(text) => setForm({ ...form, city: text })}
+              value={form.city}
+              label="City"
+              placeholder="Enter your city"
               keyboardType="default"
               type="normal"
             />
           </View>
           <View className="px-4">
-            <RoundedFullButton
-              onPress={handleSubmit}
-              className=" mt-10 py-3  rounded-full bg-primary items-center"
-            >
-              <Text className=" font-roboto-bold text-base text-white">
-                Save Address
-              </Text>
-            </RoundedFullButton>
+            {status === "pending" || upStat == "pending" ? (
+              <View className=" mt-10 py-3  rounded-full bg-primary items-center">
+                <ActivityIndicator size={20} color={"white"} />
+              </View>
+            ) : (
+              <RoundedFullButton
+                onPress={handleSubmit}
+                className=" mt-10 py-3  rounded-full bg-primary items-center"
+              >
+                <Text className=" font-roboto-bold text-base text-white">
+                  Save Address
+                </Text>
+              </RoundedFullButton>
+            )}
           </View>
         </View>
       </View>

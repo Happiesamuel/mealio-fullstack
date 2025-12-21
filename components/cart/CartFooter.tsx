@@ -1,4 +1,5 @@
 import { useCartStorage } from "@/store/useCartStore";
+import { useUserStorage } from "@/store/useUserStore";
 import cn from "clsx";
 import { router } from "expo-router";
 import React from "react";
@@ -8,6 +9,7 @@ import RoundedFullButton from "../ui/RoundedFullButton";
 import PromoCode from "./PromoCode";
 export default function CartFooter() {
   const { totalCartPrice, total, cart } = useCartStorage();
+  const { guest } = useUserStorage();
   function handleCheckout() {
     router.push("/check/checkout");
   }
@@ -46,7 +48,13 @@ export default function CartFooter() {
         </View>
       </View>
       <RoundedFullButton
-        onPress={cart?.length ? handleCheckout : () => null}
+        onPress={
+          !guest
+            ? () => router.push(`/login?from=cart`)
+            : cart?.length
+              ? handleCheckout
+              : () => null
+        }
         className={cn(" mt-8", !cart?.length ? "bg-[#95A199]" : "bg-primary")}
       >
         <Text className="text-base font-roboto-bold text-white py-4 text-center">
