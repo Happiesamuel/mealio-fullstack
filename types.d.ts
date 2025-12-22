@@ -207,3 +207,9 @@ export interface Order {
   quantity: number;
   orderId: string | undefined;
 }
+export interface OrderProp extends Order, Models.Document {}
+export interface OrderCard {
+  items: OrderProp[];
+  status: string;
+  orderId: string;
+}

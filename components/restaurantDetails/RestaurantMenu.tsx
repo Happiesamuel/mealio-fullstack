@@ -36,7 +36,10 @@ export default function RestaurantMenu({ item }: { item: Meal }) {
           isInFavourite={isInFavourite}
         />
       </View>
-      <Text className="font-roboto-semibold text-sm text-black">
+      <Text
+        className="font-roboto-semibold text-sm text-black"
+        numberOfLines={1}
+      >
         {item.title}
       </Text>
       <View className="flex justify-between flex-row items-center">

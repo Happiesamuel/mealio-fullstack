@@ -75,6 +75,38 @@ export function formatReviewDate(isoDate: string) {
 
   return `${day}/${month}/${year} ${formattedHours}:${minutes}${ampm.toLowerCase()}`;
 }
+export function formatDateExact(dateString: string) {
+  const date = new Date(dateString);
+
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = date.toLocaleString("en-GB", { month: "long" });
+
+  return `${day} ${month}, ${year}`;
+}
+
+export function formatOrder(dateString: string) {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const year = date.getFullYear();
+
+  const month = date.toLocaleString("en-GB", {
+    month: "short",
+  });
+
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+
+  return `${day}-${month}-${year}, ${String(hours).padStart(
+    2,
+    "0"
+  )}:${minutes} ${ampm}`;
+}
+
 export function randomReviews() {
   const users = ["Samuel", "Jane", "Ugo", "Chika", "Tolu", "Grace"];
   const comments = [

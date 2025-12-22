@@ -519,3 +519,42 @@ export const createOrder = async (obj: Order) => {
     throw error.message || "Failed to create document";
   }
 };
+export const getUserOrder = async (userId: string) => {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.ordersCollectionId,
+      [Query.equal("guests", userId), Query.orderDesc("$createdAt")]
+    );
+
+    return result.documents;
+  } catch (error: any) {
+    throw error?.message || "Failed to get orders";
+  }
+};
+export const getOrder = async (orderId: string) => {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.ordersCollectionId,
+      [Query.equal("orderId", orderId), Query.orderDesc("$createdAt")]
+    );
+
+    return result.documents;
+  } catch (error: any) {
+    throw error?.message || "Failed to get orders";
+  }
+};
+export const getOrderAddress = async (add: string) => {
+  try {
+    const address = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.addressCollectionId,
+      add
+    );
+    return address;
+  } catch (err: any) {
+    console.error("Error fetching guest:", err);
+    throw new Error(err.message || "Failed to fetch address");
+  }
+};

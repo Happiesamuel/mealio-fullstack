@@ -105,7 +105,6 @@ export default function Checkout() {
             select ? "bg-[#95A199]" : "bg-primary"
           )}
         >
-          {" "}
           {status === "pending" ? (
             <View className="py-4">
               <ActivityIndicator size={20} color={"white"} />
