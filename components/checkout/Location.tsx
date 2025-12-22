@@ -7,10 +7,16 @@ import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import RadioButton from "../ui/RadioButton";
 import CheckoutModal from "./CheckoutModal";
 
-export default function Location() {
+export default function Location({
+  setSelectedAddress,
+  selectedAddress,
+}: {
+  setSelectedAddress: Dispatch<SetStateAction<string | null>>;
+  selectedAddress: string | null;
+}) {
   const { address, status, refetch, error } = useGetUserAddress();
   const [showModal, setShowModal] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+
   const [data, setData] = useState<null | Address>(null);
   function handleToogleModal(item?: Address) {
     if (item) setData(item);
@@ -82,7 +88,7 @@ export default function Location() {
               func={handleToogleModal}
               selectedAddress={selectedAddress}
               setSelectedAddress={setSelectedAddress}
-              key={add.id}
+              key={add.$id}
               item={add as unknown as Address}
             />
           ))}
@@ -119,7 +125,7 @@ function LocationCard({
     <View className="border border-grey px-2.5 py-2 rounded-lg flex items-start flex-row gap-3">
       <View className="w-fit ">
         <RadioButton
-          state={selectedAddress === item.type}
+          state={selectedAddress === item.$id}
           setState={() => setSelectedAddress(item.$id)}
         />
       </View>

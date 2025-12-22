@@ -1,4 +1,4 @@
-import { AddressProps, Auth, CartApp, SignupProps } from "@/types";
+import { AddressProps, Auth, CartApp, Order, SignupProps } from "@/types";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { ID, OAuthProvider, Query } from "react-native-appwrite";
@@ -504,3 +504,18 @@ export async function clearUserCart(userId: string) {
     throw error;
   }
 }
+export const createOrder = async (obj: Order) => {
+  try {
+    const document = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.ordersCollectionId,
+      ID.unique(),
+      obj
+    );
+    console.log(document, obj);
+    return document;
+  } catch (error: any) {
+    console.log(error);
+    throw error.message || "Failed to create document";
+  }
+};

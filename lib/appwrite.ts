@@ -17,6 +17,7 @@ export const appwriteConfig = {
   otpCollectionId: "otp",
   addressCollectionId: "address",
   cartCollectionId: "cart",
+  ordersCollectionId: "orders",
 };
 
 export const client = new Client();

@@ -103,7 +103,7 @@ export interface Restaurant {
   rating: number;
   description: string;
   reviews: RestaurantReview[];
-  date: Date;
+  date?: Date;
 }
 export interface RestaurantReview {
   id: string;
@@ -195,3 +195,15 @@ export interface CartDoc extends Models.Document {
   quantity: number;
 }
 export interface Address extends AddressProps, Models.Document {}
+
+export interface Order {
+  price: number;
+  title: string;
+  restaurantId: string | undefined;
+  image: string;
+  guests: string | undefined;
+  orderAddress: string;
+  status: string;
+  quantity: number;
+  orderId: string | undefined;
+}
