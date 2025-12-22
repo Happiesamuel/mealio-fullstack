@@ -5,6 +5,7 @@ import Foot from "@/components/ui/Foot";
 import { useGetOrderViaIId, useOrderAddress } from "@/hooks/useGetOrderViaIId";
 import { useZustMeals } from "@/store/useMealStore";
 import { EvilIcons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
@@ -14,6 +15,7 @@ export default function OrderId() {
   const { orderId } = useLocalSearchParams<{ orderId: string }>();
   const { address, status: addStat } = useOrderAddress();
   const { restaurants } = useZustMeals();
+
   if (status === "pending" || addStat === "pending")
     return (
       <SafeAreaView
@@ -39,7 +41,10 @@ export default function OrderId() {
     );
   }
   const res = restaurants.find((x) => x.id === orders?.at(0)?.restaurantId);
-  const price = orders?.map((x) => x.price).reduce((a, b) => a + b) ?? 0;
+  const price =
+    orders?.map((x) => x.quantity * x.price).reduce((a, b) => a + b) ?? 0;
+
+  console.log(orders, "s");
   return (
     <SafeAreaView edges={["top"]} className="h-full bg-secondary pb-safe px-3">
       <OrderHeader />
@@ -63,12 +68,22 @@ export default function OrderId() {
                 source={{ uri: x.image }}
                 className="size-[80%] w-[100px] rounded"
               />
-              <Text
-                className="font-roboto-semibold text-xs text-black"
-                numberOfLines={1}
-              >
-                {x.title}
-              </Text>
+              <View className="flex flex-row items-center gap-1 px-2">
+                <Text
+                  className="font-roboto-semibold text-xs text-black"
+                  numberOfLines={1}
+                >
+                  {x.title}
+                </Text>
+                {x.quantity > 1 && (
+                  <Text
+                    className="font-roboto-semibold text-xs text-black"
+                    numberOfLines={1}
+                  >
+                    * {x.quantity}
+                  </Text>
+                )}
+              </View>
             </View>
           ))}
         </ScrollView>
@@ -99,13 +114,37 @@ export default function OrderId() {
             #{orderId}
           </Text>
           <View
-            className={
-              " rounded-lg border border-grey/50 bg-primary/20 py-1 px-2 flex flex-row gap-1.5 items-center"
-            }
+            className={cn(
+              " rounded-lg border border-grey/50 py-1 px-2 flex flex-row gap-1.5 items-center",
+              orders?.at(0)?.status === "Delivered"
+                ? "bg-primary/20"
+                : orders?.at(0)?.status === "Shipped"
+                  ? "bg-[#0B298A]/20"
+                  : "bg-error/10"
+            )}
           >
-            <FontAwesome name="check-square" size={15} color={"#14B74D"} />
-            <Text className={" font-roboto text-sm text-primary  "}>
-              Delivered
+            <FontAwesome
+              name="check-square"
+              size={15}
+              color={
+                orders?.at(0)?.status === "Delivered"
+                  ? "#14B74D"
+                  : orders?.at(0)?.status === "Shipped"
+                    ? "#0B298A"
+                    : "#FF1414"
+              }
+            />
+            <Text
+              className={cn(
+                " font-roboto text-sm ",
+                orders?.at(0)?.status === "Delivered"
+                  ? "text-primary"
+                  : orders?.at(0)?.status === "Shipped"
+                    ? "text-[#0B298A]"
+                    : "text-error"
+              )}
+            >
+              {orders?.at(0)?.status}
             </Text>
           </View>
         </View>

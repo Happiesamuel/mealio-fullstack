@@ -44,12 +44,21 @@ export default function Checkout() {
         image: item.image,
         price: item.price,
         quantity: item.quantity,
+
         restaurantId: item.restaurantId,
-        orderAddress: selectedAddress,
-        guests: guest.$id,
         orderId: item.orderId,
-        status: "Pending",
         successId: successId,
+        guests: guest.$id,
+
+        orderAddress: selectedAddress,
+
+        status: "Pending",
+
+        createdAt: new Date().toISOString(),
+        shippedAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 4 * 60 * 1000).toISOString(),
+        // shippedAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
+        // deliveredAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       }));
 
       await Promise.all(orders.map((order) => create(order)));
@@ -99,7 +108,7 @@ export default function Checkout() {
           </View>
         </View>
         <RoundedFullButton
-          onPress={handleCheckout}
+          onPress={status === "pending" ? () => null : handleCheckout}
           className={cn(
             "bg-primary mt-12",
             select ? "bg-[#95A199]" : "bg-primary"
@@ -119,6 +128,3 @@ export default function Checkout() {
     </SafeAreaView>
   );
 }
-
-// restartid, status, address, guest
-//what i ordered e.g name,image,price,quantity

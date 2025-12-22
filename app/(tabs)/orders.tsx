@@ -25,8 +25,8 @@ export default function Orders() {
       ? orders?.filter((x) => x.status === "Shipped")
       : tabSlug === "completed"
         ? orders?.filter((x) => x.status === "Delivered")
-        : tabSlug === "failed"
-          ? orders?.filter((x) => x.status === "Failed")
+        : tabSlug === "pending"
+          ? orders?.filter((x) => x.status === "Pending")
           : orders;
   const newOrder = [...new Set(filOrders?.map((x) => x.orderId))].map((id) => {
     const ord = filOrders?.filter((y) => y.orderId === id);

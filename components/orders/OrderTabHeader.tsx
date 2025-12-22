@@ -16,9 +16,9 @@ export default function OrderTabHeader({
 }) {
   const tabs = [
     { name: "All", slug: "all" },
+    { name: "Pending", slug: "pending" },
     { name: "Ongoing", slug: "ongoing" },
     { name: "Completed", slug: "completed" },
-    { name: "Failed", slug: "failed" },
   ];
 
   // Store the measured widths of each tab
