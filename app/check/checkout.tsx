@@ -6,9 +6,11 @@ import useCreateOrder from "@/hooks/useCreateOrder";
 import { useCartStorage } from "@/store/useCartStore";
 import { useUserStorage } from "@/store/useUserStore";
 import cn from "clsx";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 export function generateOrderId() {
   const timestamp = Date.now().toString(36).toUpperCase();
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -22,37 +24,51 @@ export default function Checkout() {
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const { create, status } = useCreateOrder();
   const select = true;
-  function handleCheckout() {
-    if (!selectedAddress) return;
-    const res = ["r1", "r2", "r3", "r4", "r5"].map((x) => {
-      return { id: x, orderId: generateOrderId() };
-    });
+  async function handleCheckout() {
+    if (!selectedAddress || !guest) return;
+    try {
+      const res = ["r1", "r2", "r3", "r4", "r5"].map((x) => {
+        return { id: x, orderId: generateOrderId() };
+      });
 
-    const cats = cart.map((x) => {
-      const a = res.find((b) => b.id === x.restaurantId);
-      return {
-        ...x,
-        orderId: a?.orderId,
-      };
-    });
-    const newCart = cats.map((cat) => {
-      return {
-        title: cat.title,
-        image: cat.image,
-        price: cat.price,
-        quantity: cat.quantity,
-        restaurantId: cat.restaurantId,
+      const cats = cart.map((x) => {
+        const a = res.find((b) => b.id === x.restaurantId);
+        return {
+          ...x,
+          orderId: a?.orderId,
+        };
+      });
+      const successId = generateOrderId();
+      const orders = cats.map((item) => ({
+        title: item.title,
+        image: item.image,
+        price: item.price,
+        quantity: item.quantity,
+        restaurantId: item.restaurantId,
         orderAddress: selectedAddress,
-        guests: guest?.$id,
-        orderId: cat.orderId,
-        status: "Delivered",
-      };
-    });
+        guests: guest.$id,
+        orderId: item.orderId,
+        status: "Pending",
+        successId: successId,
+      }));
 
-    for (const item of newCart) {
-      create(item);
+      await Promise.all(orders.map((order) => create(order)));
+      Toast.show({
+        type: "success",
+        text1: "Order placed successfully 🎉",
+        text2: "Your food is on the way!",
+      });
+
+      router.replace(`/successOrder/${successId}`);
+    } catch (error: any) {
+      console.error("Checkout failed:", error);
+
+      Toast.show({
+        type: "error",
+        text1: "Checkout failed",
+        text2: error?.message || "Something went wrong",
+      });
     }
-    // router.push("/successOrder/1");
   }
   const totalPrice = Math.floor(total() - 15 + 20);
   return (
