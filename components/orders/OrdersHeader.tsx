@@ -11,7 +11,7 @@ export default function OrdersHeader() {
       <View className="flex items-center flex-row gap-7">
         <RoundedFullButton
           className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
-          onPress={() => router.push("/favourite")}
+          onPress={() => router.push("/search")}
         >
           <Ionicons name="search-outline" size={18} color="black" />
         </RoundedFullButton>
