@@ -2,6 +2,7 @@ import CheckoutHeader from "@/components/checkout/CheckoutHeader";
 import Location from "@/components/checkout/Location";
 import PaymentMethod from "@/components/checkout/PaymentMethod";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useClearCart } from "@/hooks/useCart";
 import useCreateOrder from "@/hooks/useCreateOrder";
 import { sendOrderPlacedNotification } from "@/lib/notification";
 import { useCartStorage } from "@/store/useCartStore";
@@ -22,6 +23,7 @@ export default function Checkout() {
   const { total } = useCartStorage();
   const { guest } = useUserStorage();
   const { cart } = useCartStorage();
+  const { clear, status: clearStat } = useClearCart();
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const { create, status } = useCreateOrder();
   const select = true;
@@ -56,13 +58,14 @@ export default function Checkout() {
         status: "Pending",
 
         createdAt: new Date().toISOString(),
-        shippedAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
-        deliveredAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
+        shippedAt: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 20 * 60 * 1000).toISOString(),
         // shippedAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         // deliveredAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       }));
 
       await Promise.all(orders.map((order) => create(order)));
+      clear();
       await sendOrderPlacedNotification(
         successId,
         "Mamy's Dishes",
@@ -120,7 +123,7 @@ export default function Checkout() {
             select ? "bg-[#95A199]" : "bg-primary"
           )}
         >
-          {status === "pending" ? (
+          {status === "pending" || clearStat === "pending" ? (
             <View className="py-4">
               <ActivityIndicator size={20} color={"white"} />
             </View>
