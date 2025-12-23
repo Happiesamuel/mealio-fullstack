@@ -12,7 +12,6 @@ export const useOrderRealtime = () => {
   useEffect(() => {
     // 🔥 Don't subscribe if user is logged out
     if (!guest?.$id || !isLoggedIn) {
-      console.log("⏭️ Skipping real-time subscription - user not logged in");
       return;
     }
 
@@ -29,8 +28,6 @@ export const useOrderRealtime = () => {
         if (order.guests !== guest.$id) {
           return; // Silently ignore other users' orders
         }
-
-        console.log("📡 Real-time update for current user:", order.status);
 
         // Invalidate React Query cache
         if (
@@ -63,7 +60,6 @@ export const useOrderRealtime = () => {
     );
 
     return () => {
-      console.log("🔌 Unsubscribing real-time for user:", guest.$id);
       unsubscribe();
     };
   }, [guest?.$id, isLoggedIn, queryClient]);

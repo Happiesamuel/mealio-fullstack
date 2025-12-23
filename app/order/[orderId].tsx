@@ -178,7 +178,12 @@ export default function OrderId() {
             </View>
           </View>
         </View>
-        <TrackOrder />
+        <TrackOrder
+          shippedAt={orders?.at(0)?.shippedAt}
+          createdAt={orders?.at(0)?.createdAt}
+          deliveredAt={orders?.at(0)?.deliveredAt}
+          status={orders?.at(0)?.status}
+        />
         {address && (
           <View>
             <Text className="text-base text-black font-roboto-semibold">

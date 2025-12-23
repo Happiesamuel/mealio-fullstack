@@ -2,7 +2,6 @@ import useSyncCart from "@/hooks/useCart";
 import { useOrderRealtime } from "@/hooks/useRealTimeOrder";
 import { useOrderStatusUpdater } from "@/hooks/useUpdateOrder";
 import { useCartStorage } from "@/store/useCartStore";
-import { useUserStorage } from "@/store/useUserStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { Tabs } from "expo-router";
@@ -11,7 +10,6 @@ import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-  const { guest } = useUserStorage();
 
   useOrderStatusUpdater();
 

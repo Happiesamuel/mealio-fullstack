@@ -8,37 +8,86 @@ interface Step {
   done: boolean;
 }
 
-export default function TrackOrder() {
+interface TrackOrderProps {
+  status: string;
+  createdAt?: string;
+  shippedAt?: string;
+  deliveredAt?: string;
+}
+
+export default function TrackOrder({
+  status,
+  createdAt,
+  shippedAt,
+  deliveredAt,
+}: TrackOrderProps) {
+  console.log(status, createdAt, shippedAt, deliveredAt);
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "Pending";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const getStepStatus = (stepIndex: number) => {
+    switch (status) {
+      case "Pending":
+        return stepIndex <= 0;
+      case "Shipped":
+        return stepIndex <= 3;
+      case "Delivered":
+        return true;
+      default:
+        return stepIndex <= 0;
+    }
+  };
+
   const steps: Step[] = [
     {
       title: "Order placed",
-      subtitle: "We have received your order on 21-Dec-2019",
+      subtitle: createdAt
+        ? `We have received your order on ${formatDate(createdAt)}`
+        : "We have received your order",
       icon: "clipboard-edit-outline",
-      done: true,
+      done: getStepStatus(0),
     },
     {
       title: "Order Confirmed",
-      subtitle: "We have confirmed your order on 21-Dec-2019",
+      subtitle: createdAt
+        ? `We have confirmed your order on ${formatDate(createdAt)}`
+        : "We have confirmed your order",
       icon: "clipboard-check-outline",
-      done: true,
+      done: getStepStatus(1),
     },
     {
       title: "Order Processed",
-      subtitle: "We are processing your order on 21-Dec-2019",
+      subtitle:
+        status !== "Pending"
+          ? `We are processing your order on ${formatDate(shippedAt)}`
+          : "We are processing your order",
       icon: "clipboard-text-play-outline",
-      done: true,
+      done: getStepStatus(2),
     },
     {
       title: "Out for Delivery",
-      subtitle: "Your order is on its way to your location",
+      subtitle:
+        status === "Shipped" || status === "Delivered"
+          ? `Your order is on its way (Shipped on ${formatDate(shippedAt)})`
+          : "Your order is on its way to your location",
       icon: "truck-fast-outline",
-      done: false,
+      done: getStepStatus(3),
     },
     {
       title: "Order Delivered",
-      subtitle: "Your order has been delivered on 21-Dec-2019",
+      subtitle:
+        status === "Delivered"
+          ? `Your order has been delivered on ${formatDate(deliveredAt)}`
+          : "Your order will be delivered soon",
       icon: "check-circle-outline",
-      done: false,
+      done: getStepStatus(4),
     },
   ];
 
@@ -48,39 +97,19 @@ export default function TrackOrder() {
 
       <View className="flex">
         {steps.map((step, index) => {
-          const isLast = index === steps.length - 1;
-
           return (
             <View key={index} className="flex-row ">
-              <View className="items-center">
-                <View
-                  className={`w-4 h-4 rounded-full border-2 ${
-                    step.done
-                      ? "bg-green-500 border-green-500"
-                      : "border-gray-400"
-                  }`}
-                />
-
-                {!isLast && (
-                  <View
-                    className={`w-0.5 flex-1 ${
-                      step.done ? "bg-green-500" : "bg-gray-300"
-                    }`}
-                  />
-                )}
-              </View>
-
-              <View className="ml-4 pb-6">
-                <View className="flex-row items-center gap-2">
+              <View className="ml-2 pb-6">
+                <View className="flex-row items-start gap-4">
                   <View
                     className={cn(
-                      "size-8 rounded-full flex items-center justify-center",
+                      "size-10 rounded-full flex items-center justify-center",
                       step.done ? "bg-primary" : "bg-[#9CA3AF]"
                     )}
                   >
                     <MaterialCommunityIcons
                       name={step.icon as any}
-                      size={15}
+                      size={20}
                       color={"#FFFFFF"}
                     />
                   </View>
@@ -93,7 +122,7 @@ export default function TrackOrder() {
                       {step.title}
                     </Text>
                     <Text
-                      className={`text-sm mt-1 font-roboto ${
+                      className={`text-sm mt-1 w-[90%] font-roboto ${
                         step.done ? "text-gray-600" : "text-gray-400"
                       }`}
                     >
