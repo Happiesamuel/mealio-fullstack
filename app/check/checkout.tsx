@@ -3,6 +3,7 @@ import Location from "@/components/checkout/Location";
 import PaymentMethod from "@/components/checkout/PaymentMethod";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import useCreateOrder from "@/hooks/useCreateOrder";
+import { sendOrderPlacedNotification } from "@/lib/notification";
 import { useCartStorage } from "@/store/useCartStore";
 import { useUserStorage } from "@/store/useUserStore";
 import cn from "clsx";
@@ -55,13 +56,18 @@ export default function Checkout() {
         status: "Pending",
 
         createdAt: new Date().toISOString(),
-        shippedAt: new Date(Date.now() + 0.5 * 60 * 1000).toISOString(),
-        deliveredAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
+        shippedAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
         // shippedAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         // deliveredAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       }));
 
       await Promise.all(orders.map((order) => create(order)));
+      await sendOrderPlacedNotification(
+        successId,
+        "Mamy's Dishes",
+        cats?.at(0)?.orderId
+      );
       Toast.show({
         type: "success",
         text1: "Order placed successfully 🎉",

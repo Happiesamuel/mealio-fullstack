@@ -42,7 +42,7 @@ export async function setupNotificationCategories() {
 export async function sendOrderPlacedNotification(
   orderNumber: string,
   restaurantName: string,
-  orderId: string // <- Add this parameter
+  orderId: string | undefined // <- Add this parameter
 ) {
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -64,12 +64,12 @@ export async function sendOrderPlacedNotification(
  */
 export async function sendOrderPreparingNotification(
   orderNumber: string,
-  estimatedTime: number
+  estimatedTime: string
 ) {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Order Being Prepared 👨‍🍳",
-      body: `Your order #${orderNumber} will be ready in ${estimatedTime} minutes`,
+      body: `Your order #${orderNumber} will be ready in ${estimatedTime} `,
       data: {
         type: "order_preparing",
         orderNumber,

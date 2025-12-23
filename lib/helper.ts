@@ -131,3 +131,39 @@ export function randomReviews() {
     avatar: `https://i.pravatar.cc/150?img=${1 + Math.floor(Math.random() * 5)}`,
   }));
 }
+
+export const getTimeUntilShipped = (shippedAt: string) => {
+  const now = new Date().getTime();
+  const shipTime = new Date(shippedAt).getTime();
+  const diffMs = shipTime - now;
+
+  // If already shipped (past time)
+  if (diffMs <= 0) {
+    return "Shipped";
+  }
+
+  // Convert to different time units
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const totalHours = Math.floor(totalMinutes / 60);
+  const totalDays = Math.floor(totalHours / 24);
+
+  // Calculate remaining time for each unit
+  const days = totalDays;
+  const hours = totalHours % 24;
+  const minutes = totalMinutes % 60;
+  const seconds = totalSeconds % 60;
+
+  // Return most appropriate time unit
+  if (days > 0) {
+    return `${days} day${days !== 1 ? "s" : ""}`;
+  } else if (hours > 0) {
+    return `${hours} hr${hours !== 1 ? "s" : ""}`;
+  } else if (minutes > 0) {
+    return `${minutes} min${minutes !== 1 ? "s" : ""}`;
+  } else if (seconds > 0) {
+    return `${seconds} sec${seconds !== 1 ? "s" : ""}`;
+  } else {
+    return "Shipped";
+  }
+};

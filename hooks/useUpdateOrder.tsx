@@ -1,4 +1,9 @@
 import { appwriteConfig, client, databases } from "@/lib/appwrite";
+import { getTimeUntilShipped } from "@/lib/helper";
+import {
+  sendOrderDeliveredNotification,
+  sendOrderPreparingNotification,
+} from "@/lib/notification";
 import { useUserStorage } from "@/store/useUserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect } from "react";
@@ -13,7 +18,6 @@ export const useOrderStatusUpdater = () => {
     try {
       const now = new Date().toISOString();
 
-      console.log("🔎 Checking for pending orders (all users)...");
       const pendingOrders = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.ordersCollectionId,
@@ -39,6 +43,11 @@ export const useOrderStatusUpdater = () => {
           );
 
           if (userOrders.length > 0) {
+            console.log(userOrders?.at(0)?.shippedAt, "sjsjsj");
+            await sendOrderPreparingNotification(
+              userOrders?.at(0)?.orderId,
+              getTimeUntilShipped(userOrders?.at(0)?.shippedAt)
+            );
             Toast.show({
               type: "success",
               text1: "📦 Order Shipped!",
@@ -73,6 +82,7 @@ export const useOrderStatusUpdater = () => {
           );
 
           if (userOrders.length > 0) {
+            await sendOrderDeliveredNotification(userOrders?.at(0)?.orderId);
             Toast.show({
               type: "success",
               text1: "✅ Order Delivered!",
@@ -91,10 +101,9 @@ export const useOrderStatusUpdater = () => {
 
     const interval = setInterval(
       () => {
-        console.log("⏱️ Interval triggered");
         updateOrderStatuses();
       },
-      0.2 * 60 * 1000
+      0.5 * 60 * 1000
     );
 
     const subscription = AppState.addEventListener(
@@ -102,6 +111,10 @@ export const useOrderStatusUpdater = () => {
       (nextAppState: AppStateStatus) => {
         console.log(`📱 App state changed to: ${nextAppState}`);
         if (nextAppState === "active") {
+          console.log("🔄 App became active, checking orders...");
+          updateOrderStatuses();
+        }
+        if (nextAppState === "background") {
           console.log("🔄 App became active, checking orders...");
           updateOrderStatuses();
         }
