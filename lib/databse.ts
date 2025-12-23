@@ -559,36 +559,15 @@ export const getOrderAddress = async (add: string) => {
   }
 };
 
-// export async function updateOrder() {
-//   const orders = await databases.listDocuments(
-// appwriteConfig.databaseId,
-// appwriteConfig.ordersCollectionId,
-//     [Query.limit(100)]
-//   );
-
-//   const now = Date.now();
-
-//   for (const order of orders.documents) {
-//     const created = new Date(order.$createdAt).getTime();
-//     const diffMinutes = (now - created) / 60000;
-
-//     let newStatus = null;
-
-//     if (order.status === "Pending" && diffMinutes >= 2) {
-//       newStatus = "Shipped";
-//     }
-
-//     if (order.status === "Shipped" && diffMinutes >= 120) {
-//       newStatus = "Delivered";
-//     }
-
-//     if (newStatus) {
-//       await databases.updateDocument(
-//         appwriteConfig.databaseId,
-//         appwriteConfig.ordersCollectionId,
-//         order.$id,
-//         { status: newStatus }
-//       );
-//     }
-//   }
-// }
+export async function updateOrder(data: Record<string, any>) {
+  try {
+    return databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.ordersCollectionId,
+      data.id,
+      data
+    );
+  } catch (error: any) {
+    throw error.message || "Failed to update document";
+  }
+}

@@ -161,8 +161,6 @@ export default function Profile() {
   }
 
   async function handlePress() {
-    // await logout();
-    // reset();
     setLoading(true);
     if (user) {
       const a = await logout();

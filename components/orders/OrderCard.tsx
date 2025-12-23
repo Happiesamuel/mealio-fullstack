@@ -16,7 +16,6 @@ export default function OrderCard({ item }: { item: Ordered }) {
     await sendOrderPlacedNotification("#37843848343", "Mama fav", "5");
   }
   const res = restaurants.find((x) => x.id === items.at(0)!.restaurantId);
-  console.log(res);
   return (
     <View className="bg-[#F0F0F0] rounded-xl py-3 px-3 gap-3 border border-grey/50">
       <View className="flex flex-row items-center justify-between">

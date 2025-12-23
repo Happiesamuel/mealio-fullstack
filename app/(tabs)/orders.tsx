@@ -2,11 +2,13 @@ import EmptyOrder from "@/components/orders/EmptyOrder";
 import OrderCard from "@/components/orders/OrderCard";
 import OrdersHeader from "@/components/orders/OrdersHeader";
 import OrderTabHeader from "@/components/orders/OrderTabHeader";
+import NotLoggedIn from "@/components/ui/NotLoggedIn";
 import useGetOrder from "@/hooks/useGetOrder";
+import { useOrderRealtime } from "@/hooks/useRealTimeOrder";
 import { useUserStorage } from "@/store/useUserStore";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Orders() {
@@ -14,6 +16,7 @@ export default function Orders() {
   const { guest } = useUserStorage();
   const { order } = useLocalSearchParams<{ order: string }>();
   const [tabSlug, setTabSlug] = useState(order || "all");
+  useOrderRealtime();
   useEffect(() => {
     if (order) {
       setTabSlug(order);
@@ -48,7 +51,7 @@ export default function Orders() {
 
       {!guest ? (
         <View>
-          <Text>no user</Text>
+          <NotLoggedIn from={"orders"} />
         </View>
       ) : (
         <FlatList
@@ -59,8 +62,11 @@ export default function Orders() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => {
             return status === "pending" ? (
-              <View>
-                <Text>Pending</Text>
+              <View className="flex flex-1 h-[450px]  gap-2 items-center justify-center w-full  ">
+                <ActivityIndicator size={"large"} color="#14B74D" />
+                <Text className="text-grey text-sm font-roboto">
+                  Loading Details
+                </Text>
               </View>
             ) : (
               <EmptyOrder />

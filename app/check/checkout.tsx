@@ -55,8 +55,8 @@ export default function Checkout() {
         status: "Pending",
 
         createdAt: new Date().toISOString(),
-        shippedAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
-        deliveredAt: new Date(Date.now() + 4 * 60 * 1000).toISOString(),
+        shippedAt: new Date(Date.now() + 0.5 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
         // shippedAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         // deliveredAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
       }));
