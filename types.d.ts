@@ -31,14 +31,6 @@ export interface MealProp {
   id: string;
 }
 
-export interface Notification {
-  id: string;
-  title: string;
-  content: string;
-  image: any;
-  status: string;
-  time: string;
-}
 export interface Review {
   id: string;
   name: string;
@@ -213,3 +205,12 @@ export interface OrderCard {
   status: string;
   orderId: string;
 }
+export interface Notification {
+  title: string;
+  content: string;
+  image: any;
+  status: string;
+  guests: string;
+  createdAt: string;
+}
+export interface NotificationList extends Notification, Models.Document {}

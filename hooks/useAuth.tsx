@@ -12,6 +12,7 @@ import { Auth, Guest, SignupProps } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
 import Toast from "react-native-toast-message";
+import { useCrateNotification } from "./useNotifications";
 export type LoginData = {
   email: string;
   password: string;
@@ -26,6 +27,8 @@ export function useSignup() {
 
 export function useLoginProvider() {
   const { setUser } = useUserStorage();
+  const { from } = useLocalSearchParams<{ from: string }>();
+  const { create } = useCrateNotification();
 
   const { mutate, status, error } = useMutation({
     mutationFn: () => loginWithGoogle(),
@@ -38,7 +41,25 @@ export function useLoginProvider() {
         text1: "Login successful",
         text2: "Fresh meals are just a tap away!",
       });
-      router.push("/profile");
+
+      create(
+        {
+          title: "Welcome back",
+          content: `Fresh meals are just a tap away!. Don't mss the chance`,
+          status: "login",
+          image: null,
+          guests: data.guest!.$id,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          onSuccess: () =>
+            Toast.show({
+              type: "success",
+              text1: "1 new notification",
+            }),
+        }
+      );
+      router.push(from ? (from as any) : "/(tabs)");
     },
 
     onError: (error: Error) => {
@@ -54,6 +75,7 @@ export function useLoginProvider() {
 export function useLogin() {
   const { from } = useLocalSearchParams<{ from: string }>();
   const { setUser } = useUserStorage();
+  const { create } = useCrateNotification();
 
   const { mutate, status, error } = useMutation({
     mutationFn: (data: LoginData) => login(data.email, data.password),
@@ -72,7 +94,26 @@ export function useLogin() {
           text1: "Login successful",
           text2: "Fresh meals are just a tap away!",
         });
+
         setUser(data, guest as unknown as Guest);
+
+        create(
+          {
+            title: "Welcome back",
+            content: `Fresh meals are just a tap away!. Don't mss the chance`,
+            status: "login",
+            image: null,
+            guests: guest!.$id,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            onSuccess: () =>
+              Toast.show({
+                type: "success",
+                text1: "1 new notification",
+              }),
+          }
+        );
         router.push(from ? (from as any) : "/(tabs)");
       }
     },

@@ -4,6 +4,7 @@ import PaymentMethod from "@/components/checkout/PaymentMethod";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
 import { useClearCart } from "@/hooks/useCart";
 import useCreateOrder from "@/hooks/useCreateOrder";
+import { useCrateNotification } from "@/hooks/useNotifications";
 import { sendOrderPlacedNotification } from "@/lib/notification";
 import { useCartStorage } from "@/store/useCartStore";
 import { useUserStorage } from "@/store/useUserStore";
@@ -23,6 +24,7 @@ export default function Checkout() {
   const { total } = useCartStorage();
   const { guest } = useUserStorage();
   const { cart } = useCartStorage();
+  const { create: createNot, status: createNotStat } = useCrateNotification();
   const { clear, status: clearStat } = useClearCart();
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const { create, status } = useCreateOrder();
@@ -58,12 +60,32 @@ export default function Checkout() {
         status: "Pending",
 
         createdAt: new Date().toISOString(),
-        shippedAt: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
-        deliveredAt: new Date(Date.now() + 20 * 60 * 1000).toISOString(),
-        // shippedAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
-        // deliveredAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+        shippedAt: new Date(Date.now() + 0.5 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
+        shippedNotified: false,
+        deliveredNotified: false,
+
+        // shippedAt: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+        // deliveredAt: new Date(Date.now() + 20 * 60 * 1000).toISOString(),
       }));
 
+      createNot(
+        {
+          title: "Your order has been created",
+          content: `You created your new order #${successId} and will be packaged soon.`,
+          status: "order-created",
+          image: null,
+          guests: guest.$id,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          onSuccess: () =>
+            Toast.show({
+              type: "success",
+              text1: "1 new notification",
+            }),
+        }
+      );
       await Promise.all(orders.map((order) => create(order)));
       clear();
       await sendOrderPlacedNotification(
@@ -78,6 +100,25 @@ export default function Checkout() {
       });
 
       router.replace(`/successOrder/${successId}`);
+
+      createNot(
+        {
+          title: "Your order is being prepared",
+          content:
+            "Your food is currently being prepared and will be ready soon",
+          status: "order-prepare",
+          image: orders.at(0)?.image,
+          guests: guest.$id,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          onSuccess: () =>
+            Toast.show({
+              type: "success",
+              text1: "1 new notification",
+            }),
+        }
+      );
     } catch (error: any) {
       console.error("Checkout failed:", error);
 
@@ -123,7 +164,9 @@ export default function Checkout() {
             select ? "bg-[#95A199]" : "bg-primary"
           )}
         >
-          {status === "pending" || clearStat === "pending" ? (
+          {status === "pending" ||
+          clearStat === "pending" ||
+          createNotStat === "pending" ? (
             <View className="py-4">
               <ActivityIndicator size={20} color={"white"} />
             </View>

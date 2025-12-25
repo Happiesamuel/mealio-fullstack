@@ -18,6 +18,7 @@ export const appwriteConfig = {
   addressCollectionId: "address",
   cartCollectionId: "cart",
   ordersCollectionId: "orders",
+  notificationsCollectionId: "notifications",
 };
 
 export const client = new Client();

@@ -1,4 +1,11 @@
-import { AddressProps, Auth, CartApp, Order, SignupProps } from "@/types";
+import {
+  AddressProps,
+  Auth,
+  CartApp,
+  Notification,
+  Order,
+  SignupProps,
+} from "@/types";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { ID, OAuthProvider, Query } from "react-native-appwrite";
@@ -569,5 +576,33 @@ export async function updateOrder(data: Record<string, any>) {
     );
   } catch (error: any) {
     throw error.message || "Failed to update document";
+  }
+}
+
+export const createNotification = async (obj: Notification) => {
+  try {
+    const document = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.notificationsCollectionId,
+      ID.unique(),
+      obj
+    );
+    return document;
+  } catch (error: any) {
+    console.log(error);
+    throw error.message || "Failed to create document";
+  }
+};
+export async function getNotifications(userId: string) {
+  try {
+    const result = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.notificationsCollectionId,
+      [Query.equal("guests.$id", userId), Query.orderDesc("$createdAt")]
+    );
+    return result.documents;
+  } catch (error) {
+    console.error("Failed to fetch notification:", error);
+    throw error;
   }
 }

@@ -1,9 +1,19 @@
-import { Notification } from "@/types";
-import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import { formatTimeAgo } from "@/lib/helper";
+import { Notification, NotificationList } from "@/types";
+import {
+  AntDesign,
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import cn from "clsx";
 import React from "react";
 import { Image, Text, View } from "react-native";
-export default function NotificaationList({ item }: { item: Notification }) {
+export default function NotificaationList({
+  item,
+}: {
+  item: NotificationList;
+}) {
   return (
     <View className="flex flex-row items-start gap-2 bg-white p-3 rounded-lg border border-[#999999]/20">
       <ImageIcon item={item} />
@@ -13,31 +23,37 @@ export default function NotificaationList({ item }: { item: Notification }) {
           {item.content}
         </Text>
         <Text className="font-roboto text-grey text-xs self-end ">
-          {item.time}
+          {formatTimeAgo(item.createdAt)}
         </Text>
       </View>
     </View>
   );
 }
 function ImageIcon({ item }: { item: Notification }) {
-  return item.image !== "" ? (
+  return item.image ? (
     <Image
-      source={item.image}
-      className="rounded-full size-6"
+      source={{ uri: item.image }}
+      className="rounded-full size-7"
       resizeMode="cover"
     />
   ) : (
     <View
       className={cn(
-        "rounded-full flex items-center justify-center size-6 text-white",
-        item.status === "success"
-          ? "bg-primary"
-          : item.status === "delivery"
-            ? "bg-[#F79E1B]"
-            : ""
+        "rounded-full flex items-center justify-center size-7 text-white",
+        item.status === "order-created"
+          ? "bg-[#F79E1B]"
+          : item.status === "success-delivery" || item.status === "login"
+            ? "bg-primary"
+            : item.status === "delivery"
+              ? "bg-[#F79E1B]"
+              : ""
       )}
     >
-      {item.status === "success" ? (
+      {item.status === "login" ? (
+        <Ionicons name="logo-mastodon" size={14} color="white" />
+      ) : item.status === "order-created" ? (
+        <MaterialCommunityIcons name="food-turkey" size={14} color="white" />
+      ) : item.status === "success-delivery" ? (
         <AntDesign name="check" size={12} color="white" />
       ) : item.status === "delivery" ? (
         <FontAwesome5 name="shipping-fast" size={12} color="white" />
