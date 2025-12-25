@@ -16,7 +16,7 @@ export default function SuccessOrder() {
       <ScrollView
         scrollEnabled
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="gap-6 pb-8"
+        contentContainerClassName="gap-6 pb-8 mt-6"
       >
         <Image
           source={icons.successOrder}

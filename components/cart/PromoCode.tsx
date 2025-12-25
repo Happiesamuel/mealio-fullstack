@@ -3,8 +3,14 @@ import cn from "clsx";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 export default function PromoCode() {
-  const a = true;
+  const [show, setShow] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
   const [text, setText] = useState("");
+  function handlePress() {
+    if (!text) return;
+    setShow(true);
+    setErr("expired");
+  }
   return (
     <View className="mb-8">
       <View className="bg-[#E8E8E8] mb-2 px-4 rounded-2xl flex flex-row items-center justify-between">
@@ -24,33 +30,37 @@ export default function PromoCode() {
         </View>
         <Pressable
           className="bg-primary rounded-xl py-2 px-4"
-          onPress={() => {}}
+          onPress={() => handlePress()}
         >
           <Text className="text-base font-roboto-bold text-white text-center">
             Apply
           </Text>
         </Pressable>
       </View>
-      <View
-        className={cn(
-          "border-l-8 rounded-sm flex items-center flex-row gap-2 py-3 pl-2",
-          a ? "bg-[#F1FBF2] border-l-primary" : "border-l-error bg-[#F6E6E5]"
-        )}
-      >
-        <MaterialCommunityIcons
-          name={a ? "check-bold" : "close-thick"}
-          size={18}
-          color={a ? "#14B74D" : "#FF1414"}
-        />
-        <Text
+      {show && (
+        <View
           className={cn(
-            "font-roboto-semibold text-xs",
-            a ? "text-primary" : "text-error"
+            "border-l-8 rounded-sm flex items-center flex-row gap-2 py-3 pl-2",
+            !err
+              ? "bg-[#F1FBF2] border-l-primary"
+              : "border-l-error bg-[#F6E6E5]"
           )}
         >
-          Promo Code {a ? "applied" : "expired"}
-        </Text>
-      </View>
+          <MaterialCommunityIcons
+            name={!err ? "check-bold" : "close-thick"}
+            size={18}
+            color={!err ? "#14B74D" : "#FF1414"}
+          />
+          <Text
+            className={cn(
+              "font-roboto-semibold text-xs",
+              !err ? "text-primary" : "text-error"
+            )}
+          >
+            Promo Code {err}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

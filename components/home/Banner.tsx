@@ -1,4 +1,5 @@
 import { images } from "@/constnts";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Dimensions, Image, Text, View } from "react-native";
 import Animated, {
@@ -117,7 +118,10 @@ function BannerSlide({ item, animationValue }: SlideProps) {
           </View>
 
           <View className="w-[40%] ">
-            <RoundedFullButton className="bg-white" onPress={() => {}}>
+            <RoundedFullButton
+              className="bg-white"
+              onPress={() => router.push("/explore")}
+            >
               <Text className="text-sm font-roboto-bold  text-center text-primary py-2 px-4.5">
                 Order Now
               </Text>

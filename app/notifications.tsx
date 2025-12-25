@@ -1,15 +1,16 @@
 import EmptyNotification from "@/components/notifications/EmptyNotification";
 import NotificaationList from "@/components/notifications/NotificaationList";
 import NotificationHeader from "@/components/notifications/NotificationHeader";
+import Error from "@/components/ui/Error";
 import NotLoggedIn from "@/components/ui/NotLoggedIn";
 import { useGetNotification } from "@/hooks/useNotifications";
 import { useUserStorage } from "@/store/useUserStore";
 import React from "react";
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Notifications() {
-  const { notifications } = useGetNotification();
+  const { notifications, status, error, refetch } = useGetNotification();
   const { guest } = useUserStorage();
   if (!guest) {
     return (
@@ -21,6 +22,26 @@ export default function Notifications() {
       </SafeAreaView>
     );
   }
+  if (status === "pending") {
+    return (
+      <>
+        <NotificationHeader />
+        <View className="flex flex-1 gap-2 items-center justify-center w-full  ">
+          <ActivityIndicator size={"large"} color="#14B74D" />
+          <Text className="text-grey text-sm font-roboto">Loading Details</Text>
+        </View>
+      </>
+    );
+  }
+  if (error) {
+    return (
+      <View>
+        <NotificationHeader />
+        <Error error={error?.message} onPress={refetch} />
+      </View>
+    );
+  }
+
   const notify = notifications as any;
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary  h-full px-5 pb-safe">

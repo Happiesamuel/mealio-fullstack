@@ -158,7 +158,11 @@ export default function Checkout() {
           </View>
         </View>
         <RoundedFullButton
-          onPress={status === "pending" ? () => null : handleCheckout}
+          onPress={
+            status === "pending" || createNotStat === "pending"
+              ? () => null
+              : handleCheckout
+          }
           className={cn(
             "bg-primary mt-12",
             select ? "bg-[#95A199]" : "bg-primary"
