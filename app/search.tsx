@@ -73,7 +73,7 @@ export default function Search() {
   return (
     <SafeAreaView
       edges={["top"]}
-      className="bg-secondary h-full px-3 w-fit pb-safe"
+      className="bg-secondary dark:bg-[#121212] h-full px-3 w-fit pb-safe"
     >
       <>
         <SearchHeader />
@@ -86,7 +86,7 @@ export default function Search() {
               <ActivityIndicator size="small" color="#14b74d" />
             </View>
           ) : (
-            <Text className="text-black font-roboto-semibold text-sm">
+            <Text className="text-black dark:text-secondary font-roboto-semibold text-sm">
               {meals?.length} Results Found
             </Text>
           )

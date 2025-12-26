@@ -8,7 +8,7 @@ export default function ExploreScreenSkeleton() {
   const { isDark } = useTheme();
   return (
     <View className="flex flex-row items-start justify-between gap-5">
-      <View className="relative w-[166px] h-[129px]">
+      <View className="max-w-[166px] w-[50%] h-[129px]">
         <Skeleton
           width={"100%"}
           height={"100%"}

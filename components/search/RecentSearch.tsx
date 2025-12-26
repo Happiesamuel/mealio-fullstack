@@ -8,7 +8,7 @@ export default function RecentSearch() {
   return search.length ? (
     <View className="gap-4">
       <View className="flex items-center justify-between flex-row">
-        <Text className="text-sm font-roboto-semibold text-black">
+        <Text className="text-sm font-roboto-semibold dark:text-secondary text-black">
           Recently Search
         </Text>
         <Pressable onPress={() => clearSearch()}>
@@ -24,7 +24,7 @@ export default function RecentSearch() {
           .map((favor) => (
             <View
               key={favor.title}
-              className="bg-[#EEEEEE] px-2.5 py-2.5 flex items-center flex-row justify-between"
+              className="bg-[#EEEEEE] dark:bg-white/10 px-2.5 py-2.5 flex items-center flex-row justify-between"
             >
               <View className="flex items-center flex-row gap-2">
                 <AntDesign name="clock-circle" size={12} color="#A1A1A1" />

@@ -14,14 +14,14 @@ export default function SearchFavourite() {
       return { name: x.name, date: x.date };
     }),
   ]
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .map((x) => x.name)
     .slice(0, 5);
   console.log(arr);
   return arr.length ? (
     <View className="gap-4 mt-4">
       <View className="flex items-center justify-between flex-row">
-        <Text className="text-sm font-roboto-semibold text-black">
+        <Text className="text-sm font-roboto-semibold dark:text-secondary text-black">
           Recently Favorited
         </Text>
         <Link href={"/favourite"} className="text-sm font-roboto text-primary">
@@ -32,7 +32,7 @@ export default function SearchFavourite() {
         {arr.map((favor) => (
           <View
             key={favor}
-            className="bg-[#EEEEEE] px-2.5 py-2.5 flex items-center flex-row justify-between"
+            className="bg-[#EEEEEE] dark:bg-white/10 px-2.5 py-2.5 flex items-center flex-row justify-between"
           >
             <View className="flex items-center flex-row gap-2">
               <AntDesign name="clock-circle" size={12} color="#A1A1A1" />

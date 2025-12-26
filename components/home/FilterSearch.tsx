@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { useCategoriesQuery } from "@/hooks/useCategories";
 import { FontAwesome } from "@expo/vector-icons";
 import cn from "clsx";
@@ -80,7 +81,9 @@ export default function FilterSearch({
     <FilterModal visible={visible} onClose={close}>
       <View className="gap-2">
         <View className="gap-2">
-          <Text className="font-roboto-bold text-xl text-black">Pricing: </Text>
+          <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+            Pricing:{" "}
+          </Text>
           <RadioButton
             state={pricing === "desc"}
             setState={() => {
@@ -97,7 +100,9 @@ export default function FilterSearch({
           />
         </View>
         <View className="gap-2">
-          <Text className="font-roboto-bold text-xl text-black">Ratings: </Text>
+          <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+            Ratings:{" "}
+          </Text>
           <RadioButton
             state={rating === "desc"}
             setState={() => {
@@ -114,7 +119,7 @@ export default function FilterSearch({
           />
         </View>
         <View className="gap-2">
-          <Text className="font-roboto-bold text-xl text-black">
+          <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
             Categories:
           </Text>
           <View className="flex flex-row flex-wrap gap-2">
@@ -131,13 +136,15 @@ export default function FilterSearch({
                     onPress={() => handleCuisine(cuis.name)}
                     className={cn(
                       " w-[100px] h-9 rounded-xl flex items-center justify-center",
-                      exist ? "bg-primary " : "border border-grey"
+                      exist
+                        ? "bg-primary "
+                        : "border border-grey dark:border-white/10"
                     )}
                   >
                     <Text
                       className={cn(
                         "text-sm font-roboto ",
-                        exist ? "text-white " : "text-black"
+                        exist ? "text-white " : "text-black dark:text-secondary"
                       )}
                     >
                       {cuis.name}
@@ -149,7 +156,9 @@ export default function FilterSearch({
           </View>
         </View>
         <View className="gap-2">
-          <Text className="font-roboto-bold text-xl text-black">Sort:</Text>
+          <Text className="font-roboto-bold text-xl dark:text-white text-black">
+            Sort:
+          </Text>
           <RadioButton
             state={sort === "asc"}
             setState={() => {
@@ -197,6 +206,7 @@ function FilterModal({
   onClose?(): void;
   children: React.ReactNode;
 }) {
+  const { isDark } = useTheme();
   return (
     <Modal
       visible={visible}
@@ -208,18 +218,24 @@ function FilterModal({
         <ScrollView
           contentContainerClassName="pb-16"
           showsVerticalScrollIndicator={false}
-          className="bg-secondary  p-5 pb-16  h-[100%] "
+          className="bg-secondary dark:bg-[#121212]  p-5 pb-16  h-[100%] "
         >
           <View className="flex flex-row items-center justify-between pt-4 pb-2 my-1">
             <RoundedFullButton
-              className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+              className="bg-grey/5 dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
               onPress={onClose}
             >
-              <FontAwesome name="angle-left" size={18} color="black" />
+              <FontAwesome
+                name="angle-left"
+                size={18}
+                color={isDark ? "#f7f7f7" : "#191919"}
+              />
             </RoundedFullButton>
-            <Text className="font-roboto-bold text-xl text-black">Filter</Text>
+            <Text className="font-roboto-bold text-xl dark:text-white text-black">
+              Filter
+            </Text>
             <Pressable className="">
-              <Text className="text-black font-roboto-semibold text-base">
+              <Text className="text-black dark:text-secondary/80 font-roboto-semibold text-base">
                 Reset
               </Text>
             </Pressable>

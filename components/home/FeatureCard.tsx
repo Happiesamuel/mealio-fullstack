@@ -26,7 +26,7 @@ export default function FeatureCard({ item }: { item: Meal }) {
       onPress={() =>
         router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
       }
-      className="gap-1.5 w-[48.8%] p-1.5 mb-1 border dark:!border-zinc-200/15 !border-zinc-200/70  rounded-xl"
+      className="gap-1.5 w-[48.8%] p-1.5 mb-1 border dark:!border-zinc-200/10  !border-zinc-200/70  rounded-xl"
     >
       <View className="w-full relative">
         <Image

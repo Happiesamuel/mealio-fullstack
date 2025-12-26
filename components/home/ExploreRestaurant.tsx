@@ -34,7 +34,7 @@ export default function ExploreRestaurant() {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => router.push(`/restaurantDetails/${item.id}`)}
-            className="gap-2"
+            className="gap-2 items-center justify-center"
           >
             <Image
               source={item.image}
