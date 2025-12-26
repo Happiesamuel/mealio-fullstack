@@ -31,21 +31,22 @@ export default function CustomInput({
 
   return (
     <View className="gap-2">
-      <Text className="font-roboto-medium text-black text-xs">{label}:</Text>
+      <Text className="font-roboto-medium text-black dark:text-white text-xs">
+        {label}:
+      </Text>
       <View
         className={cn(
-          "bg-[#E8E8E8] rounded-2xl  border  font-roboto text-sm flex flex-row items-center justify-between",
+          "bg-[#E8E8E8] dark:bg-white/10 rounded-2xl  border  font-roboto text-sm flex flex-row items-center justify-between",
           isFocused
             ? " border-primary"
             : error
               ? "border-error"
-              : "border-[#E8E8E8]"
+              : "border-[#E8E8E8] dark:border-zinc-700"
         )}
       >
         <TextInput
           value={value}
           onChangeText={handleChange}
-          placeholderTextColor={"#8e9aaf"}
           placeholder={placeholder}
           autoCapitalize="none"
           autoCorrect={false}
@@ -53,7 +54,7 @@ export default function CustomInput({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           secureTextEntry={show ? true : false}
-          className="py-4  w-[80%] px-4 font-roboto"
+          className="py-4  w-[80%] px-4 dark:placeholder:text-grey text-black dark:text-secondary font-roboto"
         />
         {type === "password" && (
           <Pressable onPress={() => setShow(!show)} className="pr-4">

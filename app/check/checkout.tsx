@@ -134,7 +134,7 @@ export default function Checkout() {
   return (
     <SafeAreaView
       edges={["top"]}
-      className="bg-secondary h-full px-5 pb-safe w-fit"
+      className="bg-secondary dark:bg-[#121212] h-full px-5 pb-safe w-fit"
     >
       <CheckoutHeader />
       <ScrollView
@@ -142,11 +142,11 @@ export default function Checkout() {
         showsVerticalScrollIndicator={false}
       >
         <View className="gap-2 mt-8">
-          <View className="bg-[#EEEEEE] rounded-lg flex flex-row items-center justify-between px-3 py-4">
+          <View className="bg-[#EEEEEE] dark:bg-white/10 rounded-lg flex flex-row items-center justify-between px-3 py-4">
             <Text className="font-roboto text-base text-grey">
               Payment amount
             </Text>
-            <Text className="font-roboto-semibold text-base text-black">
+            <Text className="font-roboto-semibold text-base dark:text-white text-black">
               ${totalPrice.toFixed(2)}
             </Text>
           </View>

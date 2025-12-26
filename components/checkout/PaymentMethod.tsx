@@ -22,7 +22,7 @@ export default function PaymentMethod({
     <View className="gap-6">
       <View className="gap-2">
         <View className="flex items-center justify-between flex-row">
-          <Text className="text-base font-roboto-medium text-black">
+          <Text className="text-base font-roboto-medium dark:text-white text-black">
             Payment Method
           </Text>
           <Pressable onPress={() => setShowModal(!showModal)}>
@@ -71,7 +71,7 @@ function OtherPaymentMethod({
   return (
     <View className="gap-2">
       <View className="flex items-center justify-between flex-row">
-        <Text className="text-base font-roboto-medium text-black">
+        <Text className="text-base font-roboto-medium dark:text-white text-black">
           Other Payment Method
         </Text>
       </View>
@@ -101,7 +101,7 @@ function PaymentCard({
   selectedAddress: string | null;
 }) {
   return (
-    <View className="border border-grey px-2.5 py-2 rounded-lg flex items-center flex-row gap-3">
+    <View className="border border-grey dark:border-zinc-800 px-2.5 py-2 rounded-lg flex items-center flex-row gap-3">
       <View className="w-6 ">
         <Image
           source={item.icon}
@@ -111,7 +111,7 @@ function PaymentCard({
       </View>
       <View className="flex-1 gap-1.5">
         <View className="flex items-center flex-row justify-between">
-          <Text className="font-roboto-medium text-sm text-black">
+          <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
             {item.name}
           </Text>
           <RadioButton

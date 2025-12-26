@@ -11,7 +11,7 @@ export default function SuccessOrder() {
   return (
     <SafeAreaView
       edges={["top"]}
-      className="px-5 h-full bg-secondary flex justify-center pb-safe "
+      className="px-5 h-full bg-secondary dark:bg-[#121212] flex justify-center pb-safe "
     >
       <ScrollView
         scrollEnabled
@@ -24,12 +24,15 @@ export default function SuccessOrder() {
           className="size-[150px] self-center"
         />
         <View className="gap-3 items-center">
-          <Text className="text-black font-roboto-semibold text-2xl">
+          <Text className="text-black dark:text-white font-roboto-semibold text-2xl">
             Thank you for your order
           </Text>
           <Text className="text-base font-roboto text-grey text-center">
             You can track your order
-            <Text className="font-roboto-medium text-black"> #{Id} </Text>
+            <Text className="font-roboto-medium dark:text-white text-black">
+              {" "}
+              #{Id}{" "}
+            </Text>
             and see information about your order by checking order page
           </Text>
         </View>
@@ -88,7 +91,9 @@ function RenderIconView({
         <MaterialCommunityIcons size={24} color={"#14B74D"} name={name} />
       </View>
       <View className="gap-3">
-        <Text className="font-roboto-medium text-base text-black">{title}</Text>
+        <Text className="font-roboto-medium text-base dark:text-secondary text-black">
+          {title}
+        </Text>
         <Text className="font-roboto text-xs text-grey ">{content}</Text>
       </View>
     </View>

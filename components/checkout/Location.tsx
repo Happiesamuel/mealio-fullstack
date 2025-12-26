@@ -25,11 +25,11 @@ export default function Location({
   if (error)
     return (
       <View className="flex items-center justify-center w-[80%] pt-4 mx-auto gap-4">
-        <View className="bg-white rounded-full flex items-center justify-center size-16">
+        <View className="bg-white dark:bg-white/5 rounded-full flex items-center justify-center size-16">
           <MaterialIcons name="wifi-off" size={35} color="#14b74d" />
         </View>
         <View className="gap-1 flex items-center justify-center">
-          <Text className="font-roboto-semibold text-base text-black">
+          <Text className="font-roboto-semibold text-base dark:text-white text-black">
             No connection
           </Text>
           <Text className="text-sm font-roboto text-grey text-center">
@@ -58,7 +58,7 @@ export default function Location({
   return (
     <View className="gap-2">
       <View className="flex items-center justify-between flex-row">
-        <Text className="text-base font-roboto-medium text-black">
+        <Text className="text-base font-roboto-medium dark:text-white text-black">
           Delivery Location
         </Text>
         <Pressable onPress={() => handleToogleModal()}>
@@ -122,7 +122,7 @@ function LocationCard({
   func: (item: Address) => void;
 }) {
   return (
-    <View className="border border-grey px-2.5 py-2 rounded-lg flex items-start flex-row gap-3">
+    <View className="border border-grey dark:border-zinc-800 px-2.5 py-2 rounded-lg flex items-start flex-row gap-3">
       <View className="w-fit ">
         <RadioButton
           state={selectedAddress === item.$id}
@@ -131,7 +131,7 @@ function LocationCard({
       </View>
       <View className="flex-1 gap-1.5">
         <View className="flex items-center flex-row justify-between">
-          <Text className="font-roboto-medium text-sm text-black">
+          <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
             {item.type} Address
           </Text>
           <Pressable onPress={() => func(item)}>
