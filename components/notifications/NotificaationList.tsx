@@ -15,10 +15,12 @@ export default function NotificaationList({
   item: NotificationList;
 }) {
   return (
-    <View className="flex flex-row items-start gap-2 bg-white p-3 rounded-lg border border-[#999999]/20">
+    <View className="flex flex-row items-start gap-2 bg-white dark:bg-white/10 p-3 rounded-lg border dark:border-zinc-800  border-[#999999]/20">
       <ImageIcon item={item} />
       <View className="gap-1 flex-1">
-        <Text className="text-black text-base font-roboto">{item.title}</Text>
+        <Text className="text-black text-base dark:text-secondary font-roboto">
+          {item.title}
+        </Text>
         <Text className="text-grey text-sm font-roboto max-w-[90%]">
           {item.content}
         </Text>

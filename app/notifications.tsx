@@ -54,7 +54,10 @@ export default function Notifications() {
 
   const notify = notifications as any;
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary  h-full px-5 pb-safe">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] h-full px-5 pb-safe"
+    >
       <NotificationHeader />
       <FlatList
         data={notify}

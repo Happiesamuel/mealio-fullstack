@@ -10,7 +10,7 @@ export default function EmptyNotification() {
         source={images.emptyNot}
         resizeMode="cover"
       />
-      <Text className="font-roboto-bold text-xl text-black">
+      <Text className="font-roboto-bold text-xl dark:text-white text-black">
         No notification yet!
       </Text>
       <Text className="font-roboto text-sm text-grey text-center max-w-[180px]">
