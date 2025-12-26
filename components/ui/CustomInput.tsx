@@ -1,4 +1,5 @@
 import { icons } from "@/constnts";
+import { useTheme } from "@/context/ThemeProvider";
 import cn from "clsx";
 import React, { useState } from "react";
 import {
@@ -28,7 +29,7 @@ export default function CustomInput({
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [show, setShow] = useState(type === "password");
-
+  const { isDark } = useTheme();
   return (
     <View className="gap-2">
       <Text className="font-roboto-medium text-black dark:text-white text-xs">
@@ -62,7 +63,7 @@ export default function CustomInput({
               className="size-5 "
               resizeMode="contain"
               source={icons.eye}
-              tintColor={"#363853"}
+              tintColor={isDark ? "#f7f7f7" : "#363853"}
             />
           </Pressable>
         )}

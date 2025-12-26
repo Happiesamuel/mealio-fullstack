@@ -116,12 +116,13 @@ export default function Password() {
     );
   return (
     <KeyboardAvoidingView
+      className="bg-secondary dark:bg-[#121212]"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary dark:bg-[#121212] h-full px-3  "
         >
           <ProfileHeader>Change Password</ProfileHeader>
           <Text className="mt-5 font-roboto-medium text-grey text-base">

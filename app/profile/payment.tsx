@@ -1,6 +1,7 @@
 import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useTheme } from "@/context/ThemeProvider";
 import { useUserStorage } from "@/store/useUserStore";
 import React from "react";
 import {
@@ -33,6 +34,7 @@ type CreditCardForm = {
 
 export default function Payment() {
   const { user } = useUserStorage();
+  const { isDark } = useTheme();
   const handleChange = (form: CreditCardForm) => {
     console.log("Card Form:", form);
   };
@@ -48,11 +50,12 @@ export default function Payment() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="bg-secondary dark:bg-[#121212]"
     >
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary dark:bg-[#121212] h-full px-3  "
         >
           <ProfileHeader>Payment Method</ProfileHeader>
           <Text className="mt-5 font-roboto-medium text-grey text-base">
@@ -62,11 +65,11 @@ export default function Payment() {
             <LiteCreditCardInput
               onChange={handleChange}
               inputStyle={{
-                color: "#1A1A1A",
+                color: isDark ? "#ffffff" : "#1A1A1A",
                 fontSize: 14,
                 marginRight: 10,
                 paddingHorizontal: 16,
-                backgroundColor: "#E8E8E8",
+                backgroundColor: isDark ? "rgb(255 255 255 / 0.1)" : "#E8E8E8",
                 borderRadius: 16,
               }}
             />

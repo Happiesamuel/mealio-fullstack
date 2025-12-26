@@ -62,7 +62,7 @@ export default function Address() {
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary h-full px-3 dark:bg-[#121212] "
         >
           <ProfileHeader>Create Address</ProfileHeader>
           <Text className="mt-5 font-roboto-medium text-grey text-base">

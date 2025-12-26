@@ -1,5 +1,6 @@
 import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
+import { useTheme } from "@/context/ThemeProvider";
 import { useUserStorage } from "@/store/useUserStore";
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
@@ -10,13 +11,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Preference() {
   const { user } = useUserStorage();
   const [active, setActive] = useState("email");
+  const { isDark } = useTheme();
   const pref: { name: string; slug: string }[] = [
     { name: "Email", slug: "email" },
     { name: "Phone number", slug: "phone" },
   ];
   if (!user) return <Headers from="/profile/preference" text="Preference" />;
   return (
-    <SafeAreaView className="bg-secondary h-full px-3">
+    <SafeAreaView className="bg-secondary dark:bg-[#121212] h-full px-3">
       <ProfileHeader>Preference</ProfileHeader>
       <View className="gap-6 mt-10">
         {pref.map((pre) => (
@@ -29,14 +31,18 @@ export default function Preference() {
               className={
                 (cn("text-base  "),
                 active === pre.slug
-                  ? "text-black font-roboto"
+                  ? "text-black dark:text-secondary font-roboto"
                   : "text-grey font-roboto")
               }
             >
               {pre.name}
             </Text>
             {active === pre.slug && (
-              <Feather name="check" size={18} color="black" />
+              <Feather
+                name="check"
+                size={18}
+                color={isDark ? "#f7f7f7" : "#191919"}
+              />
             )}
           </TouchableOpacity>
         ))}

@@ -58,7 +58,7 @@ export default function Theme() {
   ];
 
   return (
-    <SafeAreaView className="bg-secondary dark:bg-gray-900 h-full px-3">
+    <SafeAreaView className="bg-secondary dark:bg-[#121212] h-full px-3">
       <ProfileHeader>Theme</ProfileHeader>
 
       <View className="gap-6 mt-10">
@@ -67,7 +67,7 @@ export default function Theme() {
             key={option.val}
             className="flex flex-row items-center justify-between"
           >
-            <Text className="font-roboto text-base text-black dark:text-white">
+            <Text className="font-roboto text-base text-black dark:text-secondary">
               {option.name}
             </Text>
             <Switch

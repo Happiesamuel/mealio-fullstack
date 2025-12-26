@@ -37,10 +37,13 @@ export default function Index() {
       };
     }) ?? [];
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary pb-safe px-3 h-full">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] pb-safe px-3 h-full"
+    >
       <ProfileHeader>Address</ProfileHeader>
       {newAddress.length && (
-        <Text className="mt-3.5 pb-3 font-roboto-medium text-black text-base">
+        <Text className="mt-3.5 pb-3 font-roboto-medium dark:text-white text-black text-base">
           Address book ({newAddress.length})
         </Text>
       )}
@@ -50,10 +53,10 @@ export default function Index() {
         renderItem={({ item }) => (
           <View
             key={item.id}
-            className="gap-1.5 bg-white rounded-xl shadow-sm shadow-black p-4"
+            className="gap-1.5 bg-white dark:bg-white/10 rounded-xl shadow-sm shadow-black p-4"
           >
             <View className="gap-1">
-              <Text className="font-roboto-semibold text-base text-black">
+              <Text className="font-roboto-semibold text-base dark:text-white text-black">
                 {item.type} Address
               </Text>
               <Text className="font-roboto text-sm text-grey">

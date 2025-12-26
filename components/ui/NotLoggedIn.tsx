@@ -10,7 +10,7 @@ export default function NotLoggedIn({ from }: { from: string }) {
         <FontAwesome5 name="user-shield" size={24} color="white" />
       </View>
       <View className="gap-0.5 flex items-center">
-        <Text className="font-roboto-semibold text-black text-base text-center">
+        <Text className="font-roboto-semibold text-black dark:text-secondary text-base text-center">
           Please sign in to access this content
         </Text>
         <Text className="font-roboto text-grey text-sm text-center">

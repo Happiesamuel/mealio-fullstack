@@ -1,11 +1,3 @@
-import {
-  FontAwesome5,
-  FontAwesome6,
-  Fontisto,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
 import { icons, images } from ".";
 
 export const categories = [
@@ -391,78 +383,6 @@ export const explore = [
     rating: 5,
     image: images.homeRecipeTwo,
     id: "6",
-  },
-];
-
-export const profile = [
-  {
-    name: "General",
-    subjects: [
-      {
-        name: "Edit Profile",
-        icon: <FontAwesome5 name="user" size={16} color="black" />,
-        route: "/profile/edit",
-      },
-      {
-        name: "Addresses",
-        icon: <FontAwesome6 name="contact-book" size={16} color="black" />,
-        route: "/profile/address",
-      },
-      {
-        name: "Payment Method",
-        icon: <Ionicons name="wallet-outline" size={16} color="black" />,
-        route: "/profile/payment",
-      },
-      {
-        name: "Notifications",
-        icon: <Fontisto name="bell" size={16} color="black" />,
-        route: "/profile/notification",
-      },
-      {
-        name: "Preferences",
-        icon: <MaterialIcons name="room-preferences" size={16} color="black" />,
-        route: "/profile/preference",
-      },
-      {
-        name: "Security",
-        icon: (
-          <MaterialCommunityIcons name="security" size={16} color="black" />
-        ),
-        route: "/profile/security",
-      },
-      {
-        name: "Theme",
-        icon: (
-          <MaterialCommunityIcons
-            name="theme-light-dark"
-            size={16}
-            color="black"
-          />
-        ),
-        route: "/profile/theme",
-      },
-    ],
-  },
-  {
-    name: "Help & Support",
-    subjects: [
-      {
-        name: "Contact Support",
-        icon: <MaterialIcons name="support-agent" size={16} color="black" />,
-        route: "/",
-      },
-      {
-        name: "FAQ",
-        icon: (
-          <MaterialCommunityIcons
-            name="message-question-outline"
-            size={16}
-            color="black"
-          />
-        ),
-        route: "/",
-      },
-    ],
   },
 ];
 

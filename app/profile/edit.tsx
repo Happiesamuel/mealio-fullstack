@@ -2,6 +2,7 @@ import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import CustomInput from "@/components/ui/CustomInput";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useTheme } from "@/context/ThemeProvider";
 import useUpdate from "@/hooks/useUpdate";
 import { editInput, editSchema } from "@/lib/schemas";
 import { useUserStorage } from "@/store/useUserStore";
@@ -13,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
   Text,
   View,
 } from "react-native";
@@ -23,6 +25,7 @@ import { ZodError } from "zod";
 export default function Edit() {
   const { user, guest, setUser } = useUserStorage();
   const { status, error: updateErr, update } = useUpdate();
+  const { isDark } = useTheme();
   const [errors, setErrors] = useState<
     Partial<Record<keyof editInput, string>>
   >({});
@@ -112,12 +115,13 @@ export default function Edit() {
 
   return (
     <KeyboardAvoidingView
+      className="bg-secondary dark:bg-[#121212]"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary dark:bg-[#121212] h-full px-3  "
         >
           <ProfileHeader>Edit Profile</ProfileHeader>
           <Text className="mt-5 font-roboto-medium text-grey text-base">
@@ -160,6 +164,10 @@ export default function Edit() {
           </RoundedFullButton>
         </ScrollView>
       </SafeAreaView>
+      <StatusBar
+        barStyle={isDark ? "light-content" : "dark-content"}
+        backgroundColor={isDark ? "#121212" : "#f7f7f7"}
+      />
     </KeyboardAvoidingView>
   );
 }

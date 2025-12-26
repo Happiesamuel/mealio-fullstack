@@ -51,8 +51,10 @@ export default function Email() {
     try {
       setErr(null);
       setLoading(true);
+
       const validatedData: emailInput = emailSchema.parse(form);
       const otp = await plunk(validatedData.email);
+      console.log(otp);
       await createOtp(otp.otp, guest!.$id);
       Toast.show({
         type: "success",
@@ -95,12 +97,13 @@ export default function Email() {
     );
   return (
     <KeyboardAvoidingView
+      className="bg-secondary dark:bg-[#121212]"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary dark:bg-[#121212] h-full px-3  "
         >
           <ProfileHeader>Change Email</ProfileHeader>
 

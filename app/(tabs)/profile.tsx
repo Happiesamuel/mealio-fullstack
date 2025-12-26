@@ -197,12 +197,15 @@ export default function Profile() {
   }
 
   return (
-    <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5">
+    <SafeAreaView
+      edges={["top"]}
+      className="h-full bg-secondary dark:bg-[#121212] px-5"
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerClassName="mt-10 pb-16"
       >
-        <Text className="font-roboto-bold text-xl text-black text-center mb-8">
+        <Text className="font-roboto-bold text-xl text-black dark:text-white text-center mb-8">
           Profile
         </Text>
         <View className="flex items-center justify-center gap-2">
@@ -219,7 +222,7 @@ export default function Profile() {
                 source={{ uri: photo }}
               />
             ) : (
-              <View className=" size-full border-[3px] border-white items-center justify-center rounded-full">
+              <View className=" size-full border-[3px] border-white dark:border-white/50 items-center justify-center rounded-full">
                 <MaterialCommunityIcons
                   name="account"
                   size={70}
@@ -240,7 +243,7 @@ export default function Profile() {
           {guest ? (
             <View className="flex items-center justify-center">
               <View className="flex items-center flex-row gap-0.5">
-                <Text className="font-roboto-medium text-base text-black">
+                <Text className="font-roboto-medium dark:text-secondary text-base text-black">
                   {guest?.name}
                 </Text>
                 {guest?.isVerified && (
@@ -252,7 +255,7 @@ export default function Profile() {
               </Text>
             </View>
           ) : (
-            <Text className="font-roboto-medium text-base text-black">
+            <Text className="font-roboto-medium text-base dark:text-secondary text-black">
               Sign in to access your profile
             </Text>
           )}

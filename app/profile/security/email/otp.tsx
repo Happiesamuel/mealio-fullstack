@@ -131,12 +131,13 @@ export default function OTP() {
   };
   return (
     <KeyboardAvoidingView
+      className="bg-secondary dark:bg-[#121212]"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          className="bg-secondary h-full px-3  "
+          className="bg-secondary dark:bg-[#121212] h-full px-3  "
         >
           <ProfileHeader>Change Email</ProfileHeader>
 
@@ -153,7 +154,7 @@ export default function OTP() {
                   onBlur={() => setFocusedIndex(null)}
                   onChangeText={(text) => handleChange(text, i)}
                   className={cn(
-                    "w-12 h-12 border text-xl rounded-lg text-center font-roboto bg-[#E8E8E8]",
+                    "w-12 h-12 border text-xl rounded-lg text-center font-roboto bg-[#E8E8E8] dark:bg-white/10 text-black dark:text-secondary ",
                     error
                       ? "border-red-500"
                       : focusedIndex === i
@@ -170,7 +171,7 @@ export default function OTP() {
             >
               <Text
                 className={`font-roboto-bold text-base ${
-                  disabled ? "text-gray-400" : "text-primary"
+                  disabled ? "text-grey" : "text-primary"
                 }`}
               >
                 {disabled ? `Resend Code (${timer}s)` : "Resend Code"}
