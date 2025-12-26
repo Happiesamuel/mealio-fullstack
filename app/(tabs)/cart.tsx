@@ -26,7 +26,10 @@ export default function Cart() {
     (cart as unknown as CartDoc[]) ?? ([] as unknown as CartDoc[]);
 
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] px-3 h-full"
+    >
       <CartHeader />
       <FlatList
         data={cartItems}
@@ -68,7 +71,7 @@ export default function Cart() {
             return guest ? clear() : clearCart();
           }}
         >
-          <Text className=" font-roboto-medium text-center text-2xl mt-4 mb-6 ">
+          <Text className=" font-roboto-medium text-center dark:text-secondary/80 text-black text-2xl mt-4 mb-6 ">
             Are you sure you want to clear your cart?
           </Text>
         </CartModal>

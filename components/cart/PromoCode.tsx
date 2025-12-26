@@ -13,7 +13,7 @@ export default function PromoCode() {
   }
   return (
     <View className="mb-8">
-      <View className="bg-[#E8E8E8] mb-2 px-4 rounded-2xl flex flex-row items-center justify-between">
+      <View className="bg-[#E8E8E8] dark:bg-white/10 mb-2 px-4 rounded-2xl flex flex-row items-center justify-between">
         <View className="gap-2 flex items-center flex-row flex-1 py-2">
           <MaterialCommunityIcons
             name="ticket-confirmation-outline"
@@ -21,11 +21,10 @@ export default function PromoCode() {
             color="#A1A1A1"
           />
           <TextInput
-            className="font-roboto text-sm  w-[90%]"
+            className="font-roboto text-sm dark:placeholder:text-grey dark:text-secondary text-black  w-[90%]"
             placeholder="Promo Code"
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholderTextColor={"#8E9AAF"}
           />
         </View>
         <Pressable

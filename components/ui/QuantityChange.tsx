@@ -31,7 +31,9 @@ export default function QuantityChange({
       {quanStat === "pending" ? (
         <ActivityIndicator size={15} color={"#14b74d"} />
       ) : (
-        <Text className="text-sm font-roboto-semibold text-black">{quan}</Text>
+        <Text className="text-sm font-roboto-semibold dark:text-secondary/80 text-black">
+          {quan}
+        </Text>
       )}
       <TouchableOpacity
         className="border border-primary bg-primary/10 size-[22px] rounded-lg flex items-center justify-center"

@@ -13,8 +13,17 @@ export default function Foot({
 }) {
   return (
     <View className="flex items-center justify-between  flex-row">
-      <Text className={cn("font-roboto text-black", titleClass)}>{title}</Text>
-      <Text className={cn("font-roboto-semibold text-black", priceClass)}>
+      <Text
+        className={cn("font-roboto text-black dark:text-white", titleClass)}
+      >
+        {title}
+      </Text>
+      <Text
+        className={cn(
+          "font-roboto-semibold text-black dark:text-white",
+          priceClass
+        )}
+      >
         ${price.toFixed(2)}
       </Text>
     </View>

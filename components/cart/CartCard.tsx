@@ -24,7 +24,7 @@ export default function CartCard({ item }: { item: CartDoc }) {
     item as unknown as CartProp
   );
   return (
-    <View className="bg-[#EEEEEE] px-2.5 py-2 rounded-xl flex items-center flex-row gap-2">
+    <View className="bg-[#EEEEEE] dark:bg-white/10 px-2.5 py-2 rounded-xl flex items-center flex-row gap-2">
       <TouchableOpacity
         onPress={() =>
           router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
@@ -39,7 +39,7 @@ export default function CartCard({ item }: { item: CartDoc }) {
       </TouchableOpacity>
       <View className="flex-1 gap-2.5">
         <View className="flex items-center flex-row justify-between">
-          <Text className="font-roboto text-sm text-black w-[80%]">
+          <Text className="font-roboto text-sm dark:text-secondary text-black w-[80%]">
             {item.title}
           </Text>
           {status === "pending" ? (
@@ -55,7 +55,7 @@ export default function CartCard({ item }: { item: CartDoc }) {
             <Text className="font-roboto-medium text-xs text-grey">
               ${item.price.toFixed(2)} * {quan}
             </Text>
-            <Text className="font-roboto-medium text-sm text-black">
+            <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
               ${Math.floor(item.price * quan).toFixed(2)}
             </Text>
           </View>
