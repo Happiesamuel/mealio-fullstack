@@ -26,7 +26,10 @@ export default function RestaurantDetail() {
   const food = meals.filter((m) => m.restaurantId === restaurantId);
   const res = restaurants.find((x) => x.id === restaurantId);
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3 pb-safe">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] h-full px-3 pb-safe"
+    >
       <RestaurantHeader item={res} />
       {error ? (
         <Error error={error.message} onPress={refetch} />
@@ -66,7 +69,7 @@ export default function RestaurantDetail() {
               />
               <View className="gap-1.5 flex items-center">
                 <View className="flex items-center flex-row gap-1.5">
-                  <Text className="font-roboto-semibold text-2xl text-black">
+                  <Text className="font-roboto-semibold text-2xl dark:text-white text-black">
                     {res?.name}
                   </Text>
                   <MaterialIcons name="verified" size={24} color="#14B74D" />

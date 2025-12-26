@@ -76,7 +76,7 @@ export default function RestaurantTabHeader({ tabSlug, setTabSlug }: Props) {
         >
           <Text
             className={`text-base font-roboto-medium ${
-              tab.slug === tabSlug ? "text-black" : "text-gray-400"
+              tab.slug === tabSlug ? "text-black dark:text-white" : "text-grey"
             }`}
           >
             {tab.name}

@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import useAllFavourite from "@/hooks/useAllFavourite";
 import { Restaurant } from "@/types";
 import {
@@ -15,29 +16,40 @@ export default function RestaurantHeader({
 }: {
   item: Restaurant | undefined;
 }) {
+  const { isDark } = useTheme();
   const [open, setOpen] = useState(false);
   const { handlePress, isInFavourite } = useAllFavourite(item!, "restaurants");
   return (
     <View className="flex relative flex-row items-center justify-between my-1 pt-4">
       <RoundedFullButton
-        className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+        className="bg-grey/5 dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
         onPress={() => router.back()}
       >
-        <FontAwesome name="angle-left" size={18} color="black" />
+        <FontAwesome
+          name="angle-left"
+          size={18}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
       </RoundedFullButton>
-      <Text className="font-roboto-bold text-xl text-black">Details</Text>
+      <Text className="font-roboto-bold text-xl text-black dark:text-white">
+        Details
+      </Text>
       <View className="flex items-center flex-row gap-3.5">
-        <RoundedFullButton className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] ">
-          <MaterialIcons name="support-agent" size={18} color="black" />
+        <RoundedFullButton className="bg-grey/5 dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] ">
+          <MaterialIcons
+            name="support-agent"
+            size={18}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </RoundedFullButton>
         <RoundedFullButton
-          className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+          className="bg-grey/5 dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
           onPress={() => setOpen((v) => !v)}
         >
           <MaterialCommunityIcons
             name="dots-vertical"
             size={18}
-            color="black"
+            color={isDark ? "#f7f7f7" : "#191919"}
           />
         </RoundedFullButton>
       </View>

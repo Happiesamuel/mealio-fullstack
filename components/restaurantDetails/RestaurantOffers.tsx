@@ -36,7 +36,10 @@ export default function RestaurantOffers({ item }: { item: ItemProp }) {
           <Ionicons name="heart-outline" size={20} color="white" />
         </View>
       </View>
-      <Text className="font-roboto-semibold text-sm text-black">
+      <Text
+        className="font-roboto-semibold text-sm dark:text-white text-black"
+        numberOfLines={1}
+      >
         {item.name}
       </Text>
       <View className="flex justify-between flex-row items-center">
@@ -52,7 +55,7 @@ export default function RestaurantOffers({ item }: { item: ItemProp }) {
         </View>
       </View>
       <View className="flex justify-between flex-row items-center">
-        <Text className="font-roboto-medium text-sm text-black">
+        <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
           ${item.price.toFixed(2)}
         </Text>
         <RoundedFullButton
