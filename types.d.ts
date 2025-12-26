@@ -210,6 +210,7 @@ export interface Notification {
   content: string;
   image: any;
   status: string;
+  isRead: boolean;
   guests: string;
   createdAt: string;
 }

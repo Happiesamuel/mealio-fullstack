@@ -24,13 +24,14 @@ export default function Checkout() {
   const { total } = useCartStorage();
   const { guest } = useUserStorage();
   const { cart } = useCartStorage();
+  const [payment, setPayment] = useState<string | null>(null);
   const { create: createNot, status: createNotStat } = useCrateNotification();
   const { clear, status: clearStat } = useClearCart();
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const { create, status } = useCreateOrder();
   const select = true;
   async function handleCheckout() {
-    if (!selectedAddress || !guest) return;
+    if (!selectedAddress || !guest || !payment) return;
     try {
       const res = ["r1", "r2", "r3", "r4", "r5"].map((x) => {
         return { id: x, orderId: generateOrderId() };
@@ -60,13 +61,11 @@ export default function Checkout() {
         status: "Pending",
 
         createdAt: new Date().toISOString(),
-        shippedAt: new Date(Date.now() + 0.5 * 60 * 1000).toISOString(),
-        deliveredAt: new Date(Date.now() + 1 * 60 * 1000).toISOString(),
         shippedNotified: false,
         deliveredNotified: false,
 
-        // shippedAt: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
-        // deliveredAt: new Date(Date.now() + 20 * 60 * 1000).toISOString(),
+        shippedAt: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+        deliveredAt: new Date(Date.now() + 20 * 60 * 1000).toISOString(),
       }));
 
       createNot(
@@ -77,6 +76,7 @@ export default function Checkout() {
           image: null,
           guests: guest.$id,
           createdAt: new Date().toISOString(),
+          isRead: false,
         },
         {
           onSuccess: () =>
@@ -110,6 +110,7 @@ export default function Checkout() {
           image: orders.at(0)?.image,
           guests: guest.$id,
           createdAt: new Date().toISOString(),
+          isRead: false,
         },
         {
           onSuccess: () =>
@@ -154,7 +155,10 @@ export default function Checkout() {
               selectedAddress={selectedAddress}
               setSelectedAddress={setSelectedAddress}
             />
-            <PaymentMethod />
+            <PaymentMethod
+              selectedAddress={payment}
+              setSelectedAddress={setPayment}
+            />
           </View>
         </View>
         <RoundedFullButton

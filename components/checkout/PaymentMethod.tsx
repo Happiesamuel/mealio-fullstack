@@ -10,8 +10,13 @@ interface PaymentMethodProp {
   id: string;
   icon: any;
 }
-export default function PaymentMethod() {
-  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+export default function PaymentMethod({
+  selectedAddress,
+  setSelectedAddress,
+}: {
+  selectedAddress: string | null;
+  setSelectedAddress: Dispatch<SetStateAction<string | null>>;
+}) {
   const [showModal, setShowModal] = useState(false);
   return (
     <View className="gap-6">

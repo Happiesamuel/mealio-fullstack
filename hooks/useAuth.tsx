@@ -50,6 +50,7 @@ export function useLoginProvider() {
           image: null,
           guests: data.guest!.$id,
           createdAt: new Date().toISOString(),
+          isRead: false,
         },
         {
           onSuccess: () =>
@@ -105,6 +106,7 @@ export function useLogin() {
             image: null,
             guests: guest!.$id,
             createdAt: new Date().toISOString(),
+            isRead: false,
           },
           {
             onSuccess: () =>

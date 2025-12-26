@@ -57,6 +57,7 @@ export const useOrderStatusUpdater = () => {
                 image: null,
                 guests: guest.$id,
                 createdAt: userOrders?.at(0)?.deliveredAt,
+                isRead: false,
               },
               {
                 onSuccess: () =>
@@ -117,6 +118,7 @@ export const useOrderStatusUpdater = () => {
                 image: null,
                 guests: guest.$id,
                 createdAt: userOrders?.at(0)?.deliveredAt,
+                isRead: false,
               },
               {
                 onSuccess: () =>

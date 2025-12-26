@@ -41,6 +41,15 @@ export default function FoodDetail() {
   const { data: ingredients, status: ingStatus } = useIngredientsQuery();
   const [active, setActive] = useState<string | null>(null);
 
+  if (error) {
+    return (
+      <View>
+        <DetailsHeader />
+        <Error error={error?.message} onPress={refetch} />
+      </View>
+    );
+  }
+
   if (mealStatus === "pending" || ingStatus === "pending")
     return (
       <SafeAreaView
@@ -63,113 +72,110 @@ export default function FoodDetail() {
   return (
     <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full pb-safe">
       <DetailsHeader />
-      {error ? (
-        <Error error={error?.message} onPress={refetch} />
-      ) : (
-        <>
-          {mealDetail && (
-            <FlatList
-              data={[]}
-              renderItem={() => null}
-              showsVerticalScrollIndicator={false}
-              ListHeaderComponent={() => (
-                <View className="pb-8">
-                  <DetailsBio
-                    quan={quan}
-                    quanStat={quanStat}
-                    res={res}
-                    handleQuantity={handleQuantity}
-                    data={mealDetail as MealDetail}
+
+      <>
+        {mealDetail && (
+          <FlatList
+            data={[]}
+            renderItem={() => null}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={() => (
+              <View className="pb-8">
+                <DetailsBio
+                  quan={quan}
+                  quanStat={quanStat}
+                  res={res}
+                  handleQuantity={handleQuantity}
+                  data={mealDetail as MealDetail}
+                />
+                {ings && ings?.length && (
+                  <IngredientsDet
+                    setActive={setActive}
+                    active={active}
+                    ings={ings}
                   />
-                  {ings && ings?.length && (
-                    <IngredientsDet
-                      setActive={setActive}
-                      active={active}
-                      ings={ings}
+                )}
+                <View className="gap-2.5 my-4">
+                  <Text className="text-base font-roboto-semibold pb-1 text-black">
+                    Reviews
+                  </Text>
+                  {mealDetail.reviews!.map((item) => (
+                    <RestaurantReviews
+                      key={item.id}
+                      item={item as unknown as RestaurantReview}
                     />
-                  )}
-                  <View className="gap-2.5 my-4">
-                    <Text className="text-base font-roboto-semibold pb-1 text-black">
-                      Reviews
-                    </Text>
-                    {mealDetail.reviews!.map((item) => (
-                      <RestaurantReviews
-                        key={item.id}
-                        item={item as unknown as RestaurantReview}
-                      />
-                    ))}
-                  </View>
-                  <View className="gap-5 mt-3">
-                    <SimalarCategory cat={mealDetail.category} />
-                    <SimilarArea area={mealDetail.area} />
-                  </View>
+                  ))}
+                </View>
+                <View className="gap-5 mt-3">
+                  <SimalarCategory cat={mealDetail.category} />
+                  <SimilarArea area={mealDetail.area} />
+                </View>
+              </View>
+            )}
+          />
+        )}
+        <View className="flex items-center justify-between flex-row py-3">
+          <View className="flex justify-between">
+            <Text className="font-roboto text-base text-grey">Total</Text>
+            <Text className="font-roboto-medium text-2xl text-black">
+              ${mealDetail?.price.toFixed(2)}
+            </Text>
+          </View>
+
+          {isInCart ? (
+            <View className="flex items-center flex-row gap-6">
+              <TouchableOpacity
+                className={cn(
+                  "  size-12 rounded-full flex items-center justify-center",
+                  quan <= 1 ? "bg-primary/50" : "bg-primary"
+                )}
+                onPress={() => handleQuantity("decrease")}
+              >
+                <AntDesign
+                  name="minus"
+                  size={14}
+                  color={quan <= 1 ? "white" : "white"}
+                />
+              </TouchableOpacity>
+              {quanStat === "pending" ? (
+                <ActivityIndicator size={25} color={"#14b74d"} />
+              ) : (
+                <Text className="text-2xl font-roboto-semibold text-black">
+                  {quan}
+                </Text>
+              )}
+              <TouchableOpacity
+                className="bg-primary  size-12 rounded-full flex items-center justify-center"
+                onPress={() => handleQuantity("increase")}
+              >
+                <AntDesign name="plus" size={18} color="white" />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <RoundedFullButton
+              onPress={handleCart}
+              className="bg-primary w-[70%] self-end"
+            >
+              {status === "pending" ? (
+                <View className="py-4">
+                  <ActivityIndicator size={20} color={"white"} />
+                </View>
+              ) : (
+                <View className="py-4 flex items-center justify-center flex-row gap-2">
+                  <MaterialCommunityIcons
+                    name="cart-outline"
+                    size={24}
+                    color={"white"}
+                  />
+                  <Text className="font-roboto-bold text-base text-white">
+                    Add to Cart
+                  </Text>
                 </View>
               )}
-            />
+            </RoundedFullButton>
           )}
-          <View className="flex items-center justify-between flex-row py-3">
-            <View className="flex justify-between">
-              <Text className="font-roboto text-base text-grey">Total</Text>
-              <Text className="font-roboto-medium text-2xl text-black">
-                ${mealDetail?.price.toFixed(2)}
-              </Text>
-            </View>
-
-            {isInCart ? (
-              <View className="flex items-center flex-row gap-6">
-                <TouchableOpacity
-                  className={cn(
-                    "  size-12 rounded-full flex items-center justify-center",
-                    quan <= 1 ? "bg-primary/50" : "bg-primary"
-                  )}
-                  onPress={() => handleQuantity("decrease")}
-                >
-                  <AntDesign
-                    name="minus"
-                    size={14}
-                    color={quan <= 1 ? "white" : "white"}
-                  />
-                </TouchableOpacity>
-                {quanStat === "pending" ? (
-                  <ActivityIndicator size={25} color={"#14b74d"} />
-                ) : (
-                  <Text className="text-2xl font-roboto-semibold text-black">
-                    {quan}
-                  </Text>
-                )}
-                <TouchableOpacity
-                  className="bg-primary  size-12 rounded-full flex items-center justify-center"
-                  onPress={() => handleQuantity("increase")}
-                >
-                  <AntDesign name="plus" size={18} color="white" />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <RoundedFullButton
-                onPress={handleCart}
-                className="bg-primary w-[70%] self-end"
-              >
-                {status === "pending" ? (
-                  <View className="py-4">
-                    <ActivityIndicator size={20} color={"white"} />
-                  </View>
-                ) : (
-                  <View className="py-4 flex items-center justify-center flex-row gap-2">
-                    <MaterialCommunityIcons
-                      name="cart-outline"
-                      size={24}
-                      color={"white"}
-                    />
-                    <Text className="font-roboto-bold text-base text-white">
-                      Add to Cart
-                    </Text>
-                  </View>
-                )}
-              </RoundedFullButton>
-            )}
-          </View>
-        </>
-      )}
+        </View>
+      </>
     </SafeAreaView>
   );
 }

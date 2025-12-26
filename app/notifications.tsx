@@ -4,14 +4,24 @@ import NotificationHeader from "@/components/notifications/NotificationHeader";
 import Error from "@/components/ui/Error";
 import NotLoggedIn from "@/components/ui/NotLoggedIn";
 import { useGetNotification } from "@/hooks/useNotifications";
+import { useUnreadNotifications } from "@/hooks/useUnreadNotification";
 import { useUserStorage } from "@/store/useUserStore";
-import React from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Notifications() {
   const { notifications, status, error, refetch } = useGetNotification();
   const { guest } = useUserStorage();
+  const { markAllAsRead } = useUnreadNotifications();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      markAllAsRead();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [markAllAsRead]);
+
   if (!guest) {
     return (
       <SafeAreaView
@@ -48,7 +58,7 @@ export default function Notifications() {
       <NotificationHeader />
       <FlatList
         data={notify}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.$id}
         showsVerticalScrollIndicator={false}
         contentContainerClassName="gap-3 py-10"
         renderItem={({ item }) => <NotificaationList item={item} />}

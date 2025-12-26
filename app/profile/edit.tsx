@@ -1,4 +1,3 @@
-import CountryPicker from "@/components/profile/CountryPicker";
 import Headers from "@/components/profile/Headers";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import CustomInput from "@/components/ui/CustomInput";
@@ -144,7 +143,7 @@ export default function Edit() {
               type="normal"
             />
           </View>
-          <CountryPicker />
+          {/* <CountryPicker /> */}
           <RoundedFullButton
             className="bg-primary mt-10"
             onPress={handleSubmit}

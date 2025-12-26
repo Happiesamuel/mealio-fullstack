@@ -1,5 +1,6 @@
 import { icons } from "@/constnts";
 import useGetGuest from "@/hooks/useGetGuest";
+import { useUnreadNotifications } from "@/hooks/useUnreadNotification";
 import { useUserStorage } from "@/store/useUserStore";
 import { Fontisto } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -8,6 +9,8 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeHeader() {
   const { user } = useUserStorage();
+  const { unreadCount } = useUnreadNotifications();
+  const hasUnread = unreadCount > 0;
   const { data, status } = useGetGuest({
     type: "email",
     value: user?.email ?? "",
@@ -57,7 +60,9 @@ export default function HomeHeader() {
         className="flex items-center justify-center rounded-full relative bg-grey/5 size-12"
       >
         <Fontisto name="bell" size={20} color="#191919" />
-        <View className="size-2 rounded-full bg-error absolute right-3.5 top-4" />
+        {hasUnread && (
+          <View className="size-2 rounded-full bg-error absolute right-3.5 top-4" />
+        )}
       </TouchableOpacity>
     </View>
   );
