@@ -43,7 +43,10 @@ export default function Orders() {
   const orderItems: any = newOrder;
 
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] h-full px-3"
+    >
       <OrdersHeader />
       <View className="pb-2">
         <OrderTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />

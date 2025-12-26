@@ -20,7 +20,7 @@ export default function OrderId() {
     return (
       <SafeAreaView
         edges={["top"]}
-        className="h-full bg-secondary pb-safe px-3"
+        className="h-full bg-secondary dark:bg-[#121212] pb-safe px-3"
       >
         <OrderHeader />
         <View className="flex flex-1 gap-2 items-center justify-center w-full  ">
@@ -34,7 +34,7 @@ export default function OrderId() {
     return (
       <SafeAreaView
         edges={["top"]}
-        className="h-full bg-secondary pb-safe px-3"
+        className="h-full bg-secondary dark:bg-[#121212]  pb-safe px-3"
       >
         <OrderHeader /> <Error error={error?.message} onPress={refetch} />
       </SafeAreaView>
@@ -44,9 +44,11 @@ export default function OrderId() {
   const price =
     orders?.map((x) => x.quantity * x.price).reduce((a, b) => a + b) ?? 0;
 
-  console.log(orders, "s");
   return (
-    <SafeAreaView edges={["top"]} className="h-full bg-secondary pb-safe px-3">
+    <SafeAreaView
+      edges={["top"]}
+      className="h-full bg-secondary dark:bg-[#121212] pb-safe px-3"
+    >
       <OrderHeader />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -62,7 +64,7 @@ export default function OrderId() {
           {orders?.map((x) => (
             <View
               key={x.$id}
-              className="border border-grey/50 gap-3 flex items-center justify-center rounded-lg size-[140px] px-2 py-3"
+              className="border border-grey/50 dark:border-zinc-800 gap-3 flex items-center justify-center rounded-lg size-[140px] px-2 py-3"
             >
               <Image
                 source={{ uri: x.image }}
@@ -70,14 +72,14 @@ export default function OrderId() {
               />
               <View className="flex flex-row items-center gap-1 px-2">
                 <Text
-                  className="font-roboto-semibold text-xs text-black"
+                  className="font-roboto-semibold text-xs dark:text-secondary/80 text-black"
                   numberOfLines={1}
                 >
                   {x.title}
                 </Text>
                 {x.quantity > 1 && (
                   <Text
-                    className="font-roboto-semibold text-xs text-black"
+                    className="font-roboto-semibold text-xs dark:text-secondary/80 text-black"
                     numberOfLines={1}
                   >
                     * {x.quantity}
@@ -95,7 +97,7 @@ export default function OrderId() {
           />
           <View className="gap-1">
             <View className="flex items-center flex-row gap-1.5">
-              <Text className="font-roboto-semibold text-base text-black">
+              <Text className="font-roboto-semibold dark:text-white text-base text-black">
                 {res?.name}
               </Text>
               <MaterialIcons name="verified" size={18} color="#14B74D" />
@@ -110,17 +112,17 @@ export default function OrderId() {
         </View>
 
         <View className="flex flex-row items-center  justify-between">
-          <Text className="text-base font-roboto-semibold text-black">
+          <Text className="text-base font-roboto-semibold dark:text-white text-black">
             #{orderId}
           </Text>
           <View
             className={cn(
               " rounded-lg border border-grey/50 py-1 px-2 flex flex-row gap-1.5 items-center",
               orders?.at(0)?.status === "Delivered"
-                ? "bg-primary/20"
+                ? "bg-primary/20 border-primary"
                 : orders?.at(0)?.status === "Shipped"
-                  ? "bg-[#0B298A]/20"
-                  : "bg-error/10"
+                  ? "bg-[#0B298A]/20 border-[#0B298A]"
+                  : "bg-error/10 border-error"
             )}
           >
             <FontAwesome
@@ -186,10 +188,10 @@ export default function OrderId() {
         />
         {address && (
           <View>
-            <Text className="text-base text-black font-roboto-semibold">
+            <Text className="text-base text-black dark:text-white font-roboto-semibold">
               Address
             </Text>
-            <Text className="text-base text-black font-roboto pt-2">
+            <Text className="text-base text-black dark:text-secondary font-roboto pt-2">
               {address?.type} Address
             </Text>
             <Text className="text-base text-grey font-roboto">

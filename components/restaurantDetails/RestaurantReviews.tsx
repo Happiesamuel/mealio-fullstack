@@ -19,7 +19,9 @@ export default function RestaurantReviews({
       <View className="flex-1 gap-1">
         <View className="flex items-center flex-row justify-between">
           <View className="gap-1.5 flex flex-row items-center">
-            <Text className="text-xs font-roboto text-black">{item.user}</Text>
+            <Text className="text-xs font-roboto dark:text-white text-black">
+              {item.user}
+            </Text>
           </View>
           <Text className="text-grey font-roboto text-xs italic">
             {formatReviewDate(item.date)}
@@ -32,7 +34,7 @@ export default function RestaurantReviews({
         </View>
         <Text
           style={{ fontStyle: "italic" }}
-          className="text-sm  font-roboto text-black"
+          className="text-sm  font-roboto dark:text-secondary text-black"
         >
           {item.comment}
         </Text>

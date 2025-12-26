@@ -6,6 +6,7 @@ import SimilarArea from "@/components/food-details/SimilarArea";
 import RestaurantReviews from "@/components/restaurantDetails/RestaurantReviews";
 import Error from "@/components/ui/Error";
 import RoundedFullButton from "@/components/ui/RoundedFullButton";
+import { useTheme } from "@/context/ThemeProvider";
 import useAllCart from "@/hooks/useAllCart";
 import { useMealDetailQuery } from "@/hooks/useFetchMealDetail";
 import { useIngredientsQuery } from "@/hooks/useIngredients";
@@ -29,6 +30,7 @@ export default function FoodDetail() {
     res: string;
   }>();
   const { restaurants } = useZustMeals();
+  const { isDark } = useTheme();
 
   const {
     data: mealDetail,
@@ -43,10 +45,13 @@ export default function FoodDetail() {
 
   if (error) {
     return (
-      <View>
+      <SafeAreaView
+        edges={["top"]}
+        className="bg-secondary dark:bg-[#121212] px-3 h-full pb-safe"
+      >
         <DetailsHeader />
         <Error error={error?.message} onPress={refetch} />
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -54,7 +59,7 @@ export default function FoodDetail() {
     return (
       <SafeAreaView
         edges={["top"]}
-        className="bg-secondary px-3 h-full pb-safe"
+        className="bg-secondary dark:bg-[#121212] px-3 h-full pb-safe"
       >
         <DetailsHeader />
         <View className="flex flex-1 gap-2 items-center justify-center w-full  ">
@@ -70,7 +75,10 @@ export default function FoodDetail() {
   ) as Ingredients[];
 
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary px-3 h-full pb-safe">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] px-3 h-full pb-safe"
+    >
       <DetailsHeader />
 
       <>
@@ -96,7 +104,7 @@ export default function FoodDetail() {
                   />
                 )}
                 <View className="gap-2.5 my-4">
-                  <Text className="text-base font-roboto-semibold pb-1 text-black">
+                  <Text className="text-base font-roboto-semibold pb-1 dark:text-secondary text-black">
                     Reviews
                   </Text>
                   {mealDetail.reviews!.map((item) => (
@@ -117,7 +125,7 @@ export default function FoodDetail() {
         <View className="flex items-center justify-between flex-row py-3">
           <View className="flex justify-between">
             <Text className="font-roboto text-base text-grey">Total</Text>
-            <Text className="font-roboto-medium text-2xl text-black">
+            <Text className="font-roboto-medium text-2xl dark:text-white text-black">
               ${mealDetail?.price.toFixed(2)}
             </Text>
           </View>
@@ -140,7 +148,7 @@ export default function FoodDetail() {
               {quanStat === "pending" ? (
                 <ActivityIndicator size={25} color={"#14b74d"} />
               ) : (
-                <Text className="text-2xl font-roboto-semibold text-black">
+                <Text className="text-2xl font-roboto-semibold dark:text-white text-black">
                   {quan}
                 </Text>
               )}

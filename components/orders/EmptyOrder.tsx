@@ -10,7 +10,7 @@ export default function EmptyOrder() {
         source={images.noOrder}
         resizeMode="cover"
       />
-      <Text className="font-roboto-bold text-xl text-black mt-5">
+      <Text className="font-roboto-bold text-xl dark:text-white text-black mt-5">
         No Orders
       </Text>
       <Text className="font-roboto text-sm text-grey text-center max-w-[180px]">

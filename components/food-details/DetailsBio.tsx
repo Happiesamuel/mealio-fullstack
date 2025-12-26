@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import useAllFavourite from "@/hooks/useAllFavourite";
 import { FavouriteMeal, MealDetail, Restaurant } from "@/types";
 import { AntDesign, EvilIcons, MaterialIcons } from "@expo/vector-icons";
@@ -31,6 +32,7 @@ export default function DetailsBio({
     data as unknown as FavouriteMeal,
     "meals"
   );
+  const { isDark } = useTheme();
   return (
     <View>
       <View className="gap-2.5 mt-4">
@@ -49,7 +51,7 @@ export default function DetailsBio({
             />
             <View className="gap-1">
               <View className="flex items-center flex-row gap-1.5">
-                <Text className="font-roboto-semibold text-base text-black">
+                <Text className="font-roboto-semibold text-base dark:text-secondary/80 text-black">
                   {res?.name}
                 </Text>
                 <MaterialIcons name="verified" size={18} color="#14B74D" />
@@ -68,7 +70,7 @@ export default function DetailsBio({
           />
         </View>
         <View className="flex items-center gap-2 justify-between flex-row">
-          <Text className="font-roboto-semibold text-[24px] max-w-[85%]  text-black">
+          <Text className="font-roboto-semibold text-[24px] max-w-[85%] dark:text-white text-black">
             {data?.title}
           </Text>
           <View className="flex items-center flex-row gap-1">
@@ -106,7 +108,7 @@ export default function DetailsBio({
             {quanStat === "pending" ? (
               <ActivityIndicator size={25} color={"#14b74d"} />
             ) : (
-              <Text className="text-2xl font-roboto-semibold text-black">
+              <Text className="text-2xl font-roboto-semibold dark:text-white text-black">
                 {quan}
               </Text>
             )}
@@ -121,14 +123,18 @@ export default function DetailsBio({
       </View>
       <View className="gap-2.5 mt-4">
         <View className="flex gap-2 items-center flex-row">
-          <AntDesign name="exclamation-circle" size={15} color="black" />
-          <Text className="text-base font-roboto-semibold text-black">
+          <AntDesign
+            name="exclamation-circle"
+            size={15}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
+          <Text className="text-base font-roboto-semibold dark:text-secondary/80 text-black">
             Description
           </Text>
         </View>
         <View className=" " style={{ width: "100%" }}>
           <Text
-            className="text-sm  font-roboto text-zinc-600"
+            className="text-sm  font-roboto dark:text-zinc-200  text-zinc-600"
             numberOfLines={expanded ? undefined : 3}
             onTextLayout={(e) => {
               if (e.nativeEvent.lines.length > 3 && !expanded) {

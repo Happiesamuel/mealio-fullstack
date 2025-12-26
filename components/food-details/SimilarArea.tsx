@@ -21,7 +21,7 @@ export default function SimilarArea({ area }: { area: string }) {
   }
   return (
     <View className="gap-2">
-      <Text className="text-base font-roboto-semibold text-black">
+      <Text className="text-base dark:text-secondary font-roboto-semibold text-black">
         Similar {area} foods
       </Text>
       <FlatList

@@ -92,8 +92,10 @@ export default function TrackOrder({
   ];
 
   return (
-    <View className="bg-[#ECECEC] p-4 rounded-xl shadow-sm my-4">
-      <Text className="text-base font-roboto-semibold mb-3">Track Order</Text>
+    <View className="bg-[#ECECEC] dark:bg-white/10 p-4 rounded-xl shadow-sm my-4">
+      <Text className="text-base text-black dark:text-secondary font-roboto-semibold mb-3">
+        Track Order
+      </Text>
 
       <View className="flex">
         {steps.map((step, index) => {
@@ -116,14 +118,18 @@ export default function TrackOrder({
                   <View>
                     <Text
                       className={`text-sm font-roboto-medium ${
-                        step.done ? "text-black" : "text-grey"
+                        step.done
+                          ? "text-black dark:text-secondary"
+                          : "text-grey"
                       }`}
                     >
                       {step.title}
                     </Text>
                     <Text
                       className={`text-sm mt-1 w-[90%] font-roboto ${
-                        step.done ? "text-gray-600" : "text-gray-400"
+                        step.done
+                          ? "text-zinc-600 dark:text-zinc-400"
+                          : "text-zinc-400"
                       }`}
                     >
                       {step.subtitle}

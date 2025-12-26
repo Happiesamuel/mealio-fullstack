@@ -14,7 +14,7 @@ export default function IngredientsDet({
   return (
     <>
       <View className="pt-4">
-        <Text className="text-base font-roboto-semibold text-black pb-2">
+        <Text className="text-base font-roboto-semibold dark:text-secondary text-black pb-2">
           Key Ingredients
         </Text>
       </View>
@@ -32,7 +32,7 @@ export default function IngredientsDet({
               "size-[100px] flex items-center justify-center gap-1 rounded-xl",
               active === item?.name
                 ? "border border-primary bg-primary/10"
-                : "bg-[#E0E0E0]"
+                : "bg-[#E0E0E0] dark:bg-white/10"
             )}
           >
             <Image
@@ -40,7 +40,7 @@ export default function IngredientsDet({
               className="size-[50px]"
               source={{ uri: item?.img }}
             />
-            <Text className="font-roboto-medium text-xs text-black px-2 text-center">
+            <Text className="font-roboto-medium text-xs text-black dark:text-secondary/80 px-2 text-center">
               {item?.name}
             </Text>
           </TouchableOpacity>

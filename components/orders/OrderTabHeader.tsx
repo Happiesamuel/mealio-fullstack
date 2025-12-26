@@ -64,7 +64,7 @@ export default function OrderTabHeader({
         >
           <Text
             className={`text-base font-roboto-medium ${
-              tab.slug === tabSlug ? "text-black" : "text-gray-400"
+              tab.slug === tabSlug ? "text-black dark:text-white" : "text-grey"
             }`}
             onLayout={(e) => {
               tabWidths.current[tab.slug] = e.nativeEvent.layout.width;

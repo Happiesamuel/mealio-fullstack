@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import {
   FontAwesome,
   MaterialCommunityIcons,
@@ -9,29 +10,40 @@ import { Text, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 
 export default function OrderHeader() {
+  const { isDark } = useTheme();
   return (
     <View className="flex flex-row items-center justify-between my-1 pt-4">
       <RoundedFullButton
-        className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+        className="bg-white dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
         onPress={() =>
           router.canGoBack() ? router.back() : router.replace("/orders")
         }
       >
-        <FontAwesome name="angle-left" size={18} color="black" />
+        <FontAwesome
+          name="angle-left"
+          size={18}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
       </RoundedFullButton>
-      <Text className="font-roboto-bold text-xl text-black">Order Details</Text>
+      <Text className="font-roboto-bold text-xl text-black dark:text-white">
+        Order Details
+      </Text>
       <View className="flex items-center flex-row gap-3.5">
-        <RoundedFullButton className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] ">
-          <MaterialIcons name="support-agent" size={18} color="black" />
+        <RoundedFullButton className="bg-white dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] ">
+          <MaterialIcons
+            name="support-agent"
+            size={18}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </RoundedFullButton>
         <RoundedFullButton
-          className="bg-grey/5 flex items-center justify-center w-[32px] h-[32px] "
+          className="bg-white dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
           onPress={() => router.push("/cart")}
         >
           <MaterialCommunityIcons
             name="dots-vertical"
             size={18}
-            color="black"
+            color={isDark ? "#f7f7f7" : "#191919"}
           />
         </RoundedFullButton>
       </View>

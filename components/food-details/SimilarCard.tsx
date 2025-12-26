@@ -1,12 +1,15 @@
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FavouriteIcon from "../ui/FavouriteIcon";
 
 export function SimilarCard({ item }: { item: Meal }) {
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -28,7 +31,10 @@ export function SimilarCard({ item }: { item: Meal }) {
       </View>
 
       <View className="flex justify-between flex-row items-center">
-        <Text className="font-roboto text-sm text-zinc-700" numberOfLines={1}>
+        <Text
+          className="font-roboto text-sm dark:text-zinc-200 text-zinc-700"
+          numberOfLines={1}
+        >
           {item.title}
         </Text>
       </View>
@@ -36,7 +42,10 @@ export function SimilarCard({ item }: { item: Meal }) {
   );
 }
 export function SimilarAreaCard({ item }: { item: Meal }) {
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -57,7 +66,10 @@ export function SimilarAreaCard({ item }: { item: Meal }) {
         />
       </View>
 
-      <Text className="font-roboto text-sm text-zinc-700" numberOfLines={1}>
+      <Text
+        className="font-roboto text-sm dark:text-zinc-200 text-zinc-700"
+        numberOfLines={1}
+      >
         {item.title}
       </Text>
     </TouchableOpacity>

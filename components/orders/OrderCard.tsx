@@ -17,10 +17,10 @@ export default function OrderCard({ item }: { item: Ordered }) {
   }
   const res = restaurants.find((x) => x.id === items.at(0)!.restaurantId);
   return (
-    <View className="bg-[#F0F0F0] rounded-xl py-3 px-3 gap-3 border border-grey/50">
+    <View className="bg-[#F0F0F0] dark:bg-white/10 rounded-xl py-3 px-3 gap-3 border border-grey/50 dark:border-zinc-800">
       <View className="flex flex-row items-center justify-between">
         <View className="gap-1">
-          <Text className="text-base font-roboto-semibold text-black">
+          <Text className="text-base font-roboto-semibold dark:text-white text-black">
             #{orderId}
           </Text>
           <Text className="text-xs font-roboto text-grey">
@@ -29,12 +29,12 @@ export default function OrderCard({ item }: { item: Ordered }) {
         </View>
         <View
           className={cn(
-            " rounded-lg border border-grey/50 py-1 px-2 flex flex-row gap-1.5 items-center",
+            " rounded-lg border  py-1 px-2 flex flex-row gap-1.5 items-center",
             status === "Delivered"
-              ? "bg-primary/20"
+              ? "bg-primary/20 border-primary"
               : item.status === "Shipped"
-                ? "bg-[#0B298A]/20"
-                : "bg-error/10"
+                ? "bg-[#0B298A]/20 border-[#0B298A]"
+                : "bg-error/10 border-error"
           )}
         >
           <FontAwesome
@@ -71,7 +71,7 @@ export default function OrderCard({ item }: { item: Ordered }) {
         <View className="gap-1">
           <View className="flex items-center flex-row gap-2">
             <Text
-              className="font-roboto-medium text-lg text-black"
+              className="font-roboto-medium text-lg text-black dark:text-white"
               numberOfLines={1}
             >
               {res?.name}
@@ -87,12 +87,12 @@ export default function OrderCard({ item }: { item: Ordered }) {
             <View className="gap-0.5">
               <View className="flex flex-row items-center gap-1">
                 <Text
-                  className="font-roboto-medium text-sm text-black flex-1 max-w-[100px]"
+                  className="font-roboto-medium text-sm dark:text-secondary/80 text-black flex-1 max-w-[100px]"
                   numberOfLines={1}
                 >
                   {items.at(0)!.title}
                 </Text>
-                <Text className="font-roboto-medium text-sm text-black">
+                <Text className="font-roboto-medium text-sm dark:text-secondary/80 text-black">
                   {items.length > 1
                     ? `+ ${items.length - 1} ${items.length - 1 === 1 ? "item" : "items"}`
                     : ""}

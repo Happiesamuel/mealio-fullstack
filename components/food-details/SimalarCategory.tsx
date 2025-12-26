@@ -21,7 +21,7 @@ export default function SimalarCategory({ cat }: { cat: string }) {
   }
   return (
     <View className="gap-2">
-      <Text className="text-base font-roboto-semibold text-black">
+      <Text className="text-base font-roboto-semibold dark:text-secondary text-black">
         Similar Category foods
       </Text>
       <FlatList
