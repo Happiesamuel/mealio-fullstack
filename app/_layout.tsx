@@ -1,4 +1,5 @@
 import BottomSheetProvider from "@/context/BottomSheetProvider";
+import { ThemeProvider } from "@/context/ThemeProvider";
 import { setupNotificationCategories } from "@/lib/notification";
 import { toastConfig } from "@/lib/toastConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -125,13 +126,15 @@ export default function RootLayout() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <BottomSheetProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-          <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
-          <Toast config={toastConfig} />
-        </BottomSheetProvider>
-      </SafeAreaProvider>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <BottomSheetProvider>
+            <Stack screenOptions={{ headerShown: false }} />
+            <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
+            <Toast config={toastConfig} />
+          </BottomSheetProvider>
+        </SafeAreaProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

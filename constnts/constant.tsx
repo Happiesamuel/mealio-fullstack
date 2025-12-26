@@ -430,6 +430,17 @@ export const profile = [
         ),
         route: "/profile/security",
       },
+      {
+        name: "Theme",
+        icon: (
+          <MaterialCommunityIcons
+            name="theme-light-dark"
+            size={16}
+            color="black"
+          />
+        ),
+        route: "/profile/theme",
+      },
     ],
   },
   {

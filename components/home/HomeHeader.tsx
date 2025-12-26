@@ -1,4 +1,5 @@
 import { icons } from "@/constnts";
+import { useTheme } from "@/context/ThemeProvider";
 import useGetGuest from "@/hooks/useGetGuest";
 import { useUnreadNotifications } from "@/hooks/useUnreadNotification";
 import { useUserStorage } from "@/store/useUserStore";
@@ -10,6 +11,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 export default function HomeHeader() {
   const { user } = useUserStorage();
   const { unreadCount } = useUnreadNotifications();
+  const { isDark } = useTheme();
   const hasUnread = unreadCount > 0;
   const { data, status } = useGetGuest({
     type: "email",
@@ -27,16 +29,20 @@ export default function HomeHeader() {
 
           <View className="flex flex-col gap-2">
             <Text className="text-grey font-roboto text-xs">Hello,</Text>
-            <Text className="font-roboto-medium text-sm text-black">
+            <Text className="font-roboto-medium text-sm text-black dark:text-white">
               Guest102
             </Text>
           </View>
         </View>
         <TouchableOpacity
           onPress={() => router.push("/notifications")}
-          className="flex items-center justify-center rounded-full relative bg-grey/5 size-12"
+          className="flex items-center justify-center rounded-full relative bg-grey/5 dark:bg-white/5 size-12"
         >
-          <Fontisto name="bell" size={20} color="#191919" />
+          <Fontisto
+            name="bell"
+            size={20}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -50,16 +56,20 @@ export default function HomeHeader() {
 
         <View className="flex flex-col gap-2">
           <Text className="text-grey font-roboto text-xs">Hello,</Text>
-          <Text className="font-roboto-medium text-sm text-black">
+          <Text className="font-roboto-medium text-sm text-black dark:text-white">
             {data?.name}
           </Text>
         </View>
       </View>
       <TouchableOpacity
         onPress={() => router.push("/notifications")}
-        className="flex items-center justify-center rounded-full relative bg-grey/5 size-12"
+        className="flex items-center justify-center rounded-full relative bg-grey/5 dark:bg-white/5 size-12"
       >
-        <Fontisto name="bell" size={20} color="#191919" />
+        <Fontisto
+          name="bell"
+          size={20}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
         {hasUnread && (
           <View className="size-2 rounded-full bg-error absolute right-3.5 top-4" />
         )}

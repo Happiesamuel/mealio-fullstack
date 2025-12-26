@@ -31,7 +31,10 @@ export default function Index() {
     router.setParams({ fil: slug });
   }
   return (
-    <SafeAreaView edges={["top"]} className="bg-secondary h-full px-3  ">
+    <SafeAreaView
+      edges={["top"]}
+      className="bg-secondary dark:bg-[#121212] h-full px-3  "
+    >
       {error ? (
         <>
           <HomeHeader />
