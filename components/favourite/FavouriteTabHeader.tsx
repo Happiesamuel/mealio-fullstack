@@ -68,7 +68,9 @@ export default function FavouriteTabHeader({
           >
             <Text
               className={`text-base font-roboto-medium ${
-                tab.slug === tabSlug ? "text-black" : "text-gray-400"
+                tab.slug === tabSlug
+                  ? "dark:text-secondary text-black"
+                  : "text-grey"
               }`}
               onLayout={(e) => {
                 tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
@@ -110,7 +112,7 @@ export default function FavouriteTabHeader({
               : clearFavourite("restaurants");
           }}
         >
-          <Text className=" font-roboto-medium text-center text-2xl mt-4 mb-6 ">
+          <Text className=" font-roboto-medium text-center text-2xl mt-4 mb-6 text-black dark:text-secondary/80">
             Are you sure you want to clear all your favourite{" "}
             {tabSlug === "meals" ? "meal" : "restaurant"}
           </Text>

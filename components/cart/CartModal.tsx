@@ -17,7 +17,7 @@ export default function CartModal({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View className="flex-1 bg-black/50 justify-center items-center ">
-        <View className="w-[80%] bg-white rounded-2xl py-8 items-center shadow-xl px-6">
+        <View className="w-[80%] bg-white dark:bg-zinc-900 rounded-2xl py-8 items-center shadow-xl px-6">
           <FontAwesome name="trash" size={48} color="#FD3F3F" />
 
           {children}

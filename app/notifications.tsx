@@ -26,7 +26,7 @@ export default function Notifications() {
     return (
       <SafeAreaView
         edges={["top"]}
-        className="bg-secondary  h-full px-5 pb-safe"
+        className="bg-secondary dark:bg-[#121212] h-full px-5 pb-safe"
       >
         <NotificationHeader /> <NotLoggedIn from="notifications" />
       </SafeAreaView>
@@ -34,13 +34,16 @@ export default function Notifications() {
   }
   if (status === "pending") {
     return (
-      <>
+      <SafeAreaView
+        edges={["top"]}
+        className="bg-secondary dark:bg-[#121212] h-full px-5 pb-safe"
+      >
         <NotificationHeader />
-        <View className="flex flex-1 gap-2 items-center justify-center w-full  ">
+        <View className="flex flex-1 gap-2 items-center justify-center w-full">
           <ActivityIndicator size={"large"} color="#14B74D" />
           <Text className="text-grey text-sm font-roboto">Loading Details</Text>
         </View>
-      </>
+      </SafeAreaView>
     );
   }
   if (error) {

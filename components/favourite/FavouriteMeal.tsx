@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import useAllFavourite from "@/hooks/useAllFavourite";
 import { FavouriteMeal as Fav } from "@/types";
 import {
@@ -12,12 +13,13 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function FavouriteMeal({ item }: { item: Fav }) {
   const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { isDark } = useTheme();
   return (
     <TouchableOpacity
       onPress={() =>
         router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
       }
-      className="flex flex-col border border-zinc-200 rounded-xl p-2 bg-zinc-200/10  justify-between gap-3"
+      className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 bg-zinc-200/10 dark:bg-zinc-900  justify-between gap-3"
     >
       <View className="w-full h-[160px]">
         <Image
@@ -30,12 +32,12 @@ export default function FavouriteMeal({ item }: { item: Fav }) {
         <View className="gap-1">
           <View className="flex items-center flex-row justify-between">
             <Text
-              className="font-roboto-medium text-lg text-black"
+              className="font-roboto-medium text-lg dark:text-white text-black"
               numberOfLines={1}
             >
               {item.title}
             </Text>
-            <Text className="font-roboto-medium text-base text-black">
+            <Text className="font-roboto-medium text-base dark:text-secondary/80 text-black">
               ${item.price.toFixed(2)}
             </Text>
           </View>
@@ -68,13 +70,13 @@ export default function FavouriteMeal({ item }: { item: Fav }) {
               <RoundedFullButton
                 onPress={() => null}
                 className={cn(
-                  "bg-grey/5 flex flex-row w-[30px] h-[30px]  items-center justify-center gap-2"
+                  "bg-grey/5 dark:bg-white/5 flex flex-row w-[30px] h-[30px]  items-center justify-center gap-2"
                 )}
               >
                 <MaterialCommunityIcons
                   name={`cart-outline`}
                   size={14}
-                  color={"black"}
+                  color={isDark ? "#f7f7f7" : "#191919"}
                 />
               </RoundedFullButton>
             </View>

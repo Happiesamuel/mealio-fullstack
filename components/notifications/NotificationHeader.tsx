@@ -12,7 +12,7 @@ import RoundedFullButton from "../ui/RoundedFullButton";
 export default function NotificationHeader() {
   const { isDark } = useTheme();
   return (
-    <View className="flex flex-row items-center justify-between my-1 pt-4">
+    <View className="flex flex-row items-center justify-between my-1 pt-4 ">
       <RoundedFullButton
         className="bg-grey/5 dark:bg-white/5 flex items-center justify-center w-[32px] h-[32px] "
         onPress={() =>

@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import useAllFavourite from "@/hooks/useAllFavourite";
 import { Restaurant } from "@/types";
 import {
@@ -14,8 +15,9 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import RoundedFullButton from "../ui/RoundedFullButton";
 export default function FavouriteRestaurant({ item }: { item: Restaurant }) {
   const { handlePress, isInFavourite } = useAllFavourite(item, "restaurants");
+  const { isDark } = useTheme();
   return (
-    <View className="flex flex-col border border-zinc-200 rounded-xl p-2 bg-zinc-200/10   gap-3">
+    <View className="flex flex-col border border-zinc-200 dark:border-zinc-800 rounded-xl p-2 bg-zinc-200/10 dark:bg-zinc-900  justify-between gap-3">
       <TouchableOpacity
         onPress={() => router.push(`/restaurantDetails/${item.id}`)}
         className="w-full "
@@ -30,7 +32,7 @@ export default function FavouriteRestaurant({ item }: { item: Restaurant }) {
         <View className="gap-1">
           <View className="flex items-center flex-row gap-2">
             <Text
-              className="font-roboto-medium text-lg text-black"
+              className="font-roboto-medium text-lg dark:text-white text-black"
               numberOfLines={1}
             >
               {item.name}
@@ -66,13 +68,13 @@ export default function FavouriteRestaurant({ item }: { item: Restaurant }) {
               <RoundedFullButton
                 onPress={() => null}
                 className={cn(
-                  "bg-grey/5 flex flex-row w-[30px] h-[30px]  items-center justify-center gap-2"
+                  "bg-grey/5 dark:bg-white/5 flex flex-row w-[30px] h-[30px]  items-center justify-center gap-2"
                 )}
               >
                 <MaterialCommunityIcons
                   name={`cart-outline`}
                   size={14}
-                  color={"black"}
+                  color={isDark ? "#f7f7f7" : "#191919"}
                 />
               </RoundedFullButton>
             </View>
