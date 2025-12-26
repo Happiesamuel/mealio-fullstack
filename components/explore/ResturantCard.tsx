@@ -18,7 +18,7 @@ export default function RestuarantCard({ item }: { item: Restaurant }) {
     <View className="flex flex-row items-center justify-between gap-5">
       <TouchableOpacity
         onPress={() => router.push(`/restaurantDetails/${item.id}`)}
-        className="w-[166px] h-[129px]"
+        className="max-w-[166px] w-[50%] h-[129px]"
       >
         <Image
           resizeMode="cover"
@@ -30,7 +30,7 @@ export default function RestuarantCard({ item }: { item: Restaurant }) {
         <View className="gap-2">
           <View className="flex items-center flex-row gap-2">
             <Text
-              className="font-roboto-medium text-lg text-black"
+              className="font-roboto-medium text-lg dark:text-white text-black"
               numberOfLines={1}
             >
               {item.name}

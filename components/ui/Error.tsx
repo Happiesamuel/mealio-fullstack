@@ -35,11 +35,11 @@ export default function Error({
 
   return (
     <View className="flex items-center justify-center w-[80%] pt-24 mx-auto gap-4">
-      <View className="bg-white rounded-full flex items-center justify-center size-24">
+      <View className="bg-white dark:bg-white/5 rounded-full flex items-center justify-center size-24">
         <MaterialIcons name="wifi-off" size={50} color="#14b74d" />
       </View>
       <View className="gap-2 flex items-center justify-center">
-        <Text className="font-roboto-semibold text-base text-black">
+        <Text className="font-roboto-semibold text-base dark:text-white text-black">
           No connection
         </Text>
         <Text className="text-sm font-roboto text-grey text-center">

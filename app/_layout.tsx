@@ -1,3 +1,4 @@
+import App from "@/components/ui/App";
 import BottomSheetProvider from "@/context/BottomSheetProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { setupNotificationCategories } from "@/lib/notification";
@@ -5,9 +6,9 @@ import { toastConfig } from "@/lib/toastConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import * as Notifications from "expo-notifications";
-import { router, SplashScreen, Stack } from "expo-router";
+import { router, SplashScreen } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Platform, StatusBar } from "react-native";
+import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import "react-native-url-polyfill/auto";
@@ -124,13 +125,13 @@ export default function RootLayout() {
       />
     );
   const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <SafeAreaProvider>
           <BottomSheetProvider>
-            <Stack screenOptions={{ headerShown: false }} />
-            <StatusBar barStyle="dark-content" backgroundColor="#f7f7f7" />
+            <App />
             <Toast config={toastConfig} />
           </BottomSheetProvider>
         </SafeAreaProvider>

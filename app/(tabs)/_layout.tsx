@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import useSyncCart from "@/hooks/useCart";
 import { useOrderRealtime } from "@/hooks/useRealTimeOrder";
 import { useOrderStatusUpdater } from "@/hooks/useUpdateOrder";
@@ -10,76 +11,85 @@ import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-
+  const { isDark } = useTheme();
   useOrderStatusUpdater();
 
   useOrderRealtime();
   useSyncCart();
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: "white",
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          height: 90 + insets.bottom,
-          paddingBottom: insets.bottom,
-          padding: 0,
-        },
-        tabBarItemStyle: {
-          paddingVertical: 25,
-          justifyContent: "center",
-          alignItems: "center",
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon title="Home" iconName="home" focused={focused} />
-          ),
+    <View className="flex-1 bg-secondary dark:bg-[#121212]">
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            backgroundColor: isDark ? "#0f0f0f" : "white",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            height: 90 + insets.bottom,
+            paddingBottom: insets.bottom,
+            padding: 0,
+            borderColor: "transparent",
+            // position: "absolute",
+            // overflow: "hidden",
+          },
+          tabBarItemStyle: {
+            paddingVertical: 25,
+            justifyContent: "center",
+            alignItems: "center",
+          },
         }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon title="Explore" iconName="compass" focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="cart"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon title="Cart" iconName="cart" focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="orders"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon title="Orders" iconName="tag" focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon
-              title="Profile"
-              iconName="account-circle"
-              focused={focused}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon title="Home" iconName="home" focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="explore"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon
+                title="Explore"
+                iconName="compass"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="cart"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon title="Cart" iconName="cart" focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="orders"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon title="Orders" iconName="tag" focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon
+                title="Profile"
+                iconName="account-circle"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </View>
   );
 }
 function TabBarIcon({

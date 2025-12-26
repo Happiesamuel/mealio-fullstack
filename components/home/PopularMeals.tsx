@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { useMealsQuery } from "@/hooks/useMeals";
 import { PopularCardSkeleton } from "@/skeleton/PopularCardSkeleton";
 import { FontAwesome } from "@expo/vector-icons";
@@ -7,14 +8,18 @@ import PopularCard from "./PopularCard";
 
 export default function PopularMeals() {
   const { popularMeals, status } = useMealsQuery();
-
+  const { isDark } = useTheme();
   return (
     <View className="gap-2">
       <View className="flex items-center justify-between flex-row w-full">
-        <Text className="font-roboto-medium text-sm text-black py-2">
+        <Text className="font-roboto-medium text-sm text-black dark:text-secondary py-2">
           Popular Meals
         </Text>
-        <FontAwesome name="angle-right" size={20} color="black" />
+        <FontAwesome
+          name="angle-right"
+          size={20}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
       </View>
       <FlatList
         data={popularMeals}

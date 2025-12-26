@@ -1,12 +1,15 @@
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import { router } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FavouriteIcon from "../ui/FavouriteIcon";
 
 export default function OffersCard({ item }: { item: Meal }) {
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -28,13 +31,13 @@ export default function OffersCard({ item }: { item: Meal }) {
       </View>
 
       <Text
-        className="font-roboto-semibold text-sm text-black"
+        className="font-roboto-semibold text-sm dark:text-white text-black"
         numberOfLines={1}
       >
         {item.title}
       </Text>
 
-      <Text className="font-roboto-medium text-sm text-black">
+      <Text className="font-roboto-medium text-sm dark:text-white/80 text-black">
         ${item.price.toFixed(2)}
       </Text>
     </TouchableOpacity>

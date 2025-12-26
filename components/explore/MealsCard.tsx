@@ -36,7 +36,7 @@ export default function MealsCard({ item }: { item: Meal }) {
       <View className="gap-6 flex-1">
         <View className="gap-2">
           <Text
-            className="font-roboto-medium text-lg text-black"
+            className="font-roboto-medium text-lg dark:text-white text-black"
             numberOfLines={1}
           >
             {item.title}
@@ -53,7 +53,7 @@ export default function MealsCard({ item }: { item: Meal }) {
               </Text>
             </View>
           </View>
-          <Text className="font-roboto-medium text-base text-black">
+          <Text className="font-roboto-medium text-base dark:text-secondary text-black">
             ${item.price.toFixed(2)}
           </Text>
         </View>

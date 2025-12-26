@@ -8,6 +8,7 @@ import Offers from "@/components/home/Offers";
 import PopularMeals from "@/components/home/PopularMeals";
 import SearchBar from "@/components/home/SearchBar";
 import Error from "@/components/ui/Error";
+import { useTheme } from "@/context/ThemeProvider";
 import { useMealsQuery } from "@/hooks/useMeals";
 import FeturedCardSkeleton from "@/skeleton/FeturedCardSkeleton";
 import { FontAwesome } from "@expo/vector-icons";
@@ -16,6 +17,7 @@ import { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
+  const { isDark } = useTheme();
   const { featuredMeals, status, error, refetch } = useMealsQuery();
   const params = useLocalSearchParams<{ fil: string }>();
 
@@ -59,10 +61,14 @@ export default function Index() {
               <Categories handlePressFilter={handlePressFilter} fil={fil} />
 
               <View className="flex items-center justify-between flex-row w-full mt-4 mb-2">
-                <Text className="font-roboto-medium text-sm text-black py-2">
+                <Text className="font-roboto-medium text-sm dark:text-secondary text-black py-2">
                   Feature Meals
                 </Text>
-                <FontAwesome name="angle-right" size={20} color="black" />
+                <FontAwesome
+                  name="angle-right"
+                  size={20}
+                  color={isDark ? "#f7f7f7" : "#191919"}
+                />
               </View>
             </>
           )}

@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { useCategoriesQuery } from "@/hooks/useCategories";
 import cn from "clsx";
 import { Skeleton } from "moti/skeleton";
@@ -11,6 +12,7 @@ export default function Categories({
   handlePressFilter: (slug: string) => void;
 }) {
   const { data: categories, status: catStatus } = useCategoriesQuery();
+  const { isDark } = useTheme();
   const newData = categories
     ? [{ name: "All", id: "2", image: "" }, ...categories]
     : [];
@@ -27,9 +29,9 @@ export default function Categories({
                 <Skeleton
                   width={60}
                   height={20}
-                  colorMode="light"
+                  colorMode={isDark ? "dark" : "light"}
                   radius={6}
-                  backgroundColor="#E5E5E5"
+                  backgroundColor={isDark ? "#121212" : "#E5E5E5"}
                   key={index}
                 />
               ))}
@@ -41,13 +43,15 @@ export default function Categories({
           onPress={() => handlePressFilter(item.name)}
           className={cn(
             "px-3 py-1 rounded-lg h-fit",
-            fil === item.name ? "bg-primary" : "bg-[#EEEEEE]"
+            fil === item.name ? "bg-primary" : "bg-[#EEEEEE] dark:bg-white/5"
           )}
         >
           <Text
             className={cn(
               "font-roboto-semibold text-sm ",
-              fil === item.name ? "text-white" : "text-[#767676]"
+              fil === item.name
+                ? "text-white"
+                : "text-[#767676] dark:text-white/70"
             )}
           >
             {item.name}

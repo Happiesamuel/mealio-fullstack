@@ -38,7 +38,7 @@ export default function Splash({ onFinish }: { onFinish: () => void }) {
   }));
 
   return (
-    <View className="flex-1 justify-center items-center bg-white">
+    <View className="flex-1 justify-center items-center dark:bg-zinc-950 bg-white">
       <Image
         source={require("../assets/images/bg.png")}
         className="absolute w-full h-full opacity-[15%]"
@@ -57,7 +57,7 @@ export default function Splash({ onFinish }: { onFinish: () => void }) {
 
         {/* Text fades + slides up FIRST */}
         <Animated.View style={animatedStyle}>
-          <Text className="font-roboto-semibold text-5xl text-black ml-3">
+          <Text className="font-roboto-semibold text-5xl dark:text-white text-black ml-3">
             mealio
           </Text>
         </Animated.View>

@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -14,6 +15,7 @@ export default function SearchBar({
   handleSearch?(test: string): void;
 }) {
   const [test, setTest] = useState(value || "");
+  const { isDark } = useTheme();
   const [showFilter, setShowFilter] = useState(false);
   const params = useLocalSearchParams();
   function handlePress() {
@@ -32,7 +34,7 @@ export default function SearchBar({
             onSubmitEditing={() => handleSearch && handleSearch(test)}
             returnKeyType="search"
             onPress={onPress}
-            className="w-full text-sm font-roboto"
+            className="w-full text-sm font-roboto dark:placeholder:text-grey text-black dark:text-secondary"
             placeholder="Search for Restaurants and dishes....."
             placeholderClassName="text-grey"
           />
@@ -42,7 +44,11 @@ export default function SearchBar({
           onPress={handleSearch && handlePress}
           className="flex items-center justify-center w-[10%] border-l border-grey/30 pl-2"
         >
-          <Ionicons name="options-outline" size={24} color="black" />
+          <Ionicons
+            name="options-outline"
+            size={24}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </Pressable>
       </View>
 

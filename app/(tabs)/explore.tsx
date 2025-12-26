@@ -60,7 +60,10 @@ export default function Explore() {
   }, [meals, categories, rating, pricing, sort]);
 
   return (
-    <SafeAreaView edges={["top"]} className="h-full bg-secondary px-5 flex-1">
+    <SafeAreaView
+      edges={["top"]}
+      className="h-full bg-secondary dark:bg-[#121212] px-5 flex-1"
+    >
       <View className="gap-2 pb-2 pt-4">
         <ExploreHeader />
         <ExploreTabHeader tabSlug={tabSlug} setTabSlug={setTabSlug} />

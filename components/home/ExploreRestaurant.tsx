@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { useZustMeals } from "@/store/useMealStore";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -12,14 +13,19 @@ import {
 } from "react-native";
 export default function ExploreRestaurant() {
   const { restaurants } = useZustMeals();
+  const { isDark } = useTheme();
   return (
     <View className="gap-1 mt-4">
       <View className="flex items-center justify-between flex-row w-full">
-        <Text className="font-roboto-medium text-sm text-black">
+        <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
           Explore Restaurants
         </Text>
         <Pressable onPress={() => router.push("/explore?tab=restaurant")}>
-          <FontAwesome name="angle-right" size={20} color="black" />
+          <FontAwesome
+            name="angle-right"
+            size={20}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </Pressable>
       </View>
       <FlatList
@@ -35,7 +41,7 @@ export default function ExploreRestaurant() {
               resizeMode="cover"
               className="size-[50px] rounded-full"
             />
-            <Text className="font-roboto text-xs text-center text-black">
+            <Text className="font-roboto text-xs text-center dark:text-white/50 text-black">
               {item.name}
             </Text>
           </TouchableOpacity>

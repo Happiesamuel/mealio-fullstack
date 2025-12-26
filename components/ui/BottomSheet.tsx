@@ -30,7 +30,7 @@ export default function BottomSheet({ children, onClose }: Props) {
       />
 
       <Animated.View
-        className="absolute bottom-0 w-full bg-[#D4D4D4] p-4 py-6 pb-safe  rounded-t-2xl"
+        className="absolute bottom-0 w-full bg-[#D4D4D4] dark:bg-[#121212] p-4 py-6 pb-safe  rounded-t-2xl"
         style={style}
       >
         {children}

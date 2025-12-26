@@ -1,16 +1,18 @@
+import { useTheme } from "@/context/ThemeProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { Skeleton } from "moti/skeleton";
 import React from "react";
 import { View } from "react-native";
 
 export default function FeturedCardSkeleton() {
+  const { isDark } = useTheme();
   return (
     <View className=" w-[49%] p-1.5 mb-1">
       <View className="relative">
         <Skeleton
           width={"100%"}
           height={150}
-          colorMode="light"
+          colorMode={isDark ? "dark" : "light"}
           radius={12}
           backgroundColor="#E5E5E5"
         />
@@ -20,10 +22,17 @@ export default function FeturedCardSkeleton() {
             style={{
               width: 40,
               height: 40,
+              borderWidth: 2,
+              borderColor: isDark ? "rgb(255 255 255 / 0.5)" : "white",
+              borderRadius: "100%",
             }}
-            className="rounded-full items-center  justify-center border-2 border-white"
+            className="rounded-full items-center  justify-center border-2 size-8 border-white dark:border-white/10"
           >
-            <Ionicons name="restaurant" size={20} color="#ffffff" />
+            <Ionicons
+              name="restaurant"
+              size={20}
+              color={isDark ? "rgb(255 255 255 / 0.5)" : "#ffffff"}
+            />
           </View>
         </View>
       </View>
@@ -31,7 +40,7 @@ export default function FeturedCardSkeleton() {
         <Skeleton
           width={"80%"}
           height={10}
-          colorMode="light"
+          colorMode={isDark ? "dark" : "light"}
           radius={4}
           backgroundColor="#E5E5E5"
         />

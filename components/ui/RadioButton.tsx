@@ -11,7 +11,11 @@ export default function RadioButton({
 }) {
   return (
     <View className="flex flex-row items-center justify-between">
-      {text && <Text className="text-black font-roboto text-base">{text}</Text>}
+      {text && (
+        <Text className="text-black dark:text-secondary font-roboto text-base">
+          {text}
+        </Text>
+      )}
       <Pressable
         onPress={setState}
         className={cn(
@@ -19,7 +23,9 @@ export default function RadioButton({
           state ? "bg-primary" : ""
         )}
       >
-        {state && <View className="bg-white size-1.5 rounded-full" />}
+        {state && (
+          <View className="bg-white dark:bg-black size-1.5 rounded-full" />
+        )}
       </Pressable>
     </View>
   );

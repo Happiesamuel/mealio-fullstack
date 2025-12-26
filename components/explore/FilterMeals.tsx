@@ -68,12 +68,14 @@ export default function FilterMeals({
   return (
     <View className="gap-5 pb-8">
       <View className="gap-2">
-        <Text className="font-roboto-bold text-xl text-center text-black">
+        <Text className="font-roboto-bold text-xl text-center dark:text-white text-black">
           Filter By
         </Text>
       </View>
       <View className="gap-2">
-        <Text className="font-roboto-bold text-xl text-black">Pricing: </Text>
+        <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+          Pricing:
+        </Text>
         <RadioButton
           state={pricing === "desc"}
           setState={() => {
@@ -90,7 +92,9 @@ export default function FilterMeals({
         />
       </View>
       <View className="gap-2">
-        <Text className="font-roboto-bold text-xl text-black">Ratings: </Text>
+        <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+          Ratings:
+        </Text>
         <RadioButton
           state={rating === "desc"}
           setState={() => {
@@ -107,7 +111,9 @@ export default function FilterMeals({
         />
       </View>
       <View className="gap-2">
-        <Text className="font-roboto-bold text-xl text-black">Categories:</Text>
+        <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+          Categories:
+        </Text>
         <View className="flex flex-row flex-wrap gap-2">
           {status === "pending" ? (
             <View className="flex gap-2 items-center justify-center w-full  ">
@@ -122,13 +128,15 @@ export default function FilterMeals({
                   onPress={() => handleCuisine(cuis.name)}
                   className={cn(
                     " w-[100px] h-9 rounded-xl flex items-center justify-center",
-                    exist ? "bg-primary " : "border border-grey"
+                    exist
+                      ? "bg-primary "
+                      : "border border-grey dark:border-white/15"
                   )}
                 >
                   <Text
                     className={cn(
                       "text-sm font-roboto ",
-                      exist ? "text-white " : "text-black"
+                      exist ? "text-white " : "text-black dark:text-secondary"
                     )}
                   >
                     {cuis.name}
@@ -140,7 +148,9 @@ export default function FilterMeals({
         </View>
       </View>
       <View className="gap-2">
-        <Text className="font-roboto-bold text-xl text-black">Sort:</Text>
+        <Text className="font-roboto-bold text-xl dark:text-secondary text-black">
+          Sort:
+        </Text>
         <RadioButton
           state={sort === "asc"}
           setState={() => {

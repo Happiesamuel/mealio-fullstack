@@ -1,4 +1,5 @@
 import { useBottomSheet } from "@/context/BottomSheetProvider";
+import { useTheme } from "@/context/ThemeProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { Dispatch, SetStateAction, useRef } from "react";
@@ -29,7 +30,7 @@ export default function ExploreTabHeader({
     { name: "Restaurant", slug: "restaurant" },
   ];
   const { open, close } = useBottomSheet();
-  // Store the measured widths of each tab
+  const { isDark } = useTheme();
   const tabWidths = useRef<{ [key: string]: number }>({});
 
   // Shared values for underline
@@ -82,7 +83,9 @@ export default function ExploreTabHeader({
           >
             <Text
               className={`text-base font-roboto-medium ${
-                tab.slug === tabSlug ? "text-black" : "text-gray-400"
+                tab.slug === tabSlug
+                  ? "dark:text-secondary text-black"
+                  : "text-grey"
               }`}
               onLayout={(e) => {
                 tabWidths.current[tab.slug] = e.nativeEvent.layout.width;
@@ -113,7 +116,11 @@ export default function ExploreTabHeader({
           onPress={openSheet}
           className="flex items-center justify-center   "
         >
-          <Ionicons name="options-outline" size={24} color="black" />
+          <Ionicons
+            name="options-outline"
+            size={24}
+            color={isDark ? "#f7f7f7" : "#191919"}
+          />
         </Pressable>
       )}
     </View>

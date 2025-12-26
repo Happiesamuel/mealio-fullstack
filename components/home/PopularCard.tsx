@@ -1,5 +1,5 @@
 import useAllFavourite from "@/hooks/useAllFavourite";
-import { Meal } from "@/types";
+import { FavouriteMeal, Meal } from "@/types";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -7,7 +7,10 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import FavouriteIcon from "../ui/FavouriteIcon";
 
 export default function PopularCard({ item }: { item: Meal }) {
-  const { handlePress, isInFavourite } = useAllFavourite(item, "meals");
+  const { handlePress, isInFavourite } = useAllFavourite(
+    item as unknown as FavouriteMeal,
+    "meals"
+  );
   return (
     <TouchableOpacity
       onPress={() =>
@@ -30,7 +33,7 @@ export default function PopularCard({ item }: { item: Meal }) {
 
       <View className="flex justify-between flex-row items-center">
         <Text
-          className="font-roboto-semibold text-sm text-black"
+          className="font-roboto-semibold text-sm dark:text-white text-black"
           numberOfLines={1}
         >
           {item.title}
@@ -42,7 +45,7 @@ export default function PopularCard({ item }: { item: Meal }) {
           <Text className="font-roboto text-xs text-grey">{item.time}</Text>
         </View>
         <View className="flex items-center flex-row gap-1">
-          <Text className="font-roboto-medium text-sm text-black">
+          <Text className="font-roboto-medium text-sm dark:text-white/80 text-black">
             ${item.price.toFixed(2)}
           </Text>
         </View>

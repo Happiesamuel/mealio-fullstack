@@ -26,7 +26,7 @@ export default function FeatureCard({ item }: { item: Meal }) {
       onPress={() =>
         router.push(`/fooddetail/${item.id}?res=${item.restaurantId}`)
       }
-      className="gap-1.5 w-[49%] p-1.5 mb-1 border !border-zinc-200/70  rounded-xl"
+      className="gap-1.5 w-[48.8%] p-1.5 mb-1 border dark:!border-zinc-200/15 !border-zinc-200/70  rounded-xl"
     >
       <View className="w-full relative">
         <Image
@@ -41,7 +41,7 @@ export default function FeatureCard({ item }: { item: Meal }) {
         />
       </View>
       <Text
-        className="font-roboto-semibold text-sm text-black"
+        className="font-roboto-semibold text-sm dark:text-white/80 text-black"
         numberOfLines={1}
       >
         {item.title}
@@ -52,7 +52,7 @@ export default function FeatureCard({ item }: { item: Meal }) {
       <View className="flex items-center flex-row gap-1">
         <View className="flex items-center flex-row gap-1">
           <AntDesign name="star" size={12} color="#FF8007" />
-          <Text className="font-roboto text-xs text-black">
+          <Text className="font-roboto text-xs dark:text-secondary text-black">
             {item.rating.toFixed(1)}
           </Text>
         </View>
@@ -61,7 +61,7 @@ export default function FeatureCard({ item }: { item: Meal }) {
         </Text>
       </View>
       <View className="flex justify-between flex-row items-center">
-        <Text className="font-roboto-medium text-sm text-black">
+        <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
           ${item.price.toFixed(2)}
         </Text>
         {isInCart ? (
