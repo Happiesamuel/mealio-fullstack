@@ -111,9 +111,10 @@ function TabBarIcon({
         color={!focused ? `#A1A1A1` : "#14B74D"}
       />
       <Text
-        numberOfLines={1}
         style={{ color: !focused ? `#A1A1A1` : "#14B74D" }}
         className={cn("text-xs font-roboto-bold")}
+        ellipsizeMode="clip"
+        numberOfLines={1}
       >
         {title}
       </Text>

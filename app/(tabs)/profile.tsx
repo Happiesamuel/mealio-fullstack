@@ -1,5 +1,6 @@
 import ProfileList from "@/components/profile/ProfileList";
 import { useBottomSheet } from "@/context/BottomSheetProvider";
+import { useTheme } from "@/context/ThemeProvider";
 import { logout, uploadImage } from "@/lib/databse";
 import { pickImage } from "@/lib/helper";
 import { useUserStorage } from "@/store/useUserStore";
@@ -37,23 +38,36 @@ export default function Profile() {
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView>(null);
+  const { isDark } = useTheme();
 
   const list = [
     {
       name: "Take Photo",
-      icon: <Feather name="camera" size={18} color="black" />,
+      icon: (
+        <Feather
+          name="camera"
+          size={18}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
+      ),
       fun: handleTakePhoto,
     },
     {
       name: "Choose photo",
-      icon: <FontAwesome name="photo" size={18} color="black" />,
+      icon: (
+        <FontAwesome
+          name="photo"
+          size={18}
+          color={isDark ? "#f7f7f7" : "#191919"}
+        />
+      ),
       fun: choosePhoto,
     },
   ];
 
   const openSheet = () => {
     open(
-      <View className=" gap-5 ">
+      <View className=" gap-5 pb-8 ">
         {list.map((lis) => (
           <Pressable
             onPress={() => lis.fun()}
@@ -61,7 +75,9 @@ export default function Profile() {
             className="gap-2 flex items-center flex-row"
           >
             {lis.icon}
-            <Text className="font-roboto text-black text-xl ">{lis.name}</Text>
+            <Text className="font-roboto dark:text-white text-black text-xl ">
+              {lis.name}
+            </Text>
           </Pressable>
         ))}
       </View>

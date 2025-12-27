@@ -2,20 +2,28 @@ import { useTheme } from "@/context/ThemeProvider";
 import { useToastConfig } from "@/lib/toastConfig";
 import { Stack } from "expo-router";
 import React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function App() {
   const { isDark } = useTheme();
   const toastConfig = useToastConfig();
   return (
-    <>
-      <Stack screenOptions={{ headerShown: false }} />
+    <View className="bg-secondary dark:bg-[#121212] flex-1">
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          animation: "slide_from_right",
+          contentStyle: {
+            backgroundColor: isDark ? "#121212" : "#f7f7f7",
+          },
+        }}
+      />
       <Toast config={toastConfig} />
       <StatusBar
         barStyle={isDark ? "light-content" : "dark-content"}
         backgroundColor={isDark ? "#121212" : "#f7f7f7"}
       />
-    </>
+    </View>
   );
 }
