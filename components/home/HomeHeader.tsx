@@ -6,7 +6,7 @@ import { useUserStorage } from "@/store/useUserStore";
 import { Fontisto } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeHeader() {
   const { user } = useUserStorage();
@@ -20,7 +20,10 @@ export default function HomeHeader() {
   if (status === "pending")
     return (
       <View className="flex flex-row items-center justify-between my-1 pt-4">
-        <View className="flex flex-row gap-2 items-center">
+        <Pressable
+          onPress={() => router.push("/profile")}
+          className="flex flex-row gap-2 items-center"
+        >
           <Image
             source={icons.defaultProfile}
             className="rounded-full size-12"
@@ -33,7 +36,7 @@ export default function HomeHeader() {
               Guest102
             </Text>
           </View>
-        </View>
+        </Pressable>
         <TouchableOpacity
           onPress={() => router.push("/notifications")}
           className="flex items-center justify-center rounded-full relative bg-grey/5 dark:bg-white/5 size-12"
@@ -48,7 +51,10 @@ export default function HomeHeader() {
     );
   return (
     <View className="flex flex-row items-center justify-between my-1 pt-4">
-      <View className="flex flex-row gap-2 items-center">
+      <Pressable
+        onPress={() => router.push("/profile")}
+        className="flex flex-row gap-2 items-center"
+      >
         <Image
           source={{ uri: data?.avatar }}
           className="rounded-full size-12"
@@ -60,7 +66,7 @@ export default function HomeHeader() {
             {data?.name}
           </Text>
         </View>
-      </View>
+      </Pressable>
       <TouchableOpacity
         onPress={() => router.push("/notifications")}
         className="flex items-center justify-center rounded-full relative bg-grey/5 dark:bg-white/5 size-12"

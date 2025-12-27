@@ -54,7 +54,7 @@ export default function MealsCard({ item }: { item: Meal }) {
             </View>
           </View>
           <Text className="font-roboto-medium text-base dark:text-secondary text-black">
-            ${item.price.toFixed(2)}
+            ₦{item.price.toFixed(2)}
           </Text>
         </View>
         <View className="flex flex-row items-center justify-between">

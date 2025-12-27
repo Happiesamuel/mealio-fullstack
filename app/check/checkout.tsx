@@ -147,7 +147,7 @@ export default function Checkout() {
               Payment amount
             </Text>
             <Text className="font-roboto-semibold text-base dark:text-white text-black">
-              ${totalPrice.toFixed(2)}
+              ₦{totalPrice.toFixed(2)}
             </Text>
           </View>
           <View className="gap-6 mt-4">

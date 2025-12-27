@@ -126,7 +126,7 @@ export default function FoodDetail() {
           <View className="flex justify-between">
             <Text className="font-roboto text-base text-grey">Total</Text>
             <Text className="font-roboto-medium text-2xl dark:text-white text-black">
-              ${mealDetail?.price.toFixed(2)}
+              ₦{mealDetail?.price.toFixed(2)}
             </Text>
           </View>
 

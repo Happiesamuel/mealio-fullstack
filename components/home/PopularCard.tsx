@@ -46,7 +46,7 @@ export default function PopularCard({ item }: { item: Meal }) {
         </View>
         <View className="flex items-center flex-row gap-1">
           <Text className="font-roboto-medium text-sm dark:text-white/80 text-black">
-            ${item.price.toFixed(2)}
+            ₦{item.price.toFixed(2)}
           </Text>
         </View>
       </View>

@@ -56,7 +56,7 @@ export default function RestaurantMenu({ item }: { item: Meal }) {
       </View>
       <View className="flex justify-between flex-row items-center">
         <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
-          ${item.price.toFixed(2)}
+          ₦{item.price.toFixed(2)}
         </Text>
         {isInCart ? (
           <QuantityChange

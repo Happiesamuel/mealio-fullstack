@@ -53,10 +53,10 @@ export default function CartCard({ item }: { item: CartDoc }) {
         <View className="flex items-center flex-row justify-between">
           <View className="flex items-center flex-row gap-2">
             <Text className="font-roboto-medium text-xs text-grey">
-              ${item.price.toFixed(2)} * {quan}
+              ₦{item.price.toFixed(2)} * {quan}
             </Text>
             <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
-              ${Math.floor(item.price * quan).toFixed(2)}
+              ₦{Math.floor(item.price * quan).toFixed(2)}
             </Text>
           </View>
           <QuantityChange

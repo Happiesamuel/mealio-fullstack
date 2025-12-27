@@ -24,7 +24,7 @@ export default function Foot({
           priceClass
         )}
       >
-        ${price.toFixed(2)}
+        ₦{price.toFixed(2)}
       </Text>
     </View>
   );

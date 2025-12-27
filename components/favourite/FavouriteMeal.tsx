@@ -38,7 +38,7 @@ export default function FavouriteMeal({ item }: { item: Fav }) {
               {item.title}
             </Text>
             <Text className="font-roboto-medium text-base dark:text-secondary/80 text-black">
-              ${item.price.toFixed(2)}
+              ₦{item.price.toFixed(2)}
             </Text>
           </View>
           <View className="flex items-center justify-between flex-row">

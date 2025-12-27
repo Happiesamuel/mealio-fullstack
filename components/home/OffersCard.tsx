@@ -38,7 +38,7 @@ export default function OffersCard({ item }: { item: Meal }) {
       </Text>
 
       <Text className="font-roboto-medium text-sm dark:text-white/80 text-black">
-        ${item.price.toFixed(2)}
+        ₦{item.price.toFixed(2)}
       </Text>
     </TouchableOpacity>
   );

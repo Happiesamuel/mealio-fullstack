@@ -56,7 +56,7 @@ export default function RestaurantOffers({ item }: { item: ItemProp }) {
       </View>
       <View className="flex justify-between flex-row items-center">
         <Text className="font-roboto-medium text-sm dark:text-secondary text-black">
-          ${item.price.toFixed(2)}
+          ₦{item.price.toFixed(2)}
         </Text>
         <RoundedFullButton
           onPress={() => null}
