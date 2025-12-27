@@ -127,7 +127,7 @@ export default function OTP() {
   return (
     <View className="mt-16">
       <View className="gap-2">
-        <Text className=" text-black font-roboto-semibold text-3xl">
+        <Text className=" text-black dark:text-white font-roboto-semibold text-3xl">
           We sent you a code
         </Text>
         <Text className="font-roboto text-base text-grey">
@@ -148,7 +148,7 @@ export default function OTP() {
               onBlur={() => setFocusedIndex(null)}
               onChangeText={(text) => handleChange(text, i)}
               className={cn(
-                "w-12 h-12 border text-xl rounded-lg text-center font-roboto bg-[#E8E8E8]",
+                "w-12 h-12 border text-xl rounded-lg text-center font-roboto bg-[#E8E8E8] dark:bg-white/10 text-black dark:text-secondary ",
                 error
                   ? "border-red-500"
                   : focusedIndex === i

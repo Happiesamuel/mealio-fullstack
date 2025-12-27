@@ -65,7 +65,9 @@ export default function Login() {
   return (
     <View className="mt-16">
       <View className="gap-2">
-        <Text className=" text-black font-roboto-semibold text-3xl">Login</Text>
+        <Text className=" text-black font-roboto-semibold dark:text-secondary text-3xl">
+          Login
+        </Text>
         <Text className="font-roboto text-base text-grey">
           Enter your details below
         </Text>
@@ -91,7 +93,7 @@ export default function Login() {
             error={errors?.password}
           />
           <Link
-            className="font-roboto-medium text-xs text-black self-end"
+            className="font-roboto-medium text-xs dark:text-secondary text-black self-end"
             href={"/reset-password"}
           >
             Forget Password?
@@ -116,14 +118,17 @@ export default function Login() {
 
       <View className="w-full flex-row items-center justify-center my-6">
         <View className="h-[0.5px] bg-grey flex-1" />
-        <Text className="px-4 text-grey font-roboto text-xs">
+        <Text className="px-4 text-grey dark:text-zinc-300 font-roboto text-xs">
           or continue with
         </Text>
         <View className="h-[0.5px] bg-grey flex-1" />
       </View>
 
       <View className="flex w-full gap-6 items-center">
-        <RoundedFullButton onPress={provider} className="bg-[#F2F4ED]">
+        <RoundedFullButton
+          onPress={provider}
+          className="dark:bg-zinc-800 bg-[#F2F4ED]"
+        >
           <View className="flex items-center py-4 justify-center gap-2 flex-row">
             <Image
               source={icons.google}
@@ -136,7 +141,7 @@ export default function Login() {
           </View>
         </RoundedFullButton>
 
-        <Text className="text-base font-roboto-bold text-black">
+        <Text className="text-base font-roboto-bold dark:text-secondary text-black">
           Don&apos;t have an account?{" "}
           <Link className="text-primary" href="/sign-up">
             Sign up

@@ -83,7 +83,7 @@ export default function SignUp() {
   return (
     <View className="mt-16">
       <View className="gap-2">
-        <Text className=" text-black font-roboto-semibold text-3xl">
+        <Text className=" text-black dark:text-white font-roboto-semibold text-3xl">
           Sign up
         </Text>
         <Text className="font-roboto text-base text-grey">
@@ -162,7 +162,10 @@ export default function SignUp() {
       </View>
 
       <View className="flex w-full gap-6 items-center">
-        <RoundedFullButton onPress={provider} className="bg-[#F2F4ED]">
+        <RoundedFullButton
+          onPress={provider}
+          className="dark:bg-zinc-800 bg-[#F2F4ED]"
+        >
           <View className="flex items-center py-4 justify-center gap-2 flex-row">
             <Image
               source={icons.google}
@@ -174,7 +177,7 @@ export default function SignUp() {
             </Text>
           </View>
         </RoundedFullButton>
-        <Text className="text-base font-roboto-bold text-black">
+        <Text className="text-base font-roboto-bold dark:text-secondary text-black">
           Already have an account?{" "}
           <Link className="text-primary" href="/login">
             Login

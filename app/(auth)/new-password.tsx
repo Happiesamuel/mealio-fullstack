@@ -89,7 +89,7 @@ export default function NewPassword() {
   return (
     <View className="mt-16">
       <View className="gap-2">
-        <Text className=" text-black font-roboto-semibold text-3xl">
+        <Text className=" text-black dark:text-white font-roboto-semibold text-3xl">
           New Password
         </Text>
         <Text className="font-roboto text-base text-grey">

@@ -8,10 +8,10 @@ export default function success() {
   return (
     <View className="flex-1 h-full items-center justify-center relative">
       <View className="gap-2   flex items-center justify-center px-5">
-        <Text className=" text-black font-roboto-semibold text-3xl">
+        <Text className=" text-black dark:text-white font-roboto-semibold text-3xl">
           Password Changed
         </Text>
-        <Text className=" text-black font-roboto-semibold text-3xl">
+        <Text className=" text-black dark:text-secondary font-roboto-semibold text-3xl">
           Succesfully
         </Text>
         <Text className="font-roboto text-base text-center text-grey">

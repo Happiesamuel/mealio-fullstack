@@ -25,7 +25,7 @@ export default function AuthLayout() {
           className="bg-primary relative"
         >
           <View
-            className="absolute w-[97%] self-center bg-[#08732E] rounded-t-[34px]"
+            className="absolute w-[97%] self-center bg-[#08732E] dark:bg-[#018e32]  rounded-t-[34px]"
             style={{
               top: 85,
               bottom: 0,
@@ -33,7 +33,7 @@ export default function AuthLayout() {
           />
 
           <View
-            className="bg-secondary pb-safe relative z-50 rounded-t-[34px] px-5  flex-1  mt-28"
+            className="bg-secondary dark:bg-[#121212] pb-safe relative z-50 rounded-t-[34px] px-5  flex-1  mt-28"
             style={{
               minHeight: Dimensions.get("screen").height - 112,
             }}
