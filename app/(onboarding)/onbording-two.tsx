@@ -23,7 +23,7 @@ export default function OnBoardingTwo() {
           <View className="flex-row items-center gap-2 mt-4">
             <Image source={icons.meal} style={{ width: 25, height: 25 }} />
 
-            <Text className="font-roboto-semibold text-2xl text-black ">
+            <Text className="font-roboto-semibold text-2xl dark:text-white text-black ">
               mealio
             </Text>
           </View>
@@ -36,7 +36,7 @@ export default function OnBoardingTwo() {
               />
             </View>
             <View className="gap-4 flex items-center mt-12">
-              <Text className="text-2xl text-black  font-roboto-semibold">
+              <Text className="text-2xl text-black dark:text-white text-center font-roboto-semibold">
                 Order Easily, Eat Happily
               </Text>
               <Text className="font-roboto text-xl text-grey text-center ">
@@ -58,7 +58,7 @@ export default function OnBoardingTwo() {
 
               <RoundedFullButton
                 onPress={handleFinish}
-                className="bg-[#A1C249]/5 "
+                className="bg-[#A1C249]/5 dark:bg-zinc-800"
               >
                 <Text className=" text-center py-4 font-roboto-bold text-base text-primary ">
                   Skip

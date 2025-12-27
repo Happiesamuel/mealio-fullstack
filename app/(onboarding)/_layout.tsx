@@ -6,7 +6,7 @@ export default function OnBoardingLayout() {
   return (
     <SafeAreaView
       edges={["top"]}
-      className="h-full flex-1 bg-secondary flex items-center px-5 pb-safe"
+      className="h-full flex-1 bg-secondary dark:bg-[#121212] flex items-center px-5 pb-safe"
     >
       <Slot />
     </SafeAreaView>

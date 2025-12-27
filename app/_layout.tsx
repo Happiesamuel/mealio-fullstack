@@ -2,7 +2,6 @@ import App from "@/components/ui/App";
 import BottomSheetProvider from "@/context/BottomSheetProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { setupNotificationCategories } from "@/lib/notification";
-import { toastConfig } from "@/lib/toastConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import * as Notifications from "expo-notifications";
@@ -10,7 +9,6 @@ import { router, SplashScreen } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Toast from "react-native-toast-message";
 import "react-native-url-polyfill/auto";
 import "./globals.css";
 import Splash from "./Splash";
@@ -132,7 +130,6 @@ export default function RootLayout() {
         <SafeAreaProvider>
           <BottomSheetProvider>
             <App />
-            <Toast config={toastConfig} />
           </BottomSheetProvider>
         </SafeAreaProvider>
       </ThemeProvider>
