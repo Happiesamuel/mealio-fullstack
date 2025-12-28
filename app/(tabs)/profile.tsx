@@ -190,6 +190,8 @@ export default function Profile() {
         });
         router.push("/(tabs)");
       } else {
+        reset();
+        setPhoto(null);
         Toast.show({
           type: "error",
           text1: "Failed to logout",
