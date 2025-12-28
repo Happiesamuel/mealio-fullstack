@@ -13,7 +13,7 @@ export default function App() {
       <Stack
         screenOptions={{
           headerShown: false,
-          animation: "slide_from_right",
+          animation: "ios_from_right",
           contentStyle: {
             backgroundColor: isDark ? "#121212" : "#f7f7f7",
           },

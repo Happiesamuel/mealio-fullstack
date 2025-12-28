@@ -117,7 +117,7 @@ export default function OrderId() {
           </Text>
           <View
             className={cn(
-              " rounded-lg border border-grey/50 py-1 px-2 flex flex-row gap-1.5 items-center",
+              " rounded-lg border  py-1 px-2 flex flex-row gap-1.5 items-center",
               orders?.at(0)?.status === "Delivered"
                 ? "bg-primary/20 border-primary"
                 : orders?.at(0)?.status === "Shipped"
