@@ -14,7 +14,7 @@ export default function ExploreScreenSkeleton() {
           height={"100%"}
           colorMode={isDark ? "dark" : "light"}
           radius={12}
-          backgroundColor="#E5E5E5"
+          // backgroundColor="#E5E5E5"
         />
 
         <View className="absolute inset-0 flex items-center justify-center">
@@ -38,21 +38,21 @@ export default function ExploreScreenSkeleton() {
           height={10}
           colorMode={isDark ? "dark" : "light"}
           radius={4}
-          backgroundColor="#E5E5E5"
+          // backgroundColor="#E5E5E5"
         />
         <Skeleton
           width={"50%"}
           height={10}
           colorMode={isDark ? "dark" : "light"}
           radius={4}
-          backgroundColor="#E5E5E5"
+          // backgroundColor="#E5E5E5"
         />
         <Skeleton
           width={"30%"}
           height={10}
           colorMode={isDark ? "dark" : "light"}
           radius={4}
-          backgroundColor="#E5E5E5"
+          // backgroundColor="#E5E5E5"
         />
       </View>
     </View>

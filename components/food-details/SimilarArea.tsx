@@ -36,7 +36,9 @@ export default function SimilarArea({ area }: { area: string }) {
         ListEmptyComponent={() => {
           return (
             <View className="p-4">
-              <Text>No result</Text>
+              <Text className="dark:text-secondary text-black text-center font-roboto">
+                No result
+              </Text>
             </View>
           );
         }}

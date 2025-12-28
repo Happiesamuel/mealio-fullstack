@@ -10,7 +10,7 @@ export default function AddressSkeleton() {
       height={100}
       colorMode={isDark ? "light" : "light"}
       radius={4}
-      backgroundColor="#E5E5E5"
+      // backgroundColor="#E5E5E5"
     />
   );
 }

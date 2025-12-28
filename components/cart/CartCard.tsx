@@ -75,7 +75,7 @@ export default function CartCard({ item }: { item: CartDoc }) {
             return guest ? deleteItem(item.$id) : removeItem(item.id);
           }}
         >
-          <Text className=" font-roboto-medium text-2xl mt-4 mb-6">
+          <Text className=" font-roboto-medium dark:text-white text-black text-2xl mt-4 mb-6">
             Remove Item?
           </Text>
         </CartModal>

@@ -33,6 +33,7 @@ export default function DetailsBio({
     "meals"
   );
   const { isDark } = useTheme();
+  console.log(quanStat);
   return (
     <View>
       <View className="gap-2.5 mt-4">

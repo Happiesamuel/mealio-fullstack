@@ -55,53 +55,54 @@ export default function useAllCart(item: Meal | MealDetail | CartProp) {
       );
     }
   }
-  function handleQuantity(type: string) {
+  function handleQuantity(type: "increase" | "decrease") {
+    const delta = type === "increase" ? 1 : -1;
+    const newQuantity = Math.max(1, quan + delta);
+
     if (!guest) {
-      if (type === "decrease") {
-        if (quan === 1) {
-          setQuan(1);
-          removeItem(item.id);
-        } else {
-          setQuan((i) => (i -= 1));
-          setQuantity(item.id, quan - 1);
-        }
-      } else {
-        setQuan((i) => (i += 1));
-        setQuantity(item.id, quan + 1);
+      if (type === "decrease" && quan === 1) {
+        removeItem(item.id);
+        setQuan(1);
+        return;
       }
-    } else {
-      const ite = cart?.find((x) => x.id === item.id) as CartDoc;
-      const toast = {
-        onSuccess: () => {
-          Toast.show({
-            type: "success",
-            text1: "item updated successfully",
-            text2: "Check your cart to complete your order",
-          });
-        },
-        onError: () => {
-          Toast.show({
-            type: "error",
-            text1: "Failed",
-            text2: "Failed to update quantity",
-          });
-        },
-      };
-      if (!ite) return;
-      if (type === "decrease") {
-        if (quan === 1) {
-          setQuan(1);
-          updateQuan({ id: ite!.$id, quantity: 0 }, toast);
-        } else {
-          setQuan((i) => (i -= 1));
-          updateQuan({ id: ite!.$id, quantity: quan - 1 }, toast);
-        }
-      } else {
-        setQuan((i) => (i += 1));
-        updateQuan({ id: ite!.$id, quantity: quan + 1 }, toast);
-      }
+
+      setQuan(newQuantity);
+      setQuantity(item.id, newQuantity);
+      return;
     }
+
+    const ite = cart?.find((x) => x.id === item.id) as CartDoc | undefined;
+
+    const toast = {
+      onSuccess: () =>
+        Toast.show({
+          type: "success",
+          text1: "Item updated successfully",
+          text2: "Check your cart to complete your order",
+        }),
+      onError: () =>
+        Toast.show({
+          type: "error",
+          text1: "Failed",
+          text2: "Failed to update quantity",
+        }),
+    };
+
+    if (!ite) {
+      setQuan(newQuantity);
+      return;
+    }
+
+    if (type === "decrease" && quan === 1) {
+      setQuan(1);
+      updateQuan({ id: ite.$id, quantity: 0 }, toast);
+      return;
+    }
+
+    setQuan(newQuantity);
+    updateQuan({ id: ite.$id, quantity: newQuantity }, toast);
   }
+
   return {
     handleQuantity,
     handleCart,

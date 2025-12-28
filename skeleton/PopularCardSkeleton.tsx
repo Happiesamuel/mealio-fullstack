@@ -13,7 +13,7 @@ export function PopularCardSkeleton() {
           height={130}
           colorMode={isDark ? "dark" : "light"}
           radius={12}
-          backgroundColor="#E5E5E5"
+          // backgroundColor="#E5E5E5"
         />
 
         <View className="absolute inset-0 flex items-center justify-center">
