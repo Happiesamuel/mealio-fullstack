@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mealio",
     "slug": "Mealio",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/splash.png",
     "scheme": "appwrite-callback-6938ce360021c4f37829",
