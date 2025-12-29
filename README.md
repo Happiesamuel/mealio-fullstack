@@ -146,7 +146,7 @@ With live time estimates and status-based styling.
 
 ## 📞 Support
 
-For support, email your.email@example.com or open an issue on GitHub.
+For support, email odionsamuel2005@gmail.com or open an issue on GitHub.
 
 ## 🗺️ Roadmap
 
