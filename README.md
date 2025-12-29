@@ -133,8 +133,9 @@ With live time estimates and status-based styling.
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/Happiesamuel)
-- Email: odionsamuel2005@gmial.com
+- GitHub: [@Happiesamuel](https://github.com/Happiesamuel)
+- Email: odionsamuel2005@gmail.com
+- Twitter: [@Hs_the_dev](https://x.com/Hs_the_dev)
 
 ## 🙏 Acknowledgments
 
