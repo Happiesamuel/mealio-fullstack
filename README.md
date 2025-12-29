@@ -162,7 +162,7 @@ For support, email odionsamuel2005@gmail.com or open an issue on GitHub.
 ## 📥 Download
 
 ### Android
-[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Happiesamuel/mealio/releases/latest/download/mealio-v1.0.0.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Happiesamuel/mealio-fullstack/releases/download/v2.0.0/Mealio.v-2.0.0)
 
 **Latest Version:** v1.0.0  
 **File Size:** ~141MB  
