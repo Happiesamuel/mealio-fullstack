@@ -159,10 +159,25 @@ For support, email odionsamuel2005@gmail.com or open an issue on GitHub.
 - [ ] Table reservations
 - [ ] Loyalty rewards program
 
-## 🐛 Known Issues
+## 📥 Download
 
-- Background updates limited on iOS (use Appwrite Functions for production)
-- Real-time subscriptions disconnect after extended background time
+### Android
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Happiesamuel/mealio/releases/latest/download/mealio-v1.0.0.apk)
+
+**Latest Version:** v1.0.0  
+**File Size:** ~141MB  
+**Minimum Android:** 6.0+
+
+[View All Releases](https://github.com/Happiesamuel/mealio/releases)
+
+### Installation Instructions
+1. Download the APK from the link above
+2. Go to **Settings** → **Security** → Enable **Install from unknown sources**
+3. Open the downloaded APK file
+4. Tap **Install**
+5. Open Mealio and start ordering! 🍕
+```
+
 
 
 
