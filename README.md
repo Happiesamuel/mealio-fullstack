@@ -1,184 +1,315 @@
-# 🍔 Mealio
-
-> A modern food ordering app built with React Native and Expo, featuring real-time order tracking, push notifications, and Users authentication and authorization.
-
-[![React Native](https://img.shields.io/badge/React%20Native-0.76-blue.svg)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-52-black.svg)](https://expo.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
-[![Appwrite](https://img.shields.io/badge/Appwrite-Latest-f02e65.svg)](https://appwrite.io/)
-
-## ✨ Features
-
-### 🍽️ Core Features
-- **Browse Restaurants** - Discover local restaurants and explore their menus
-- **Food Ordering** - Simple and intuitive food ordering experience
-- **Real-time Order Tracking** - Live updates on order status (Pending → Shipped → Delivered)
-- **Multiple Payment Methods** - Support for various payment options
-- **Order History** - View all your past orders with detailed information
-
-### 🔔 Notifications
-- **Real-time Push Notifications** - Instant updates on order status changes
-- **In-app Notifications** - Notification center with unread badge indicators
-- **Toast Messages** - Non-intrusive status updates within the app
-- **Notification History** - Complete history of all notifications
-
-### 👤 User Management
-- **User Authentication** - Secure login and registration
-- **Guest Mode** - Order without creating an account
-- **Profile Management** - Update personal information and preferences
-- **Multiple Addresses** - Save and manage delivery addresses
-
-### 📦 Order Management
-- **Smart Cart System** - Add, remove, and modify cart items
-- **Order Scheduling** - Automatic status updates based on time
-- **Order Tracking** - Visual progress indicator for order status
-- **Time Estimates** - Real-time countdown to delivery
-
-### 🎨 UI/UX
-- **Modern Design** - Clean and intuitive interface
-- **Dark Mode Support** - (Optional) Toggle between light and dark themes
-- **Smooth Animations** - Polished user experience with animations
-- **Responsive Layout** - Works seamlessly on different screen sizes
-
-## 🚀 Tech Stack
-
-### Frontend
-- **React Native** - Cross-platform mobile framework
-- **Expo** - Development and build toolchain
-- **TypeScript** - Type-safe code
-- **NativeWind (Tailwind CSS)** - Styling
-- **React Navigation** - Navigation library
-- **Expo Router** - File-based routing
-
-### Backend & Services
-- **Appwrite** - Backend as a Service (BaaS)
-  - Database
-  - Authentication
-  - Storage
-  - Real-time subscriptions
-  - Cloud Functions
-
-### State Management
-- **React Query (TanStack Query)** - Server state management
-- **Zustand** - Client state management
-
-### Notifications
-- **Expo Notifications** - Local and push notifications
-- **Appwrite Real-time** - Live updates via WebSocket
-
-### Additional Libraries
-- **React Native Toast Message** - Toast notifications
-- **Zod** - Form vaildation
-- **OTP Email Provider & Backend for OTP Config** - Plunk & Next Js
-- **AsyncStorage** - Local data persistence
-
-## 📱 Screenshots
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0c761ae6-deb3-4f2b-afce-da419eb684f4" alt="Mealio Banner" width="100%">
+</p>
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/69dd30e0-a393-47a3-96f0-c1698cc0c3d4" width="250" alt="Home Screen">
-  <img src="https://github.com/user-attachments/assets/eeba0a6b-75c6-4b57-846a-0a7db1634465" width="250" alt="Restaurants">
-  <img src="https://github.com/user-attachments/assets/3c9de253-ee98-4402-bf15-f44023a535ef" width="250" alt="Food Detail">
+
+# 🍔 Mealio
+
+### Modern Food Ordering App Built with React Native & Expo
+
+Order food, track deliveries in real time, receive instant notifications, and enjoy a seamless mobile experience.
+
+[![Download APK](https://img.shields.io/badge/Download-APK-14B74D?style=for-the-badge&logo=android)](https://github.com/Happiesamuel/mealio-fullstack/releases/download/v2.0.0/Mealio.v-2.0.0)
+
 </div>
 
+---
 
-## 🛠️ Installation
+# ✨ Why Mealio?
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Expo CLI
-- iOS Simulator or Android Emulator (optional)
-- Expo Go app (for testing on physical devices)
+Mealio was built to provide a smooth and modern food ordering experience—from discovering restaurants to tracking deliveries in real time.
 
+Instead of simply placing an order, users receive live order updates, push notifications, guest checkout, and a synchronized shopping experience across devices.
 
+> Think of it as a lightweight Uber Eats experience built with React Native.
 
-### Real-time Order Status Updates
+---
 
-Orders automatically transition through statuses:
-1. **Pending** → Order placed
-2. **Shipped** → Rider assigned (after 30 minutes)
-3. **Delivered** → Order delivered (after 2 hours)
+# 📊 Project Highlights
 
-The app uses:
-- Client-side interval checks (every 12 seconds when app is active)
-- Appwrite real-time subscriptions for instant UI updates
-- Optional: Appwrite Cloud Functions for 24/7 updates
+| Feature | Description |
+|----------|------------|
+| 🍽️ Restaurant Discovery | Browse restaurants and menus |
+| 📦 Live Order Tracking | Pending → Shipped → Delivered |
+| 🔔 Push Notifications | Instant order updates |
+| 👤 Guest Mode | Order without creating an account |
+| 📍 Multiple Addresses | Save delivery locations |
+| 🛒 Smart Cart | Sync cart across sessions |
 
-### Notification System
+---
 
-Three-layer notification system:
-1. **Database notifications** - Persistent notification records
-2. **Toast notifications** - In-app visual feedback
-3. **Push notifications** - Native OS notifications
+# 🚀 Core Features
 
-Notifications include:
-- Unread badge on notification bell
-- Real-time count updates
-- Mark as read functionality
-- Notification history
+## 🍽️ Food Ordering
 
-### Order Tracking
+- Browse restaurants
+- Explore menus
+- Add items to cart
+- Place orders
+- Order history
 
-Visual progress tracker showing:
-- Order placed
-- Order confirmed
-- Order processed
-- Out for delivery
-- Order delivered
+---
 
-With live time estimates and status-based styling.
+## 📦 Real-Time Order Tracking
 
+One of Mealio's standout features is automatic order progression.
 
+Orders move through each stage without requiring manual refreshes.
 
-## 👨‍💻 Author
-
-**Your Name**
-- GitHub: [@Happiesamuel](https://github.com/Happiesamuel)
-- Email: odionsamuel2005@gmail.com
-- Twitter: [@Hs_the_dev](https://x.com/Hs_the_dev)
-
-## 🙏 Acknowledgments
-
-- [Appwrite](https://appwrite.io/) - Backend infrastructure
-- [Expo](https://expo.dev/) - Development framework
-- [React Native](https://reactnative.dev/) - Mobile framework
-- [NativeWind](https://www.nativewind.dev/) - Styling solution
-
-## 📞 Support
-
-For support, email odionsamuel2005@gmail.com or open an issue on GitHub.
-
-## 🗺️ Roadmap
-
-- [ ] Add restaurant reviews and ratings
-- [ ] Implement favorites system
-- [ ] Add promo codes and discounts
-- [ ] Support for multiple languages
-- [ ] Restaurant dashboard for order management
-- [ ] Delivery driver app
-- [ ] Table reservations
-- [ ] Loyalty rewards program
-
-## 📥 Download
-
-### Android
-[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Happiesamuel/mealio-fullstack/releases/download/v2.0.0/Mealio.v-2.0.0)
-
-**Latest Version:** v1.0.0  
-**File Size:** ~141MB  
-**Minimum Android:** 6.0+
-
-[View All Releases](https://github.com/Happiesamuel/mealio/releases)
-
-### Installation Instructions
-1. Download the APK from the link above
-2. Go to **Settings** → **Security** → Enable **Install from unknown sources**
-3. Open the downloaded APK file
-4. Tap **Install**
-5. Open Mealio and start ordering! 🍕
+```
+Pending
+   │
+   ▼
+Shipped
+   │
+   ▼
+Delivered
 ```
 
+### How it works
 
+- Automatic status scheduling
+- Appwrite real-time subscriptions
+- Live UI updates
+- Delivery countdown timer
 
+---
 
-Made with ❤️ and ☕ by Hs_the_dev
+## 🔔 Smart Notification System
+
+Mealio includes a three-layer notification experience.
+
+### Push Notifications
+
+- Order status updates
+- Delivery alerts
+
+### In-App Notifications
+
+- Notification center
+- Unread badge
+- Mark as read
+
+### Toast Messages
+
+- Instant feedback
+- Smooth user experience
+
+---
+
+## 👤 User Experience
+
+### Authentication
+
+- Secure login
+- Registration
+- OTP verification
+
+### Guest Mode
+
+Users can order immediately without creating an account.
+
+When they later sign in, their cart syncs seamlessly.
+
+### Profile Features
+
+- Multiple delivery addresses
+- Profile management
+- Preferences
+
+---
+
+## 🛒 Smart Cart
+
+The cart system was designed to feel seamless.
+
+Features include:
+
+- Add and remove items
+- Quantity updates
+- Persistent cart
+- Guest cart synchronization
+- Appwrite sync after login
+
+---
+
+# 🎨 Mobile Experience
+
+Mealio focuses heavily on user experience.
+
+- Modern interface
+- Smooth animations
+- Responsive layouts
+- Native interactions
+- Clean onboarding flow
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- React Native
+- Expo
+- TypeScript
+- NativeWind
+- Expo Router
+
+## Backend
+
+Powered by **Appwrite**
+
+- Authentication
+- Database
+- Storage
+- Real-time
+- Functions
+
+## State Management
+
+- TanStack Query
+- Zustand
+
+## Notifications
+
+- Expo Notifications
+- Appwrite Real-time
+
+## Additional Tools
+
+- Zod
+- AsyncStorage
+- React Native Toast Message
+- OTP Email Provider (Plunk + Next.js)
+
+---
+
+# 📱 App Showcase
+
+## Home Screen
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/69dd30e0-a393-47a3-96f0-c1698cc0c3d4" width="250" alt="Home Screen">
+</p>
+
+---
+
+## Restaurant Discovery
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/eeba0a6b-75c6-4b57-846a-0a7db1634465" width="250" alt="Restaurants">
+</p>
+
+---
+
+## Food Details
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3c9de253-ee98-4402-bf15-f44023a535ef" width="250" alt="Food Detail">
+</p>
+
+---
+
+# 📥 Download
+
+## Android APK
+
+<p align="center">
+
+<a href="https://github.com/Happiesamuel/mealio-fullstack/releases/download/v2.0.0/Mealio.v-2.0.0">
+  <img src="https://img.shields.io/badge/Download-APK-14B74D?style=for-the-badge&logo=android" alt="Download APK">
+</a>
+
+</p>
+
+| Item | Value |
+|------|-------|
+| Version | v1.0.0 |
+| Size | ~141 MB |
+| Android | 6.0+ |
+
+### Installation
+
+1. Download the APK.
+2. Enable **Install from Unknown Sources**.
+3. Install.
+4. Start ordering.
+
+---
+
+# ⚙️ Getting Started
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Happiesamuel/mealio-fullstack.git
+cd mealio-fullstack
+```
+
+## Install
+
+```bash
+npm install
+```
+
+## Run
+
+```bash
+npx expo start
+```
+
+Then:
+
+- Android Emulator
+- iOS Simulator
+- Expo Go
+
+---
+
+# 🛣 Roadmap
+
+## Completed
+
+- React Native app
+- Guest Mode
+- Order Tracking
+- Push Notifications
+- Address Management
+- Real-time Updates
+
+## Coming Soon
+
+- ⭐ Restaurant Reviews
+- ❤️ Favorites
+- 🎁 Promo Codes
+- 🌍 Multiple Languages
+- 🏪 Restaurant Dashboard
+- 🚚 Delivery Rider App
+- 🍽 Table Reservations
+- 🎯 Loyalty Rewards
+
+---
+
+# 👨‍💻 About the Developer
+
+## Happie Samuel
+
+Frontend & Mobile Developer
+
+- GitHub: https://github.com/Happiesamuel
+- LinkedIn: https://www.linkedin.com/in/hs-the-dev
+- X: https://x.com/hs_the_dev
+- Portfolio: https://linktr.ee/hs_the_dev
+
+---
+
+# ⭐ Support
+
+If you found Mealio useful, consider giving it a Star.
+
+It helps others discover the project and motivates future improvements.
+
+---
+
+> **Mealio — Order. Track. Enjoy. 🍔**
